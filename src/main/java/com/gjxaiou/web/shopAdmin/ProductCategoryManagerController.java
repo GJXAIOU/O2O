@@ -57,7 +57,6 @@ public class ProductCategoryManagerController {
      * @param request
      * @return
      */
-    // TODO: 2019/11/4 这里的 @RequestBody 是什么意思？为什么参数中还要 list
     @RequestMapping(value = "/batchAddProductCategory", method = RequestMethod.POST)
     @ResponseBody
     public Map<String, Object> batchAddProductCategory(@RequestBody List<ProductCategory> productCategoryList,

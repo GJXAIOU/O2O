@@ -1,8 +1,10 @@
 # README
 
-🙋‍♂️：GJXAIOU
+Author：GJXAIOU
 
 该小项目1.0 使用自己熟悉 SSM 框架，项目 2.0 使用将使用 SpringBoot 重新构建，将在项目 2.0 完成之后部署到阿里云服务器。
+
+![主页图](README.resource/%E4%B8%BB%E9%A1%B5%E5%9B%BE.png)
 
 ## 一、项目说明
 
@@ -339,23 +341,308 @@
 
 - LocalAuthDao.xml
 
+    因为返回结果是一个复合对象（**即返回值对应的 Java 类中包含其他类型的对象，所有需要将结果进行封装**），所以首先需要构建 `resultMap`
+
+    ```xml
+    <resultMap id="localAuthResultMap" type="com.gjxaiou.entity.LocalAuth">
+    		<!-- 主键 -->
+    		<id column="local_auth_id" property="localAuthId" />
+    		<!--column对应库表中的字段名 property对应实体类中的属性名 -->
+    		<result column="username" property="username" />
+    		<result column="password" property="password" />
+    		<result column="create_time" property="createTime" />
+    		<result column="last_edit_time" property="lastEditTime" />
+    
+    		<!-- 复合对象 -->
+    		<association column="user_id" property="personInfo" javaType="com.gjxaiou.entity.PersonInfo">
+    			<id column="user_id" property="userId" />
+    			<result column="local_auth_id" property="localAuthId" />
+    			<result column="name" property="name" />
+    			<result column="gender" property="gender" />
+    			<result column="profile_img" property="profileImg" />
+    			<result column="email" property="email" />
+    			<result column="enable_status" property="enableStatus" />
+    			<result column="user_type" property="userType" />
+    			<result column="create_time" property="createTime" />
+    			<result column="last_edit_time" property="lastEditTime" />
+    		</association>
+    	</resultMap>
+    ```
+
+    接下来同样需要提供插入方法、更新方法，根据用户 ID 查询方法、根据用户用户名和密码查询方式。
+
 - PersonInfoDao.xml
+
+    该部分与上面类似，同样因为查询结果的信息是复合信息，所以返回值封装为一个 resultMap。
+
+    ```xml
+    	<resultMap id="PersonInfoResultMap" type="com.gjxaiou.entity.PersonInfo">
+    		<!-- 主键 -->
+    		<id column="user_id" property="userId" />
+    		<!--column对应库表中的字段名 property对应实体类中的属性名 -->
+    		<result column="local_auth_id" property="localAuthId" />
+    		<result column="name" property="name" />
+    		<result column="profile_img" property="profileImg" />
+    		<result column="email" property="email" />
+    		<result column="gender" property="gender" />
+    		<result column="enable_status" property="enableStatus" />
+    		<result column="user_type" property="userType" />
+    		<result column="create_time" property="createTime" />
+    		<result column="last_edit_time" property="lastEditTime" />
+    	</resultMap>
+    ```
+
+    这里同样提供了用户信息的查找、插入以及更新操作。
 
 - ProductCategoryDao.xml
 
+    该部分为商品类别的操作，包括根据 shopId 来查询该商铺下面的所有商品类别信息，批量新增商品列表，以及删除指定店铺下面的某个商品类别。
+
 - ProductImgDao.xml
+
+    商品详情页的图片操作相关，主要包括
+
+     * 根据店铺 Id 获取该店铺下的所有详情图片列表
+
+       `List<ProductImg> queryProductImgList(long productId);`
+
+     * 批量添加商品详情页图片
+    `int batchInsertProductImg(List<ProductImg> productImgList);`
+
+     * 根据店铺 Id 删除该店铺下所有详情图片
+    `int deleteProductImgByProductId(long productId);`
 
 - ProductDao.xml
 
+    同上，因为商品的对象中包括和店铺属性、商品种类属性等信息，所以同样将返回值封装在一个 `resultMap` 中。
+
+    ```xml
+      <resultMap id="productMap" type="com.gjxaiou.entity.Product">
+            <id column="product_id" property="productId"></id>
+            <result column="product_name" property="productName"></result>
+            <result column="product_desc" property="productDesc"></result>
+            <result column="img_addr" property="imgAddr"></result>
+            <result column="normal_price" property="normalPrice"></result>
+            <result column="promotion_price" property="promotionPrice"></result>
+            <result column="priority" property="priority"></result>
+            <result column="create_time" property="createTime"></result>
+            <result column="enable_status" property="enableStatus"></result>
+            <result column="last_edit_time" property="lastEditTime"></result>
+            <association property="productCategory" column="product_category_id"
+                         javaType="com.gjxaiou.entity.ProductCategory">
+                <id column="product_category_id" property="productCategoryId"></id>
+                <result column="product_category_name" property="productCategoryName"></result>
+            </association>
+            <association property="shop" column="shop_id"
+                         javaType="com.gjxaiou.entity.Shop">
+                <id column="shop_id" property="shopId" />
+                <result column="owner_id" property="ownerId" />
+                <result column="shop_name" property="shopName" />
+            </association>
+            <!--TODO：为什么这里的 column 是 product_id-->
+            <collection property="productCategoryList" column="product_id"
+                        javaType="com.gjxaiou.entity.ProductImg">
+                <id column="product_img_id" property="productImgId" />
+                <result column="img_addr" property="imgAddr" />
+                <result column="img_desc" property="imgDesc" />
+                <result column="priority" property="priority" />
+                <result column="create_time" property="createTime" />
+                <result column="product_id" property="productId" />
+            </collection>
+        </resultMap>
+    ```
+
+    另外提供了根据 Id 查询商品的 `queryProductByProductId()` 方法，查询商品总数的 `queryProductCount()` 方法，插入商品的 `insertProduct()` 方法，更新商品信息的 `updataProduct()` 方法，删除商品的 `deleteProduct()` 方法。
+
 - ShopCategoryDao.xml
+
+    暂时只提供了店铺种类的查询操作，其他的删除以及更新操作将在 2.0 版本中实现。
 
 - ShopDao.xml
 
-    
+    同样，因为 Shop 类中封装了其他对象，所有其返回结果为 `resultMap`。
+  
+  ```xml
+      <resultMap id="shopMap" type="com.gjxaiou.entity.Shop">
+          <id column="shop_id" property="shopId"></id>
+          <result column="owner_id" property="ownerId" />
+          <result column="shop_name" property="shopName" />
+          <result column="shop_desc" property="shopDesc" />
+          <result column="shop_addr" property="shopAddr" />
+          <result column="phone" property="phone" />
+          <result column="shop_img" property="shopImg" />
+          <result column="priority" property="priority" />
+          <result column="create_time" property="createTime" />
+          <result column="last_edit_time" property="lastEditTime" />
+          <result column="enable_status" property="enableStatus" />
+          <result column="advice" property="advice" />
+          <!-- property 对应类中属性值，column 为该属性值对应的数据库中字段，JavaType 表示该属性类型 -->
+          <association property="area" column="area_id" javaType="com.gjxaiou.entity.Area">
+              <id column="area_id" property="areaId"></id>
+              <result column="area_name" property="areaName"></result>
+          </association>
+          <association property="ower" column="user_id"
+                       javaType="com.gjxaiou.entity.PersonInfo">
+              <id column="user_id" property="userId"></id>
+              <result column="name" property="name"></result>
+          </association>
+          <association property="shopCategory" column="shop_category_id"
+                       javaType="com.gjxaiou.entity.ShopCategory">
+              <id column="shop_category_id" property="shopCategoryId" />
+              <result column="shop_category_name" property="shopCategoryName" />
+          </association>
+      </resultMap>
+  
+  ```
+  
+  提供的功能包括：
+  
+  - 根据店铺 ID 查询店铺：`queryByShopId()`；
+  
+  - 查看并返回与该店铺状态相同的店铺数：`queryShopCount()`；
+  
+  - 新增店铺：`insertShop()`；
+  
+  - 更新店铺：`updateShop()`；
+  
+  - 分页查询所有店铺：`queryShopList()`；
+  
+      
+
+
+
+## 三、具体模块分析
+
+### （一）前端展示模块
+
+这里的前端代码不做展开介绍，部分组件采用了阿里巴巴共享业务事业部 UED 团队开发的轻量级 [SUI Mobile](https://sui.ctolog.com/)，通过 UI 库进行搭建，同时部分前端代码需要自己针对性的书写，主要包括以下部分页面。
+
+- 头条展示
+- 店铺类别展示
+- 区域详情展示
+- 店铺详情页开发
+- 搜索功能开发
+
+### （二）商家模块
+
+- 账号维护
+- 店铺信息维护
+- 权限验证
+- 商品类别维护
+
+
+
+#### 2.店铺信息的编辑
+
+###### 实现目标：
+
+- 实现单个店铺信息的获取；
+- 实现对店铺信息进行修改；
+
+
+
+##### 1.1 获取店铺信息
+
+- DAO 层
+
+    对应于 `com.gjxaiou.dao.ShopDao.java`；其中提供的方法包括：
+
+    - 通过 shopId 查询店铺：`Shop queryByShopId(long shopId);`
+
+    - 返回与该店铺状态相同的店铺数：`int queryShopCount(@Param("shopCondition") Shop shopCondition);`
+
+    - 新增店铺：`int insertShop(Shop shopDao);`
+
+    - 更新店铺：`int updateShop(Shop shop);`
+
+    - 带分页功能的查询商铺列表：
+
+        ```java
+        List<Shop> queryShopList(@Param("shopCondition") Shop shopCondition,
+                                 @Param("rowIndex") int rowIndex,
+                                 @Param("pageSize") int pageSize);
+        ```
+
+- Mapper：对应的 Mapper 为 `ShopMapper.xml`；
+
+- Service 层
+
+    提供接口：`com.gjxaiou.service.ShopService.java`：增加店铺；更新店铺信息（包括对图片的处理）； 通过店铺 Id 获取店铺信息；根据店铺的状态进行分页查询。
+
+    具体地实现类：`com.gjxaiou.service.impl.ShopServiceImpl.java`
+
+    - `getByShopId()` ，调用对应的 Dao 来实现。
+
+    - `addShop()`，因为是新增操作，所以使用了 `@Transactional` 注解来实现事务处理，===**使用注解实现控制事务的优点**==：
+
+        - 开发团队达成一致性约定，明确标注事务方法的编程风格；
+
+        *      保证事务方法的执行时间尽可能短，不要穿插其他网络操作，RPC/HTTP 请求或者剥离到事务方法外部；
+        *      不是所有的方法都需要事务，如只有一条修改操作、只读操作时不需要事务控制；
+
+    - `modifyShop()`，修改店铺信息
+        *      首先更新店铺图片：根据参数 shop 中的 shopId 获取原来店铺对应的图片，删除，再添加新的图片信息，最后更新店铺
+    *      `getShopList()`，分页显示店铺查询结果。
+
+- Controller 层
+
+前端：shopOperation.js  和 common.js
+
+
+#### 分页查询展示店铺
+
+整体的结构还是 shopDao.java /shopDao.xml/shopService.java/shopServiceImpl.java/shopListController.java
+
+```java
+ /**
+     * 带有分页功能的查询商铺列表 。 可输入的查询条件：商铺名（要求模糊查询） 区域Id 商铺状态 商铺类别 owner
+     * (注意在sqlmapper中按照前端入参拼装不同的查询语句)
+     * @param shopCondition
+     * @param rowIndex：从第几行开始取
+     * @param pageSize：返回多少行数据（页面上的数据量）
+     *                    比如 rowIndex为1,pageSize为5 即为 从第一行开始取，取5行数据
+     */
+    List<Shop> queryShopList(@Param("shopCondition") Shop shopCondition,
+                             @Param("rowIndex") int rowIndex,
+                             @Param("pageSize") int pageSize);
+```
+
+这里的 SQL 语句中，需要对输入的条件（shopCondition 中 shop 的各种属性）进行判断，因此使用 `<where></where>` 标签配合 `<if></if>`使用，进行动态 SQL 拼接，同时最后使用 ：`LIMIT #{rowIndex},#{pageSize}`进行分页。同时因为返回值为 shop对象（里面包含了其他的对象），因此采用 resultMap，里面通过组合 `<association> </association>`来实现 实体类和 数据表之间的映射；
+
+
+
+对应到 Service 层中，因为用户传入的参数肯定是查看第几页和每页显示几条（pageIndex 和 pageSize），一次这里通过一个工具类：PageCalculator，通过：`rowIndex = (pageIndex - 1) * pageSize;`来计算从第几条开始显示；
+
+
+### （六）商品类别列表展示
+
+实体类是 ProductCategory
+
+首先 Dao 层接口 ProductCategoryDao.java 和 对应的Mapper 然后使用 ProductCategoryTest 中 testAQueryByShopId 方法进行测试
+
+然后是 Service 层 ProductCategoryService 和实现类；
+
+最后是 controller 层 ProductCategoryManagementController
+
+###### 前端页面：
+
+product-category-management.html 和对应的 CSS 布局；和对应的 productCategoryManagement.js 文件 （最后通过标签将 CSS 、js 代码引入 html 中）
+
+然后是 shopAdminController.java 中实现路由，通过访问
+
+- #### 商品类别批量添加
+
+// 说明待补充
+
+- #### 商品类别删除
+
+// 说明待补充
 
 
 
 
+
+### 
 
 ### （一）区域管理
 
@@ -476,96 +763,6 @@ DTO(data transfer object)：数据传输对象，以前被称为值对象(VO,val
 2. util包下面添加 ImageUtil 方法
 该方法中实现了图片的一般操作方法，这里的方法可以自定义。但是如果是批量处理图片，需要平凡的获取图片文件路径，
 因此新建一个 PathUtil.java 类，里面实现获取输入文件路径和输出文件路径；
-
-
-
-### （五）店铺信息的编辑
-
-###### 实现目标：
-
-- 实现单个店铺信息的获取；
-- 实现对店铺信息进行修改；
-
-
-
-#### 获取店铺信息
-
-Dao：shopDao.java 中添加 查询方法；
-
-配置 对应的 xml 方法；
-
-
-
-Service 层：针对 ShopService 主要增加： 通过店铺 Id 获取店铺信息，和更新店铺信息（包括对图片的处理）
-
-然后在对应的实现类中实现；
-
-```
-getByShopId
-```
-
-```
-modifyShop
-```
-
-
-Controller 层：
-
-前端：shopOperation.js  和 common.js
-
-
-#### 分页查询展示店铺
-
-整体的结构还是 shopDao.java /shopDao.xml/shopService.java/shopServiceImpl.java/shopListController.java
-
-```java
- /**
-     * 带有分页功能的查询商铺列表 。 可输入的查询条件：商铺名（要求模糊查询） 区域Id 商铺状态 商铺类别 owner
-     * (注意在sqlmapper中按照前端入参拼装不同的查询语句)
-     * @param shopCondition
-     * @param rowIndex：从第几行开始取
-     * @param pageSize：返回多少行数据（页面上的数据量）
-     *                    比如 rowIndex为1,pageSize为5 即为 从第一行开始取，取5行数据
-     */
-    List<Shop> queryShopList(@Param("shopCondition") Shop shopCondition,
-                             @Param("rowIndex") int rowIndex,
-                             @Param("pageSize") int pageSize);
-```
-
-这里的 SQL 语句中，需要对输入的条件（shopCondition 中 shop 的各种属性）进行判断，因此使用 `<where></where>` 标签配合 `<if></if>`使用，进行动态 SQL 拼接，同时最后使用 ：`LIMIT #{rowIndex},#{pageSize}`进行分页。同时因为返回值为 shop对象（里面包含了其他的对象），因此采用 resultMap，里面通过组合 `<association> </association>`来实现 实体类和 数据表之间的映射；
-
-
-
-对应到 Service 层中，因为用户传入的参数肯定是查看第几页和每页显示几条（pageIndex 和 pageSize），一次这里通过一个工具类：PageCalculator，通过：`rowIndex = (pageIndex - 1) * pageSize;`来计算从第几条开始显示；
-
-
-### （六）商品类别列表展示
-
-实体类是 ProductCategory
-
-首先 Dao 层接口 ProductCategoryDao.java 和 对应的Mapper 然后使用 ProductCategoryTest 中 testAQueryByShopId 方法进行测试
-
-然后是 Service 层 ProductCategoryService 和实现类；
-
-最后是 controller 层 ProductCategoryManagementController
-
-###### 前端页面：
-
-product-category-management.html 和对应的 CSS 布局；和对应的 productCategoryManagement.js 文件 （最后通过标签将 CSS 、js 代码引入 html 中）
-
-然后是 shopAdminController.java 中实现路由，通过访问
-
-- #### 商品类别批量添加
-
-// 说明待补充
-
-- #### 商品类别删除
-
-// 说明待补充
-
-
-
-
 
 ### 补充一：数据库实现主从读写分离
 

@@ -40,7 +40,7 @@ public interface ShopDao {
 
     /**
      * 带有分页功能的查询商铺列表 。 可输入的查询条件：商铺名（要求模糊查询） 区域Id 商铺状态 商铺类别 owner
-     * (注意在sqlmapper中按照前端入参拼装不同的查询语句)
+     * (注意在sqlMapper中按照前端入参拼装不同的查询语句)
      * @param shopCondition
      * @param rowIndex：从第几行开始取
      * @param pageSize：返回多少行数据（页面上的数据量）

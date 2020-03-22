@@ -92,7 +92,7 @@ public class shopManagerController {
             return modelMap;
         }
 
-        // TODO: 2019/11/3 下面不知道在说啥
+
         // 3.处理店铺图片（使用 spring 自带的 CommonsMultipartFile）
         CommonsMultipartFile shopImg = null;
         // 文件解析器，解析 request 中的文件对象，即从 request 的本次回话的上下文获取文件内容
