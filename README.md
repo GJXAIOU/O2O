@@ -509,7 +509,68 @@ Author：GJXAIOU
   
       
 
+### （二）工具类
 
+工具类封装了一系列项目中一系列的常用方法，主要包括以下部分：
+
+- CodeUtil
+
+    实现验证码的验证功能，因为这里通过 Google 的 kaptcha 来实现验证码的功能。主要逻辑为：将 key 为 `KAPTCHA_SESSION_KEY` 的验证码字符串放入 Session 中，然后使用 `request.getSession().getAttribute()`来获取返回值，该值与 request 请求中 key `verifyCodeActual` 中保存的真实值进行对比来判断输入的验证码是否正确。
+
+    ```java
+    package com.gjxaiou.util;
+    
+    import javax.servlet.http.HttpServletRequest;
+    
+    /**
+     * @author GJXAIOU
+     * @create 2019-10-19-14:30
+     */
+    public class CodeUtil {
+        public static boolean checkVerifyCode(HttpServletRequest request) {
+            String verifyCodeExpected = (String) request.getSession().getAttribute(
+                    com.google.code.kaptcha.Constants.KAPTCHA_SESSION_KEY);
+            String verifyCodeActual = HttpServletRequestUtil.getString(request,
+                    "verifyCodeActual");
+            if (verifyCodeActual == null
+                    || !verifyCodeActual.equalsIgnoreCase(verifyCodeExpected)) {
+                return false;
+            }
+            return true;
+        }
+    }
+    
+    ```
+
+- DESUtil
+
+    这里使用堆成加密算法 DES 来对数据库配置信息进行加密处理，流程为：首先设置秘钥 key 以及字符编码和指定采用的加密算法名称。在初始化阶段生成 DES 算法对象，运行 SHA1 安全策略，同时设置上密钥种子并生成秘钥对象。
+
+    加密过程：将未加密的字符串传入 `getEncryptString()` 方法，首先将字符串转换为字符数组，然后获取加密对象和初始化密码信息，然后调用 `doFinal()` 方法来进行加密，最后将加密之后的字符数组转换为字符数组返回。
+
+    解密过程：解密过程与上面一样，只不过输入的字符串为加密之后的信息，因为对称加密的加密和解密秘钥是一样的，所以步骤和上面类似。 
+
+- ImageUtil
+
+    因为项目中涉及到大量的图片处理，所以封装了一个工具类来集中处理。首先处理之前要获得图片的绝对路径，这里为了防止用户上传重复名称的文件，使用系统生成的随机数（由当前时间和五位随机数共同组成）。同时使用了 `Thumbnails` 中的 `watermark`方法为图片增加了水印。以及删除图片等等操作。
+
+- PageCalculator
+
+    该部分是用于在数据查询过程中需要分页的情况，通过传入第几页以及每页显示多条数据来计算应该查询到多少行。
+
+    ```java
+    package com.gjxaiou.util;
+    
+    /**
+     * @author GJXAIOU
+     * @create 2019-10-24-16:37
+     */
+    public class PageCalculator {
+        public static int calculateRowIndex(int pageIndex, int pageSize) {
+            return (pageIndex > 0) ? (pageIndex - 1) * pageSize : 0;
+        }
+    }
+    ```
 
 ## 三、具体模块分析
 
@@ -530,7 +591,50 @@ Author：GJXAIOU
 - 权限验证
 - 商品类别维护
 
+#### 1.针对商品信息以及类别的维护
 
+主要实现目标：
+
+- 商品的增删改查功能。
+
+**具体分析**
+
+- DAO 层
+
+    包括 `com.gjxaiou.dao.ProductDao.java`,`com.gjxaiou.dao.ProductImgDao.java`
+
+    - 商品的查询功能
+
+        - 根据 ID 查询：`Product queryProductByProductId(Long productId);`
+
+        - 分页查询：
+
+            ```java
+            List<Product> queryProductList(@Param("productCondition") Product productCondition, @Param("rowIndex") int rowIndex,@Param("pageSize") int pageSize);
+            ```
+
+        - 查询总数：`int queryProductCount(@Param("productCondition") Product productCondition);`
+
+    - 商品的新增功能：`int insertProduct(Product product);`
+
+    - 商品的更新修改功能：`int updateProduct(Product product);`
+
+    - 商品的删除功能：`int updateProductCategoryToNull(long productCategoryId);`
+
+    - 获取店铺下面所有详情图片：`List<ProductImg> queryProductImgList(long productId);`
+
+    - 批量添加商品详情页的图片：`int batchInsertProductImg(List<ProductImg> productImgList);`
+
+    - 根据店铺 ID 删除店铺下所有详情图：`int deleteProductImgByProductId(long productId);`
+
+- Mapper：主要包括文件为：`ProductDao.xml` 和 `ProductImgDao.xml`和 `ProductCategoryDao.xml`
+
+- Service 层
+
+    分别提供了接口：`com.gjxaiou.service.ProductService.java`、`com.gjxaiou.service.ProductCategoryService.java` 以及对应的实现类 `com.gjxaiou.service.impl.ProductServiceImpl.java` 和 `com.gjxaiou.service.impl.ProductCategoryServiceImpl.java`。
+
+    - `getProductById`方法直接调用 Dao 中的查询方法即可；
+    - `getProductList` 方法实现分页获取商品列表
 
 #### 2.店铺信息的编辑
 
@@ -581,6 +685,7 @@ Author：GJXAIOU
         *      不是所有的方法都需要事务，如只有一条修改操作、只读操作时不需要事务控制；
 
     - `modifyShop()`，修改店铺信息
+        
         *      首先更新店铺图片：根据参数 shop 中的 shopId 获取原来店铺对应的图片，删除，再添加新的图片信息，最后更新店铺
     *      `getShopList()`，分页显示店铺查询结果。
 
