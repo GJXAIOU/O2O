@@ -59,7 +59,7 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
 
     /**
      * 删除指定商品属性
-     * 应该先将该商品属性的商品的商品属性值为五，然后将该商品属性删除
+     * 应该先将该商品属性的商品的商品属性值为无，然后将该商品属性删除
      * @param productCategoryId
      * @param shopId
      * @return

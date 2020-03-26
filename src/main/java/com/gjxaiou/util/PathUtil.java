@@ -17,7 +17,7 @@ public class PathUtil {
         String basePath = "";
         // 不能将图片放在项目之下，否则每次重启就会将后生成的图片删除
         if (os.toLowerCase().startsWith("win")){
-            basePath="E:\\Program\\Java\\Project\\ProjectAgainByMyself\\";
+            basePath="E:\\Program\\Java\\Project\\o2o\\";
         }else{
             basePath = "/home/GJXAIOU/Project/o2o/image";
         }

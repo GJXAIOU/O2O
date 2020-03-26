@@ -78,7 +78,7 @@ public class ShopServiceImpl implements ShopService {
                     }
                     // 更新店铺的图片地址
                     int effectedNum = shopDao.updateShop(shop);
-                    if (effectNum <= 0){
+                    if (effectedNum <= 0){
                         throw new ShopOperationException("更新图片地址失败");
                     }
                 }

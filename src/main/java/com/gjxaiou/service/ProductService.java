@@ -42,7 +42,7 @@ public interface ProductService {
                                 List<ImageHolder> productImageHolderList) throws ProductOperationException;
 
     /**
-     * 修改图片信息和对应的图片处理
+     * 修改商品信息和对应的图片处理
      * @param product
      * @param thumbnail
      * @param productImageHolderList
@@ -51,5 +51,4 @@ public interface ProductService {
      */
     ProductExecution modifyProduct(Product product,ImageHolder thumbnail,
                                    List<ImageHolder> productImageHolderList) throws ProductOperationException;
-
 }

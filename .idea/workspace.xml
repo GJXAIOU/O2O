@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="61f2e862-cbe6-42dc-bd27-a87c8de272ac" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/dictionaries/GJX.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Algorithm/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Algorithm/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../JVM/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../JVM/pom.xml" afterDir="false" />
@@ -34,8 +33,8 @@
       <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CNAME" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/gjxaiou/dao/ProductDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gjxaiou/dao/ProductDao.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/gjxaiou/dao/ShopDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gjxaiou/dao/ShopDao.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/gjxaiou/dto/ImageHolder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gjxaiou/dto/ImageHolder.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/gjxaiou/dto/ProductCategoryExecution.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gjxaiou/dto/ProductCategoryExecution.java" afterDir="false" />
@@ -54,9 +53,16 @@
       <change beforePath="$PROJECT_DIR$/src/main/java/com/gjxaiou/enums/ProductCategoryStateEnum.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gjxaiou/enums/ProductCategoryStateEnum.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/gjxaiou/enums/ProductStateEnum.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gjxaiou/enums/ProductStateEnum.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/gjxaiou/enums/ShopStateEnum.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gjxaiou/enums/ShopStateEnum.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/gjxaiou/service/ProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gjxaiou/service/ProductService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/gjxaiou/service/impl/ProductCategoryServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gjxaiou/service/impl/ProductCategoryServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/gjxaiou/service/impl/ProductServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gjxaiou/service/impl/ProductServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/gjxaiou/service/impl/ShopCategoryServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gjxaiou/service/impl/ShopCategoryServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/gjxaiou/service/impl/ShopServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gjxaiou/service/impl/ShopServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/gjxaiou/web/shopAdmin/ProductCategoryManagerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gjxaiou/web/shopAdmin/ProductCategoryManagerController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/gjxaiou/web/shopAdmin/shopManagerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gjxaiou/web/shopAdmin/shopManagerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/gjxaiou/util/DESUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gjxaiou/util/DESUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/gjxaiou/util/PathUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gjxaiou/util/PathUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/gjxaiou/web/shopAdmin/ProductManagerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gjxaiou/web/shopAdmin/ProductManagerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/gjxaiou/web/shopadmin/ProductCategoryManagerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gjxaiou/web/shopadmin/ProductCategoryManagerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/gjxaiou/web/shopadmin/ShopManagerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gjxaiou/web/shopadmin/ShopManagerController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/spring/spring-dao.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/spring/spring-dao.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/spring/spring-web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/spring/spring-web.xml" afterDir="false" />
     </list>
@@ -214,7 +220,9 @@
       <workItem from="1574147815441" duration="14597000" />
       <workItem from="1574590305173" duration="651000" />
       <workItem from="1584601371084" duration="6300000" />
-      <workItem from="1584858294417" duration="7170000" />
+      <workItem from="1584858294417" duration="7387000" />
+      <workItem from="1585131532197" duration="5337000" />
+      <workItem from="1585212722029" duration="12273000" />
     </task>
     <servers />
   </component>
@@ -251,5 +259,9 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="716" y="250" key="FileChooserDialogImpl/0.0.1920.1080@0.0.1920.1080" timestamp="1584613956864" />
+    <state x="539" y="45" width="840" height="1034" key="search.everywhere.popup" timestamp="1585215334936">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="539" y="45" width="840" height="1034" key="search.everywhere.popup/0.0.1920.1080@0.0.1920.1080" timestamp="1585215334936" />
   </component>
 </project>

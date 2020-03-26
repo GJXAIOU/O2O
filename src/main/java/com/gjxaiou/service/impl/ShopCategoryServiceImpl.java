@@ -52,14 +52,14 @@ public class ShopCategoryServiceImpl implements ShopCategoryService {
         // 拼接出redis的key
         if (shopCategoryCondition == null) {
             // 若查询条件为空，则列出所有首页大类，即parentId为空的店铺类型
-            key = key + "_allfirstlevel";
+            key = key + "_allFirstLevel";
         } else if (shopCategoryCondition != null && shopCategoryCondition.getParent() != null
                 && shopCategoryCondition.getParent().getShopCategoryId() != null) {
             // 若parentId不为空，则列出该parentId下的所有子类别
             key = key + "_parent" + shopCategoryCondition.getParent().getShopCategoryId();
         } else if (shopCategoryCondition != null) {
             // 列出所有子类别，不管其属于哪个类都列出
-            key = key + "_allsecondlevel";
+            key = key + "_allSecondLevel";
         }
 
         // 判断key是否存在

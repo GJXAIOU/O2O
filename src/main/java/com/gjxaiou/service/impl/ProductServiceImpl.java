@@ -113,7 +113,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     /**
-     *  修改店铺
+     *  修改商品
      *     步骤一：如果缩略图参数有值，则处理缩略图
      *     步骤二：若原来存在缩略图则先删除再添加新的缩略图，之后获取缩略图相对路径并赋值给 product
      *     步骤三：若商品详情图列表参数有值，对商品详情图片列表进行同样的操作
@@ -216,5 +216,4 @@ public class ProductServiceImpl implements ProductService {
         // 删除数据库里原有的图片的地址
         productImgDao.deleteProductImgByProductId(productId);
     }
-
 }

@@ -54,7 +54,7 @@ public class ProductManagerController {
 
         if (!CodeUtil.checkVerifyCode(request)) {
             modelMap.put("success", false);
-            modelMap.put("errMsg", "验证码输入错误");
+            modelMap.put("errMsg", "验证码 输入错误");
             return modelMap;
         }
 
@@ -99,7 +99,7 @@ public class ProductManagerController {
             return modelMap;
         }
 
-        // 如果 Product 信息、缩略图以及详情图均为空，则进行商品添加操作
+        // 如果 Product 信息、缩略图以及详情图均不为空，则进行商品添加操作
         if (product != null && thumbnail != null && productImgList.size() > 0) {
             try {
                 // 从 Session 中获取当前店铺的 Id 并赋值给 Product，减少对前端数据的依赖
@@ -163,7 +163,7 @@ public class ProductManagerController {
 
 
     /**
-     * 通过商品 Id 获取商品信息
+     * 通过商品 Id 获取商品所有商品列表信息
      *
      * @param productId
      * @return
@@ -240,7 +240,7 @@ public class ProductManagerController {
             modelMap.put("errMsg", e.toString());
             return modelMap;
         }
-        // 若Product信息、缩略图以及详情图里诶包为空，则开始进行商品添加操作
+        // 若Product信息、缩略图以及详情图里都不为空，则开始进行商品添加操作
         if (product != null) {
             try {
                 // 从session中获取当前店铺的id并赋值给product，减少对前端数据的依赖

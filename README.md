@@ -629,12 +629,92 @@ Author：GJXAIOU
 
 - Mapper：主要包括文件为：`ProductDao.xml` 和 `ProductImgDao.xml`和 `ProductCategoryDao.xml`
 
-- Service 层
+- Service 层以及实现
 
     分别提供了接口：`com.gjxaiou.service.ProductService.java`、`com.gjxaiou.service.ProductCategoryService.java` 以及对应的实现类 `com.gjxaiou.service.impl.ProductServiceImpl.java` 和 `com.gjxaiou.service.impl.ProductCategoryServiceImpl.java`。
 
+    首先针对 `ProductService.java` 和 `ProductServiceImpl.java`
+    
     - `getProductById`方法直接调用 Dao 中的查询方法即可；
-    - `getProductList` 方法实现分页获取商品列表
+    - `getProductList` 方法实现分页获取商品列表；
+    - `addProduct` 方法实现添加商品信息和对应的图片的处理；
+        - 步骤一：处理缩略图，获取缩略图的相对路径并赋值给 Product；
+        - 步骤二：向 tb_product 中写入商品信息，同时获取 productId；
+        - 步骤三：结合 productId 批量处理商品详情图；
+        - 步骤四：将商品详情图列表批量插入 tb_product_img 中；
+    - `modifyProduct` 方法实现修改商品信息与图片处理
+        *     步骤一：如果缩略图参数有值，则处理缩略图
+        *     步骤二：若原来存在缩略图则先删除再添加新的缩略图，之后获取缩略图相对路径并赋值给 product
+        *     步骤三：若商品详情图列表参数有值，对商品详情图片列表进行同样的操作
+        *     步骤四：将 tb_product_img下面的该商品原来的商品详情图记录全部清除
+        *     步骤五：更新 tb_product_img 以及 tb_product 的信息
+    
+    其次针对 ``ProductCategoryService.java` 和 `ProductCategoryServiceImpl.java` 来说，用于处理商品类别。
+    
+    - `getProductCategoryList` 方法用于获取该店铺中所有的商品类别，直接调用 Dao 层的查询语句，传入 shopId 之后就可以得到该店铺中所有的商品类别。
+    - `batchAddProductCategory` 方法用于批量增加商品类别，也是直接调用 Dao 层的批量插入来实现的。
+    - `deleteProductCategory` 反复用于删除某个商铺中的指定商品类别。
+        - 步骤一：将该商品类别下面的所有商品的商品属性值置为 NULL；
+        - 步骤二：调用 Dao 层直接将该商品属性删除。
+    
+- Controller 层
+
+    主要包括 `com.gjxaiou.web.shopAdmin.ProductManagerController.java` 和 `com.gjxaiou.web.shopAdmin.ProductCategoryManagerController.java`
+
+    - `addProduct()` 对应的请求路径就是 `/shopAdmin/addProduct`，当然因为是添加商品，所有需要有上传的数据，因此使用 POST 请求。
+
+        ```java
+         @RequestMapping(value = "/addProduct", method = RequestMethod.POST)
+         @ResponseBody
+        public Map<String, Object> addProduct(HttpServletRequest request) throws ProductOperationException {
+        ```
+
+        - 步骤一：判断验证码是否输入正确；
+        - 步骤二：获取前端参数的变量初始化，包括商品、缩略图、详情图列表实体类；通过封装的 `HttpServletResquestUtil`来获取 key 为 `productStr` 的商品，同时因为可能涉及到新增图片，所以使用 `CommonsMultipartResolver` 来判断请求中是否存在文件流，如果存在文件流则取出相关的文件（包括缩略图和详情图）。
+        - 步骤三：获取前端传过来的表单 String 流，并将其转换为 Product 实体类，这里使用的是 `ObjectMapper` 类的 `readValue()` 方法，它实现了 `Serializable` 接口，所以相当于是一种反序列化。
+        - 步骤四：如果 Product 对象信息、缩略图、详情图等信息均不为空则进行商品添加操作。
+
+    - `getProductById` 实现了通过商品 ID 来获取商品信息，请求路径为：`/shopAdmin/getproductById`，这里使用的 GET 请求。
+
+        - 步骤一：根据传入的商品 Id 来通过 Service 层 的 `productService` 的 `getProductById` 来获取商品 Product；
+
+        - 步骤二：然后同理可以获取该商品所在店铺中所有的商品类别。
+
+        - 步骤三：将获取到的 Product 以及 ProductCategoryList 分别放入视图 Map 中返回。
+
+            ```java
+            modelMap.put("product", product);
+            modelMap.put("productCategoryList", productCategoryList);
+            modelMap.put("success", true);
+            ```
+
+    - `modifyProduct` 实现了对店铺信息的修改，请求路径为：`/shopAdmin/modifyProduct`，使用的是 POST 请求。
+
+        - 步骤一：判断商品状态（从 request 中的 `statusChange`字段获取）和验证码是否正确。
+
+        - 步骤二：接收前端参数变量初始化，包括商品、缩略图、详情图列表，同时如果请求中存在文件流则取出相关文件
+
+            ```java
+            CommonsMultipartResolver multipartResolver=new CommonsMultipartResolver(request.getSession().getServletContext());
+             // 若请求中存在文件流，则取出相关的文件
+                    try {
+                        if (multipartResolver.isMultipart(request)) {
+                            thumbnail = handleImage(request, productImgList);
+                        }
+            ```
+
+        - 步骤三：同样从提交表单的 String 流中，通过 key ：`productStr` 取出商品对象并且转换为实体类。
+
+        - 步骤四：如果 Product信息、缩略图以及详情图里都不为空，则开始进行商品添加操作
+
+    - `getProductListByShop`，根据店铺获取该店铺下所有的商品分类，访问路径为：`/shopAdmin/getProductListByShop`，请求为 GET 请求。
+
+        - 步骤一：首先通过 `HttpServletRequestUtil.getInt(request, key)` ，这里的 key 分别为 pageIndex 和 pageSize ，即获取前台传过来的页码以及每页要求返回的商品数量。
+        - 步骤二：通过 `(Shop)request.getSession().getAttributes("currentShop") ` 来获取店铺信息，以及通过 HttpServletRequestUtil 来获取传入的检索辅助条件。
+        - 步骤三：判断上面条件符合之后调用 Service 来处理并返回结果。
+        - 步骤四：将返回结果作为 value（每个 value 添加对应的 key），放入视图中返回。
+
+    `com.gjxaiou.web.shopAdmin.ProductCategoryManagerController.java` 里面的方法类似，省略。
 
 #### 2.店铺信息的编辑
 
@@ -643,13 +723,11 @@ Author：GJXAIOU
 - 实现单个店铺信息的获取；
 - 实现对店铺信息进行修改；
 
-
-
 ##### 1.1 获取店铺信息
 
 - DAO 层
 
-    对应于 `com.gjxaiou.dao.ShopDao.java`；其中提供的方法包括：
+    对应于 `com.gjxaiou.dao.ShopDao.java` ；其中提供的方法包括：
 
     - 通过 shopId 查询店铺：`Shop queryByShopId(long shopId);`
 
@@ -667,29 +745,100 @@ Author：GJXAIOU
                                  @Param("pageSize") int pageSize);
         ```
 
+    对于 `com.gjxaiou.dao.ShopCategoryDao.java`  来说，提供了对店铺种类的操作，包括
+
+    - `queryShopCategory` 方法是根据店铺类别 Id 来获取店铺类型列表，因为店铺类别是有等级的，如果参数为空的话则表示一级店铺类型，反之则是二级等子集店铺类型。
+        - 首页展示一级目录（即 parent_id 为 null 的店铺类别）
+        - 点进去某个一级目录加载对应目录下的子目录；
+        - 店铺只能挂在店铺二级类别下；
+        - 在首页点击某个一级店铺目录，进入店铺展示页面的时候，需要加载对应目录下的子目录。
+    - `batchInsertProductCategory` 方法是批量新增商品类别；
+    - `deleteProductCategory` 方法作用是删除指定商品 Id 的商品类别；
+    - `insertShopCategory` 方法作用是新增商品分类；
+    - `updateShopCategory`方法作用是修改商品分类；
+    - `selectShopCategoryById` 方法作用是根据 Id 来查询商品分类信息；
+
 - Mapper：对应的 Mapper 为 `ShopMapper.xml`；
 
 - Service 层
 
     提供接口：`com.gjxaiou.service.ShopService.java`：增加店铺；更新店铺信息（包括对图片的处理）； 通过店铺 Id 获取店铺信息；根据店铺的状态进行分页查询。
 
+    提供接口2：`com.gjxaiou.service.shopCategoryService.java`：按照查询条件获取店铺类别分页列表，新增商品分类，修改商品分类，根据 id 查询商品分类信息。
+
     具体地实现类：`com.gjxaiou.service.impl.ShopServiceImpl.java`
 
     - `getByShopId()` ，调用对应的 Dao 来实现。
 
-    - `addShop()`，因为是新增操作，所以使用了 `@Transactional` 注解来实现事务处理，===**使用注解实现控制事务的优点**==：
+    - `addShop()`，因为是新增操作，所以使用了 `@Transactional` 注解来实现事务处理。
 
-        - 开发团队达成一致性约定，明确标注事务方法的编程风格；
+        - 步骤二：调用 Dao 层的 `shopDao` 的 `insertShop(shop)` 来实现插入店铺，通过判断返回值（即影响行数）来判断是否是否插入成功，如果插入不成功则回滚。
 
-        *      保证事务方法的执行时间尽可能短，不要穿插其他网络操作，RPC/HTTP 请求或者剥离到事务方法外部；
-        *      不是所有的方法都需要事务，如只有一条修改操作、只读操作时不需要事务控制；
+            ```java
+             // 插入并检查店铺是否新增成功
+            int effectNum = shopDao.insertShop(shop);
+            if (effectNum <= 0){
+                // 只有抛出 RuntimeException 事务才能回滚
+                throw new ShopOperationException("店铺新建失败");
+                
+            // 该异常本质上是继承了 RuntimeException
+            public class ShopOperationException extends RuntimeException{
+                private static final long serialVersionUID = 7923277044845362315L;
+                public ShopOperationException(String msg){
+                    super(msg);
+                }
+            }    
+            ```
+
+        - 然后将图片插入店铺中，然后更新店铺信息，同样这里和上面一样加上事务处理。
+
+        - ===**使用注解实现控制事务的优点**==：
+
+            - 开发团队达成一致性约定，明确标注事务方法的编程风格；
+        - 保证事务方法的执行时间尽可能短，不要穿插其他网络操作，RPC/HTTP 请求或者剥离到事务方法外部；
+            - 不是所有的方法都需要事务，如只有一条修改操作、只读操作时不需要事务控制；
 
     - `modifyShop()`，修改店铺信息
-        
+      
         *      首先更新店铺图片：根据参数 shop 中的 shopId 获取原来店铺对应的图片，删除，再添加新的图片信息，最后更新店铺
-    *      `getShopList()`，分页显示店铺查询结果。
+    *      `getShopList()`，分页显示店铺查询结果。直接调用 Dao 层的 `shopDao.queryShopList()` 实现。
+
+    另一个对应的具体实现类：`com.gjxaiou.service.ShopCategoryServiceImpl.java`
+
+    - `getShopCategoryList` 方法获得店铺的分类，==这里使用了 Redis==。
+
+        - 这里统一定义了 Redis 的 key 前缀为：`shopCategoryList`，==这里使用了 jackson 的 ObjectMapper 类来讲数据转换为操作类==。
+
+        - 步骤一：首先判断传入的查询条件是否为空，如果为空则将 Redis 的 key 拼接为 `shopCategoryList_allFirstLevel`，相当于列出 parentId 为空的店铺类型，即列出所有首页大类。则将 Redis 的 key 拼接为：`shopCategoryList_parent+父类别Id`。
+
+        - 步骤二：使用 `jedisKeys.exist(key)` 来判断该 key 是否存在，如果不存在则从数据库中取出数据，即调用 Dao 层的 ` shopCategoryDao.queryShopCategory()` 来实现。然后将返回的结果使用 ObjectMapper  类的 `writeValueAsString()` 方法来讲实体类集合转换为 String 存入 Redis。如果该 key 存在，直接使用 `get(key)` 方法从 Redis 中取出数据，因为返回值是一个集合类型，而直接从 Redis 中取出的数据是 String 类型，所以使用 ObjectMapper 类的 `getTypeFactory()` 得到转换之后类型为 ArrayList 集合类型，最后使用 `readValue()` 读取出值。
+
+        ```java
+        // 若存在，则直接从redis中取出数据
+        String jsonString = jedisStrings.get(key);
+         // 将String转换为集合类型
+                    JavaType javaType = mapper.getTypeFactory().constructParametricType(ArrayList.class, ShopCategory.class);
+                    try {
+                        shopCategoryList = mapper.readValue(jsonString, javaType);
+        ```
+
+    - `addShopCategory` 增加店铺种类，直接调用 `shopCategoryDao.insertShopCategory()` 来插入，如果插入成功之后将需要将该 key 对应的 Redis 缓存清理，因为这时候的缓存已经失效了。
+
+        ```java
+         int effectNum = shopCategoryDao.insertShopCategory(shopCategory);
+         if (effectNum <= 0) {
+            throw new ShopCategoryOperationException(ShopCategoryStateEnum.EDIT_ERROR.getStateInfo());
+           } else {
+                  // 删除缓存信息
+                  cacheService.removeFromCache(SC_LIST_KEY);
+                   }
+        ```
+
+    - `modifyShopCategory` 同理，在调用 Dao 层的 `shopCategoryDao.updateShopCategory();` 如果修改成功同样要删除 Redis 中的缓存信息。
 
 - Controller 层
+
+    这里对应的 Controller 层一共包括三个：`com.gjxaiou.web.frontEnd.ShopDetailController.java` ， `com.gjxaiou.web.frontEnd.shopListController.java`
 
 前端：shopOperation.js  和 common.js
 

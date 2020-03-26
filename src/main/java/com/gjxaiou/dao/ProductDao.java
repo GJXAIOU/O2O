@@ -56,8 +56,4 @@ public interface ProductDao {
      * @return
      */
     int updateProductCategoryToNull(long productCategoryId);
-
-
-
-
 }
