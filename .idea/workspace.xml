@@ -53,6 +53,7 @@
       <change beforePath="$PROJECT_DIR$/src/main/java/com/gjxaiou/enums/ProductCategoryStateEnum.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gjxaiou/enums/ProductCategoryStateEnum.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/gjxaiou/enums/ProductStateEnum.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gjxaiou/enums/ProductStateEnum.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/gjxaiou/enums/ShopStateEnum.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gjxaiou/enums/ShopStateEnum.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/gjxaiou/service/AreaService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gjxaiou/service/AreaService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/gjxaiou/service/ProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gjxaiou/service/ProductService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/gjxaiou/service/impl/ProductCategoryServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gjxaiou/service/impl/ProductCategoryServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/gjxaiou/service/impl/ProductServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gjxaiou/service/impl/ProductServiceImpl.java" afterDir="false" />
@@ -60,8 +61,8 @@
       <change beforePath="$PROJECT_DIR$/src/main/java/com/gjxaiou/service/impl/ShopServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gjxaiou/service/impl/ShopServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/gjxaiou/util/DESUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gjxaiou/util/DESUtil.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/gjxaiou/util/PathUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gjxaiou/util/PathUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/gjxaiou/web/shopAdmin/ProductManagerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gjxaiou/web/shopAdmin/ProductManagerController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/gjxaiou/web/shopadmin/ProductCategoryManagerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gjxaiou/web/shopadmin/ProductCategoryManagerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/gjxaiou/web/shopadmin/ProductManagerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gjxaiou/web/shopadmin/ProductManagerController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/gjxaiou/web/shopadmin/ShopManagerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gjxaiou/web/shopadmin/ShopManagerController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/spring/spring-dao.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/spring/spring-dao.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/spring/spring-web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/spring/spring-web.xml" afterDir="false" />
@@ -223,6 +224,9 @@
       <workItem from="1584858294417" duration="7387000" />
       <workItem from="1585131532197" duration="5337000" />
       <workItem from="1585212722029" duration="12273000" />
+      <workItem from="1585316285602" duration="2179000" />
+      <workItem from="1585382902410" duration="3520000" />
+      <workItem from="1585547784006" duration="7966000" />
     </task>
     <servers />
   </component>
@@ -255,10 +259,14 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="721" y="161" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1080@0.0.1920.1080" timestamp="1584870898026" />
-    <state x="716" y="250" key="FileChooserDialogImpl" timestamp="1584613956864">
+    <state x="716" y="250" key="FileChooserDialogImpl" timestamp="1585459979834">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="716" y="250" key="FileChooserDialogImpl/0.0.1920.1080@0.0.1920.1080" timestamp="1584613956864" />
+    <state x="716" y="250" key="FileChooserDialogImpl/0.0.1920.1080@0.0.1920.1080" timestamp="1585459979834" />
+    <state x="6" y="180" key="new project wizard" timestamp="1585459988804">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="6" y="180" key="new project wizard/0.0.1920.1080@0.0.1920.1080" timestamp="1585459988804" />
     <state x="539" y="45" width="840" height="1034" key="search.everywhere.popup" timestamp="1585215334936">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>

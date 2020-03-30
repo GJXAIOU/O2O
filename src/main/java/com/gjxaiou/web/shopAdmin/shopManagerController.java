@@ -204,15 +204,15 @@ public class shopManagerController {
         try {
             shop = mapper.readValue(shopStr, Shop.class);
         } catch (JsonParseException e) {
-            modelMap.put("sucess", false);
+            modelMap.put("success", false);
             modelMap.put("errMsg", e.getMessage());
             return modelMap;
         } catch (JsonMappingException e) {
-            modelMap.put("sucess", false);
+            modelMap.put("success", false);
             modelMap.put("errMsg", e.getMessage());
             return modelMap;
         } catch (IOException e) {
-            modelMap.put("sucess", false);
+            modelMap.put("success", false);
             modelMap.put("errMsg", e.getMessage());
             return modelMap;
         }

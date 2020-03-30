@@ -1,8 +1,14 @@
 # README
 
-Author：GJXAIOU
+[![GitHub license](https://img.shields.io/github/license/GJXAIOU/O2O)](https://github.com/GJXAIOU/O2O/blob/master/LICENSE) ![](https://img.shields.io/badge/language-Java-yellow) ![](https://img.shields.io/badge/version-v1.0-yellow)
 
-该小项目1.0 使用自己熟悉 SSM 框架，项目 2.0 使用将使用 SpringBoot 重新构建，将在项目 2.0 完成之后部署到阿里云服务器。
+**在线阅读地址**：www.gjxaiou.com/O2O
+
+> 该小项目1.0 使用自己熟悉 SSM 框架，项目 2.0 使用将使用 SpringBoot 重新构建，将在项目 2.0 完成之后部署到阿里云服务器。
+
+[TOC]
+
+## 零、项目预览
 
 ![主页图](README.resource/%E4%B8%BB%E9%A1%B5%E5%9B%BE.png)
 
@@ -89,7 +95,7 @@ Author：GJXAIOU
 - kaptcha：用于生成验证码；
 - `lombok 1.18.10` 插件：为了自己做笔记方便，因此使用 lombok 插件；
 
-## （三）SSM 整合验证
+### （三）SSM 整合验证
 
 这里以实现区域查找功能为例，通过配置验证SSM配置；
 
@@ -105,7 +111,7 @@ Author：GJXAIOU
     - 配置日志的记录级别，保存时间，输出位置，输出格式等；
     
 
-## 四、具体实践
+## 五、具体实践
 
 ### （一）Spring 相关配置文件解析
 
@@ -572,7 +578,9 @@ Author：GJXAIOU
     }
     ```
 
-## 三、具体模块分析
+
+
+## 六、具体模块分析
 
 ### （一）前端展示模块
 
@@ -716,14 +724,14 @@ Author：GJXAIOU
 
     `com.gjxaiou.web.shopAdmin.ProductCategoryManagerController.java` 里面的方法类似，省略。
 
-#### 2.店铺信息的编辑
+#### 2.针对店铺信息与类别维护
 
-###### 实现目标：
+##### 2.1 实现目标：
 
 - 实现单个店铺信息的获取；
 - 实现对店铺信息进行修改；
 
-##### 1.1 获取店铺信息
+##### 2.2 获取店铺信息
 
 - DAO 层
 
@@ -739,11 +747,24 @@ Author：GJXAIOU
 
     - 带分页功能的查询商铺列表：
 
-        ```java
+
+    ```java
+     /**
+         * 带有分页功能的查询商铺列表 。 可输入的查询条件：商铺名（要求模糊查询） 区域Id 商铺状态 商铺类别 owner
+         * (注意在sqlmapper中按照前端入参拼装不同的查询语句)
+         * @param shopCondition
+         * @param rowIndex：从第几行开始取
+         * @param pageSize：返回多少行数据（页面上的数据量）
+         *                    比如 rowIndex为1,pageSize为5 即为 从第一行开始取，取5行数据
+         */
         List<Shop> queryShopList(@Param("shopCondition") Shop shopCondition,
                                  @Param("rowIndex") int rowIndex,
                                  @Param("pageSize") int pageSize);
-        ```
+    ```
+
+    这里的 SQL 语句中，需要对输入的条件（shopCondition 中 shop 的各种属性）进行判断，因此使用 `<where></where>` 标签配合 `<if></if>`使用，进行动态 SQL 拼接，同时最后使用 ：`LIMIT #{rowIndex},#{pageSize}`进行分页。同时因为返回值为 shop对象（里面包含了其他的对象），因此采用 resultMap，里面通过组合 `<association> </association>`来实现 实体类和 数据表之间的映射；
+
+    对应到 Service 层中，因为用户传入的参数肯定是查看第几页和每页显示几条（pageIndex 和 pageSize），一次这里通过一个工具类：PageCalculator，通过：`rowIndex = (pageIndex - 1) * pageSize;`来计算从第几条开始显示；
 
     对于 `com.gjxaiou.dao.ShopCategoryDao.java`  来说，提供了对店铺种类的操作，包括
 
@@ -796,6 +817,7 @@ Author：GJXAIOU
 
             - 开发团队达成一致性约定，明确标注事务方法的编程风格；
         - 保证事务方法的执行时间尽可能短，不要穿插其他网络操作，RPC/HTTP 请求或者剥离到事务方法外部；
+          
             - 不是所有的方法都需要事务，如只有一条修改操作、只读操作时不需要事务控制；
 
     - `modifyShop()`，修改店铺信息
@@ -838,170 +860,196 @@ Author：GJXAIOU
 
 - Controller 层
 
-    这里对应的 Controller 层一共包括三个：`com.gjxaiou.web.frontEnd.ShopDetailController.java` ， `com.gjxaiou.web.frontEnd.shopListController.java`
+    这里对应的 Controller 层一共包括三个：`com.gjxaiou.web.frontEnd.ShopDetailController.java` ， `com.gjxaiou.web.frontEnd.shopListController.java` 以及 `com.gjxaiou.web.shopAdmin.shopManagerController.java` 。
+    
+    首先是 `com.gjxaiou.web.frontEnd.shopDetailController.java`
+    
+    - `listShopDetailPageInfo` 方法用于获取店铺信息以及店铺下的信息商品类别信息。访问路径为：`/frontEnd/listShopDetailPageInfo`。使用 GET 请求。
+        - 步骤一：从 request 中根据 key 为 `shopId` 取出店铺 ID ，然后调用 `shopService.getByShopId(shopId)` 获取店铺，以及通过 `productCategoryService.getProductCategoryList` 获取商品种类类别。
+        - 步骤二：将查询得到的值放入返回视图中返回。
+    - `listProductsByShop` 方法用户根据 ShopId 来获取商品列表，这里使用分页查询显示，所以从 GET 请求中根据 key 得到开始页面下标和每页显示页数以及 shopId，最后调用 `productService.getProductList` 来查询结果，最后将结果放入 modelMap 中返回。
+    - `compactProductCondition4Search` 方法实现组合查询条件，可以查询的条件为 `long shopId, long productCategoryId, String productName`。
+        - 步骤一：首先创建一个 Shop 对象，然后使用 set 方法将参数中的值赋值给对应的属性，，同样需要创建一个 ProductCategory 对象然后赋值。
+    
+    其次是 `com.gjxaiou.web.frontEnd.ShopListController.java`
+    
+    - `listShopsPageInfo` 方法是返回商品列表的一级或者二级区域信息列表，访问路径为：`/frontEnd/listShopsPageInfo`，首先取出 GET 请求中 key 为 `parentId`的值，如果该值存在就取出所有的二级列表，则新建一个 ShopCategory 对象，然后赋值调用 ` shopCategoryService.getShopCategoryList()` 进行查询，然后返回即可，如果 `parentId` 不存在，则将查询条件设置为 parentId = null 即可。
+    - 其他方法类似不在展开。
+    
+    针对 `com.gjxaiou.web.shopAdmin.shopManagerController.java`
+    
+    - `registerShop`  方法实现店铺注册功能。==可以着重理解这里==
+    
+        - 这里的  request 这是前端传入的 HttpServletRequest 类型参数 request，表示客户端的请求。客户端通过 HTTP 协议访问服务器的时候，其请求头中的信息都封装在该对象中，可以通过该对象提供的方法获取客户端请求的所有信息。本方法中，当用户在注册店铺的页面中填写完店铺信息后，完整的店铺信息就会封装保存在 request 参数中；
+        - 因为是注册店铺，所以提交的信息较多，所以使用 POST 方法。
+    
+        ```java
+        @RequestMapping(value = "/registerShop", method = RequestMethod.POST)
+        @ResponseBody
+        private Map<String, Object> registerShop(HttpServletRequest request) {
+                Map<String, Object> modelMap = new HashMap<>();
+            }
+        ```
+    
+        整体的流程是：
+    
+        - 步骤一：读取请求中的信息（包括店铺信息以及图片信息）然后转换为实体类对象，即接收并且转换响应的参数，**获取信息还是使用 key - value 的格式**，示例：
+    
+            ```java
+            // 这里的 shopStr 是与前端约定好的，以此为 key，然后得到其 value 值
+            String shopStr = HttpServletRequestUtil.getString(request, "shopStr");
+            // 这里使用的是 Jackson 的方法 ，具体见：https://github.com/FasterXML/jackson-databind
+            ObjectMapper mapper = new ObjectMapper();
+            Shop shop = null;
+            try {
+                // 将转换后的 shopStr，转换为 shop 实体类；
+                shop = mapper.readValue(shopStr, Shop.class);
+            } catch (JsonParseException e) {
+                // 转换失败之后，将错误和错误信息返回前端
+                modelMap.put("success", false);
+                modelMap.put("errMsg", e.getMessage());
+                return modelMap;
+            ```
+    
+        - 步骤二：如果转换为实体类成功之后，首先处理店铺图片，具体流程见下：
+    
+            ```java
+            // 3.处理店铺图片（使用 spring 自带的 CommonsMultipartFile）
+            CommonsMultipartFile shopImg = null;
+            // 文件解析器，解析 request 中的文件对象，即从 request 的本次回话的上下文获取文件内容
+            CommonsMultipartResolver multipartResolver =
+                new CommonsMultipartResolver(request.getSession().getServletContext());
+            // 判断 request 是不是有上传的文件流，如果有则将 request 转换为 MultipartHttpServletRequest 对象
+            if (multipartResolver.isMultipart(request)) {
+                MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest) request;
+                // 从该对象中提取文件流，同时强制转换为 spring 能够处理的文件流，shopImg 同前端一致
+                shopImg = (CommonsMultipartFile) multipartHttpServletRequest.getFile("shopImg");
+            } else {
+                modelMap.put("success", false);
+                modelMap.put("errMsg", "上传图片不能为空");
+                return modelMap;
+            }
+            ```
+    
+        - 步骤三：正式开始注册店铺，注册之前首先从 Session 中取出传入的信息
+    
+            ```java
+            
+            // 通过从 session 中获取登录信息，得到店主信息，因为注册店铺之前必须先登录，登录时将登录信息以键值对的形式存储，这里 user 即为 key
+            PersonInfo owner = (PersonInfo) request.getSession().getAttribute("user");
+            owner.setUserId(1L);
+            shop.setOwner(owner);
+            ```
+    
+            然后根据这些信息调用 `shopService.addShop()` 来实现正式的插入店铺。
+    
+    - `modifyShop` 方法作用是修改店铺信息，当然使用的是 POST 请求。
+    
+        - 步骤一：判断用户的验证码是否正确；
+        - 步骤二：从 request 中取出 key 为 shopStr 的店铺信息字符串，然后使用 Jackson 的 ObjectMapper 类的 readValue 方法将其转换为 Shop 实体类。
+        - 步骤三：同上面方法处理店铺图片；
+        - 步骤四：修改店铺信息，直接调用 `shopService.modifyShop()` 方法来处理。然后将 key 为 success 的视图返回。
 
-前端：shopOperation.js  和 common.js
 
 
-#### 分页查询展示店铺
+#### 3.针对区域信息与操作
 
-整体的结构还是 shopDao.java /shopDao.xml/shopService.java/shopServiceImpl.java/shopListController.java
+- Dao 层
 
-```java
- /**
-     * 带有分页功能的查询商铺列表 。 可输入的查询条件：商铺名（要求模糊查询） 区域Id 商铺状态 商铺类别 owner
-     * (注意在sqlmapper中按照前端入参拼装不同的查询语句)
-     * @param shopCondition
-     * @param rowIndex：从第几行开始取
-     * @param pageSize：返回多少行数据（页面上的数据量）
-     *                    比如 rowIndex为1,pageSize为5 即为 从第一行开始取，取5行数据
+    因为区域一层原则上只有超级管理员有权限，因此在 1. 0 版本中仅仅提供了查询方法，将在后续 2.0  版本中提供新增、修改和删除对应的方法。
+
+    `com.gjxaiou.dao.AreaDao.java`
+
+    ```java
+    package com.gjxaiou.dao;
+    
+    
+    import com.gjxaiou.entity.Area;
+    
+    import java.util.List;
+    
+    /**
+     * @author GJXAIOU
+     * @create 2019-10-29-21:53
      */
-    List<Shop> queryShopList(@Param("shopCondition") Shop shopCondition,
-                             @Param("rowIndex") int rowIndex,
-                             @Param("pageSize") int pageSize);
-```
+    public interface AreaDao {
+        /**
+         *  列出所有的区域列表
+         * @return
+         */
+        List<Area> queryArea();
+    }
+    
+    ```
 
-这里的 SQL 语句中，需要对输入的条件（shopCondition 中 shop 的各种属性）进行判断，因此使用 `<where></where>` 标签配合 `<if></if>`使用，进行动态 SQL 拼接，同时最后使用 ：`LIMIT #{rowIndex},#{pageSize}`进行分页。同时因为返回值为 shop对象（里面包含了其他的对象），因此采用 resultMap，里面通过组合 `<association> </association>`来实现 实体类和 数据表之间的映射；
+- Service 层
 
+    同样，Service 层仅仅提供一个接口，在 `impl` 包下面仅仅提供一个实现类，仍然仅仅提供查询功能。
 
+    `com.gjxaiou.service.AreaService.java`
 
-对应到 Service 层中，因为用户传入的参数肯定是查看第几页和每页显示几条（pageIndex 和 pageSize），一次这里通过一个工具类：PageCalculator，通过：`rowIndex = (pageIndex - 1) * pageSize;`来计算从第几条开始显示；
+    ```java
+    package com.gjxaiou.service;
+    
+    import com.gjxaiou.entity.Area;
+    
+    import java.util.List;
+    
+    /**
+     * @author GJXAIOU
+     * @create 2019-10-31-16:06
+     */
+    public interface AreaService {
+        String AREA_LIST_KEY = "areaList";
+        List<Area> getAreaList();
+    }
+    
+    ```
 
+    对应的实现类为：`com.gjxaiou.service.impl.AreaServiceImpl.java`，因为是查询方法，所以==借助 Redis==。
 
-### （六）商品类别列表展示
+    由上面的接口可以看出其中定义了一个 key 为 `    String AREA_LIST_KEY = "areaList";`，所以第一步就是判断 Redis 中是否存在该 Key，如果不存在则使用 `areaList = areaDao.queryArea();` 来从数据库中获取区域列表，然后还是使用 Jackson 的 ObjectMapper 类中的 `writeValueAsString()` 来将查询得到的列表 list 转换为 String 类型。**然后将 key 和查询得到并转换为 String 类型的结果插入 Redis 中。**并将列表格式的结果返回。
 
-实体类是 ProductCategory
+    如果 Redis 中存在该 key，既可以通过 `JedisUtil` 中的 `Strings` 类型对象的 get 方法获取查询结果（结果为 String 类型）。然后使用 ObjectMapper 类中的 `readValue()` 方法将其转换为 List 类型。
 
-首先 Dao 层接口 ProductCategoryDao.java 和 对应的Mapper 然后使用 ProductCategoryTest 中 testAQueryByShopId 方法进行测试
+    ```java
+    // 将String转换为List
+    String jsonString = jedisStrings.get(key);
+    JavaType javaType = mapper.getTypeFactory().constructParametricType(ArrayList.class, Area.class);
+    try {
+        areaList = mapper.readValue(jsonString, javaType);
+    } 
+    ```
 
-然后是 Service 层 ProductCategoryService 和实现类；
+- Controller 层
 
-最后是 controller 层 ProductCategoryManagementController
+    Controller 层也就只有一个方法：`listArea()`，对应的访问路径为：`/superAdmin/listArea`。
 
-###### 前端页面：
+    ```java
+     /**
+         * 这里含义是使用 SpringMVC 作用域进行传值，这里使用的是 Map 集合（其他方式见总结笔记），本质上是将 Map 集合放入 Request 作用域
+         *    然后 Spring 会将 map 集合通过 BindingAwareModelMap 类进行实例化；
+         * 因为这是 Controller 返回值满足 key-value 格式，即返回值为对象或者 map 格式，使用 @ResponseBody 会使其恒不跳转，
+         *    同时会自动将响应头设置为： application/json;charaSet=utf-8,且转换后的内容以输出流的形式返回到客户端；
+         * @return Map
+         */
+        @ResponseBody
+        @RequestMapping(value="/listArea", method = RequestMethod.GET)
+        public Map<String,Object> listArea(){
+    ```
 
-product-category-management.html 和对应的 CSS 布局；和对应的 productCategoryManagement.js 文件 （最后通过标签将 CSS 、js 代码引入 html 中）
-
-然后是 shopAdminController.java 中实现路由，通过访问
-
-- #### 商品类别批量添加
-
-// 说明待补充
-
-- #### 商品类别删除
-
-// 说明待补充
-
-
-
-
-
-### 
-
-### （一）区域管理
-
-- 功能一：列出所有的区域列表
-  - 涉及的类
-    - com.gjxaiou.dao.AreaDao.java
-    - resources.mapper.AreaDao.xml
-    - com.gjxaiou.service.AreaService.java
-    - com.gjxaiou.sercive.impl.AreaService.java
-    - com.gjxaiou.web.superadmin.AreaController.java
-- 功能二：删除某个区域（待补充）
-
-###  (二) 店铺类别管理
-
-- 功能一：列出所有店铺类别
-
-  - 涉及的类
-
-    - com.gjxaiou.dao.ShopCategoryDao.java
-
-    - resources.mapper.ShopCategoryDao.xml
-
-    - com.gjxaiou.service.ShopCategoryService.java
-
-    - com.gjxaiou.service.impl.ShopCategoryService.java
-
-      
-
-- 功能二：删除某个店铺类别（待补充）
-
-### (三) 店铺管理
-
-- 功能一：店铺
+    具体执行过程就是直接调用 `areaService.getAreaList();`，然后将返回结果放入 Map 中返回即可。
 
 
 
-==注意：为什么使用 dto:==
+## 七、补充
+
+### （一）使用 DTO 原因
 
 DTO(data transfer object)：数据传输对象，以前被称为值对象(VO,value object)，作用仅在于在应用程序的各个子系统间传输数据，在表现层展示。与POJO对应一个数据库实体不同，DTO并不对应一个实体，可能仅存储实体的部分属性或加入符合传输需求的其他的属性。																
 
 
-
-- com.gjxaiou.entity：数据库表对应的实体类；
-- Dao 层：
-    - 首先创建 AreaDao 接口（com.gjxaiou.dao.AreaDao.java），声明查询区域列表的方法；
-    - 然后创建 AreaDao.xml（resources.mapper.AreaDao.xml），其中 `namespace` 是声明对应的 Dao 接口，因为是查询要求，因此使用 `<select/>`标签，其中 `id ` 表示 对应的方法名，`resultType`表示返回值类型，这里只需要返回 `Area`对象即可；然后最后加上对应的 SQL 语句；
-- service 层： AreaService.java 与  AreaServiceImpl.java   
-    - service 层一般包含一个接口和一个实现类，接口是想要执行的方法，然后在实现类中实现该方法，该方法调用 Dao 层中的查询方法；
-    - 其实现类 XXXService.xml 返回想要的数据是给 controller 中的；
-    - 实现类中使用 `@Service` 和 `@Autowired` 表示交给 Spring 管理；
-- Controller 层: AreaController.java（com.gjxaiou.web.superadmin.AreaController.java）
-    - 首先 controller 层依赖于 service 层，因此首先创建 service 对象，将 service 实体类交个 Spring 管理；
-    - 定义方法接受 service 层处理之后的对象，这里接收到的是 List 集合，这里使用 Map 存放返回值，因为是 `select`，所以返回的是受影响的行数；
-    - 这里使用 logback 实现运行过程中的日志输出；
-- 功能测试
-  - 首先通过 BaseTest 类，实现初始化 Spring 容器，所有其他 Test 类都继承该类；
-  - 验证 AreaDao 类，即调用查询方法，看结果和数据库中数据数目是否相同；
-  - 验证 AreaServiceTest 类，可以查看查询里面具体内容是否和数据库中数据相同；
-
-## （四）店铺商家管理系统
-包括：店铺和商品模块
-首先应该应有店铺然后才有商品模块，因此先从店铺商家管理系统开始设计，主要实现店铺的增删改查；
-
-
-
-#### 1.Dao层
-
-- shopDao
-- shopExecution ：保存返回信息
-- shopStateEnume：定义所有 shop 可能的返回值
-
-#### 2.service 层（需要事务处理）
-首先需要将店铺信息插入到数据库中，然后返回这个店铺的 Id，根据该店铺的 Id 创建存储该店铺图片的文件夹，在该文件夹下面处理图片，最后将文件夹地址更新会这条数据
-以上任何一步出错都要回滚 -> 需要事务处理；
-
-因此 店铺注册的逻辑中分为四步：①新增店铺信息；②返回店铺ID；③存储图片信息；④存储数据库 这是粗略的四个步骤，如果中间出错一步，整个过程将会回滚。注意：**Spring事务管理中只对运行期异常（RunTimeException）进行事务回滚。** 思考一：代码中将RunTimeException进行封装，业务将更加清晰； 思考二：存储图片时，如未上传图片，应添加默认图片，逻辑更加合理。 
-
-#### 3.controller 层
-放在包 web.shopadmin 下面，店家管理后台的 controller都放在这里
-
-- ShopManagerController ：负责店铺管理相关逻辑
-- HttpServletRequestUtil：负责解析 HttpServletRequest 请求的参数
-
-注： pom 中 的 jackson-databind.jar 负责将实体类转换为 json或者反过来转换
-
-
-#### 4.前端页面
-使用 阿里巴巴的 SUI Mobile
-使用这个 demo ：http://m.sui.taobao.org/demos/form/label-input/ ,然后右击获取源代码，并且引入静态资源（将 Link 和 script
- 内容替换），参考：http://m.sui.taobao.org/getting-started/
-
- - 然后将页面放在 WEB-INF 下的 html/shop 下面，然后配置 shopadmin/shopAdminController.java 来访问，因为该文件夹下面资源文件不能直接访问；
-
- - 然后编写： webapp/resources/js/shop/shopOperation.js
-
- ### 需要的方法补写
-
- 因为上面涉及到了 getshopinitinfo 方法，该方法返回区域和商铺类别相关信息，应为当前以及实现了区域列表，但是 shopCategory 还么有实现，所以从 dao层开始实现；
- - shopCategoryDao.java 和对应的 Mapper文件
-
- - service 层：一个接口，一个实现类
- - shopManagerController 中实现控制层： getinitinfo 方法，该方法获取区域和商铺类别相关信息然后返回给前台
-
-
-### 上面 前端中的 验证码功能使用 ：
+### （二）验证码功能使用说明
  - 导包 Kaptcha
  - web.xml 中使用servlet 生成验证码的相关设置
  - shopOperation.html 中引入验证码控件
@@ -1012,15 +1060,17 @@ DTO(data transfer object)：数据传输对象，以前被称为值对象(VO,val
 - 最后在 ShopManagerController.java  的添加店铺之前进行验证
 
 
-### thumbnailator 使用
+### （三）图片处理工具 thumbnailator 使用说明
 1. 导包
 2. util包下面添加 ImageUtil 方法
 该方法中实现了图片的一般操作方法，这里的方法可以自定义。但是如果是批量处理图片，需要平凡的获取图片文件路径，
 因此新建一个 PathUtil.java 类，里面实现获取输入文件路径和输出文件路径；
 
-### 补充一：数据库实现主从读写分离
 
-#### （一）数据库配置
+
+### （四）数据库实现主从读写分离
+
+#### 1.数据库配置
 MySQL 的主从复制功能不仅可以实现数据的多处自动备份，从而实现数据库的拓展。同时多个数据备份不仅可以加强数据的安全性，同时通过读写分离还能进一步提升数据库的负载性能。
 
 在一主多从的数据库体系中，多个从服务器采用异步的方式更新主数据库的变化，**业务服务器在执行写或者相关修改数据库的操作是在主服务器上进行的，读操作则是在各从服务器上进行**。如果配置了多个从服务器或者多个主服务器又涉及到相应的负载均衡问题，关于负载均衡具体的技术细节还没有研究过，本项目中实现一主一从的主从复制功能，一主多从的复制和读写分离的模型见下：
@@ -1117,7 +1167,7 @@ cmd 中使用：`mysqldump -u用户名 -p 数据库名 数据表名 > 导出的�
 服务器端进入数据库，然后新建数据库：`create database o2o;`，然后`use o2o;`，最后将上传的数据库文件导入：`source o2o.sql`，后面是刚才上传文件放置的位置；
 
 
-#### （二）代码上实现读写分离
+#### 2.代码上实现读写分离
 
 因为是 Dao层，因此创建包 `com.gjxaiou.dao.split`，里面放置读写分离的方法
 
@@ -1130,14 +1180,14 @@ cmd 中使用：`mysqldump -u用户名 -p 数据库名 数据表名 > 导出的�
 
 - 最后在 Spring-dao.xml 中重新配置 DataSource，包括 db.properties属性值要分为主从分别配置；
 
-### 补充二：权限管理
+### （五）权限管理
 
 项目中一共有两处进行了权限管理：
 
 - ShopLoginInterceptor：店家管理系统拦截器（ 针对登录店铺管理页面时进行拦截 ）
 - shopPermissionInteceptor：店铺操作权限拦截器（ 对登录用户是否拥有店铺管理权限进行拦截 ）
 
-#### （一）具体实现
+#### 1.具体实现
 
 这里的拦截器的实现，都是继承抽象类：HandlerInterceptorAdaptor（该抽象类实现了 AsyncHandlerInterceptor 接口，里面除了构造器之外还有四个方法：preHandle/postHandle/afterCompletion/afterConcurrentHandlingStarted），
 
@@ -1154,7 +1204,7 @@ cmd 中使用：`mysqldump -u用户名 -p 数据库名 数据表名 > 导出的�
 - springMVC 的配置文件配置：在 spring-web.xml 文件中配置拦截器，因为这里是两个拦截器，需要分别进行配置；
   - 首先就是配置拦截器类的 <bean> 标签，然后配置该拦截器拦截哪些 controller，这里设置是：`path = "/shopAdmin/**"`，即拦截该包下面的所有controller。
 
-#### （二）原理知识
+#### 2.原理知识
 - 这里实现自定义拦截器可以直接实现 HandlerInterceptor 接口或者继承实现上面接口的类（例如：HandlerInterceptorAdaptor )，这里使用后者；
 - 拦截顺序：preHandle -> controller -> postHandle -> jsp -> afterCompletion；
 - 多个拦截器拦截顺序：preHandle A -> preHandle B -> controller ->postHandle B -> postHandle A -> jsp -> afterCompletion B ->afterCompletion A；
@@ -1164,13 +1214,13 @@ cmd 中使用：`mysqldump -u用户名 -p 数据库名 数据表名 > 导出的�
 
 
 
-### 补充三：Redis
+### （六）Redis
 
 具体的内容见：Java -> JavaNotes -> Redis
 
 同时可以参考博客： https://blog.csdn.net/tian330726/article/details/84332830 
 
-#### （一）简介
+#### 1.简介
 
 - 首先 Redis 属于 NoSQL（非关系型数据库）中的**键值存储数据库**，该类型的数据库一般使用哈希表。Redis 中键可以包含：string，哈希, List, Set，zset。
 
@@ -1190,7 +1240,7 @@ cmd 中使用：`mysqldump -u用户名 -p 数据库名 数据表名 > 导出的�
     - 将内存中以快照的方式写入到二进制文件中,默认为 `dump.rdb` 可以通过配置设置自动做快照持久化的方式。我们可以配置redis 在n秒内如果超过m个key则修改就自动做快照。
     - redis会将每一个收到的写命令都通过 write 函数追加到命令中,当redis重新启动时会重新执行文件中保存的写命令来在内存中重建这个数据库的内容,这个文件在bin目录下 `appendonly.aof`。aof不是立即写到硬盘上,可以通过配置文件修改强制写到硬盘中。
 
-#### （二）使用
+#### 2.使用
 这是使用 Redis 官方推荐的 Java 连接开发工具：Jedis
 - 首先将 Redis 中的相关属性以 redis.properties 存储；
 - 同样需要在 spring-redis.xml 中加载 redis.properties， 配置 redis 的连接池（包括：最大空闲连接数，最大等待时间、获取连接时候检查有效性）；这里创建 Redis 连接池的方式使用构造函数进行相关属性的注入（包括用户名、连接池、端口等）；同样将 Redis 的工具类进行配置；

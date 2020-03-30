@@ -9,6 +9,6 @@ import java.util.List;
  * @create 2019-10-31-16:06
  */
 public interface AreaService {
-    public static final String AREA_LIST_KEY = "areaList";
+    String AREA_LIST_KEY = "areaList";
     List<Area> getAreaList();
 }
