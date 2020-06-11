@@ -2,11 +2,11 @@
 
 [![GitHub license](https://img.shields.io/github/license/GJXAIOU/O2O)](https://github.com/GJXAIOU/O2O/blob/master/LICENSE) ![](https://img.shields.io/badge/language-Java-yellow) ![](https://img.shields.io/badge/version-v1.0-yellow)
 
-**在线阅读地址**：www.gjxaiou.com/O2O
+**在线阅读地址**：www.gjxaiou.com/O2O         **项目源代码见**：https://github.com/GJXAIOU/O2O
 
-> 该小项目1.0 使用自己熟悉 SSM 框架，项目 2.0 使用将使用 SpringBoot 重新构建，将在项目 2.0 完成之后部署到阿里云服务器。
+v1.1 共计 13262 词，读完预计需要 35 分钟，因为纯手码可能存在错误之处，如有疑问 Email：gjxaiou@gmail.com
 
-[TOC]
+> 该项目1.0 使用 SSM 框架，项目 2.0 使用将使用 SpringBoot 重新构建，将在项目 2.0 完成之后部署到阿里云服务器。该篇文档记录了项目整个方案以及构建过程中的点点滴滴，部分重要的知识点以博客的形式呈现，具体见：www.gjxaiou.com
 
 ## 零、项目预览
 
@@ -14,13 +14,15 @@
 
 ## 一、项目说明
 
-技术架构： Spring  + SpringMVC  + MyBatis + MySQL + Redis + SUI Mobile + jQuery
+- 项目描述：该项目主要实现商城后台管理，包括通用模块、数据备份模块、前端展示模块、商家模块和超级管理员模块。实现的功能有店铺、商品管理，账号管理，头条、店铺、商品等详情展示等。
 
-工具：IDEA + Maven + Tomcat + Kaptcha
+- 技术架构： Spring  + SpringMVC  + MyBatis + MySQL + Redis + SUI Mobile + jQuery
 
-特点：MySQL 主从同步实现读写分离，Redis 缓存，数据库加密设置
+- 搭建工具：Intellij IDEA + Maven + Tomcat + Kaptcha + Linux + Lombok + Logback
 
-## 二、项目分解
+- 项目优化：通过 MySQL 主从同步实现读写分离，使用 Redis 缓存提高数据访问速度，通过 SpringMVC 拦截器实现权限认证，考虑到后期项目部署的安全问题，使用 DES 对关键配置信息进行加密和使用验证码组件 Kaptcha 实现验证码功能，并且使用脚本定时备份数据库文件和系统信息。
+
+## 二、项目模块分解
 
 - 通用模块
     - 通用 DAO 开发
@@ -51,20 +53,18 @@
 
 ## 三、数据库建表
 
-- 数据库名称：`o2o`
-- 数据表：
-  - `tb_area`：区域信息；包括：区域 ID、区域名称、区域权重、区域创建时间、区域修改时间；
-  - `tb_head_line`：头条，即首页轮播图；包括：ID 号、名称、图片、权重、状态、链接、创建时间、修改时间；
-  - `tb_shop_category`：店铺类别；包括：店铺类别 ID 号、名称、权重、描述、图片、上级ID、创建时间、修改时间；
-  - `tb_shop`：商铺信息；包括：店铺 ID、店铺名称、店铺状态、店铺描述、店铺照片、店铺联系方式、店铺地址、店铺建议、店铺权重、店铺创建时间、店铺修改时间、店铺对应的区域ID、店铺对应的类别ID、店铺对应用户ID；
-  - `tb_product_category`：商品类别；商品类别 ID、店铺 ID、商品类别名、商品类别描述、商品类别优先级、创建时间、修改时间；
-  - `tb_product`：商品信息；包括：商品 ID、商品名称、商品状态、商品描述、商品缩略图、商品原价、商品折扣价、商品权重、商品创建时间、商品修改时间、商品对应类别 ID、商品对应店铺 ID；
-  - `tb_product_img`：商品图片；包括：商品图片 ID、商品 ID、图片地址、图片描述、图片优先级、创建时间、修改时间；
-  - `tb_person_info`：用户信息；包括：用户 ID、姓名、性别、头像、邮箱、状态、身份标识、创建时间、修改时间；
-  - `tb_local_auth`：本地用户信息，包括：本地用户 id，用户 id，用户名，密码，创建时间；
-  - `tb_wechat_auth`：微信用户信息；包括：微信open id、用户id、创建时间；
+数据库名称：`o2o`
 
-
+- `tb_area`：区域信息；包括：区域 ID、区域名称、区域权重、区域创建时间、区域修改时间；
+- `tb_head_line`：头条，即首页轮播图；包括：ID 号、名称、图片、权重、状态、链接、创建时间、修改时间；
+- `tb_shop_category`：店铺类别；包括：店铺类别 ID 号、名称、权重、描述、图片、上级ID、创建时间、修改时间；
+- `tb_shop`：商铺信息；包括：店铺 ID、店铺名称、店铺状态、店铺描述、店铺照片、店铺联系方式、店铺地址、店铺建议、店铺权重、店铺创建时间、店铺修改时间、店铺对应的区域ID、店铺对应的类别ID、店铺对应用户ID；
+- `tb_product_category`：商品类别；商品类别 ID、店铺 ID、商品类别名、商品类别描述、商品类别优先级、创建时间、修改时间；
+- `tb_product`：商品信息；包括：商品 ID、商品名称、商品状态、商品描述、商品缩略图、商品原价、商品折扣价、商品权重、商品创建时间、商品修改时间、商品对应类别 ID、商品对应店铺 ID；
+- `tb_product_img`：商品图片；包括：商品图片 ID、商品 ID、图片地址、图片描述、图片优先级、创建时间、修改时间；
+- `tb_person_info`：用户信息；包括：用户 ID、姓名、性别、头像、邮箱、状态、身份标识、创建时间、修改时间；
+- `tb_local_auth`：本地用户信息，包括：本地用户 id，用户 id，用户名，密码，创建时间；
+- `tb_wechat_auth`：微信用户信息；包括：微信open id、用户id、创建时间；
 
 ## 四、系统环境设计
 
@@ -81,28 +81,27 @@
 - `LocalAuth.java`
 - `WeChatAuth.java`
 
-
-
 ### （二）Maven 配置
 
-- 统一配置 Spring 版本为：`Spring 5.1.19.RELEASE`；参考[5.2.0 RELEASE Document](https://docs.spring.io/spring/docs/current/spring-framework-reference/)
+- Spring 版本：`Spring 5.1.19.RELEASE`；官方文档见：[5.2.0 RELEASE Document](https://docs.spring.io/spring/docs/current/spring-framework-reference/)
+- MySQL 版本：`Server version: 5.7.25-log MySQL Community Server (GPL)`
 - 因为是 Demo，会经常对自己代码进行调试，使用 `junit 4.12`；
-- 一定要有的日志，这里使用 `logback 1.2.1`（log4j 的改良版）；
+- 项目日志版本： `logback 1.2.1`（Log4j 的改良版）；
 - `mysql-connectr-java`  为 8.0.17 以及 `c3p0 0.9.1.2` 连接池；
-- `Mybatis 3.4.2` 依赖以及 Mybatis 与 Spring 依赖；
-- Servlet 方面的以及 `stl 1.2` 以及使用` Jackson 2.9.5` 作为 json 解析；
+- `MyBatis 3.4.2` 依赖以及 MyBatis 与 Spring 依赖；
+- Servlet 方面的以及 `stl 1.2` 以及使用` Jackson 2.9.5` 作为 JSON 解析；
 - Map 工具类，对标准的 Java collection 的拓展；
-- kaptcha：用于生成验证码；
-- `lombok 1.18.10` 插件：为了自己做笔记方便，因此使用 lombok 插件；
+- Kaptcha：用于生成验证码；
+- `lombok 1.18.10` 插件：为了自己做笔记方便，因此使用 Lombok 插件；
 
 ### （三）SSM 整合验证
 
-这里以实现区域查找功能为例，通过配置验证SSM配置；
+这里以实现区域查找功能为例，通过配置验证 SSM 配置；
 
 - 首先是 SSM 基本配置：
     - `db.properties`  配置数据库连接信息；
-    - `mybatis-config` 配置 MyBatis 的全局属性，包括使用 jdbc 的 getGeneratedKeys 获取数据库的自增主键值；
-    - `spring-dao.xml` 配置整合 Mybatis  的过程，包括数据库相关参数配置文件（db.properties）位置，数据库连接池（数据库连接池属性， 关闭自动提交等等），配置 SqlSessionFactory 对象，配置扫描 Dao 接口包，实现交由 Spring 容器管理；
+    - `mybatis-config` 配置 MyBatis 的全局属性，包括使用 JDBC 的 getGeneratedKeys 获取数据库的自增主键值；
+    - `spring-dao.xml` 配置整合 MyBatis  的过程，包括数据库相关参数配置文件（`db.properties`）位置，数据库连接池（数据库连接池属性， 关闭自动提交等等），配置 `SqlSessionFactory` 对象，配置扫描 Dao 接口包，实现交由 Spring 容器管理；
     - `spring-service.xml` 首先配置扫描 service 包下面所有使用注解的类型，然后配置事务管理器，同时配置基于注解的声明式事务；
     - `spring-web.xml` 配置 SpringMVC，开启 SpringMVC 的注解模式，配置静态资源位置，自定义视图解析器，文件上传解析器；
     - `web.xml` 配置 DispatcherServlet，即 SpringMVC 需要加载的配置文件
@@ -115,59 +114,53 @@
 
 ### （一）Spring 相关配置文件解析
 
-- spring-dao.xml
-
-    Spring 整合 MyBatis 配置，
+- `spring-dao.xml`，用于Spring 整合 MyBatis 配置
 
     - 主要包括配置数据库相关参数 properties 的属性
-    - 配置数据库连接池（这里关闭了自动提交）
+- 配置数据库连接池（这里关闭了自动提交）
     - 分别配置主从数据库属性以及配置动态数据源。
     - 同时**因为需要等到 SQL 正式执行的时候才能将 DataSource 执行，所有需要配置懒加载**。
-    - 配置 SqlSessionFactory 对象，注入数据库连接池、配置 MyBatis 全局配置文件，扫描 entity 包 以及扫描 SQL 配置文件（对应于 mapper 包下面的 .xml 配置文件）。
+    - 配置 `SqlSessionFactory` 对象，注入数据库连接池、配置 MyBatis 全局配置文件，扫描 entity 包 以及扫描 SQL 配置文件（对应于 mapper 包下面的 `.xml` 配置文件）。
     - **最主要的就是扫描 dao 包，将相关 Bean 注入 Spring 容器中**。
-
-- spring-service.xml：
+    
+- `spring-service.xml`
 
     - 配置扫描，扫描 service 包下面的注解
     - 配置事务管理器
     - 配置基于注解的声明式事务
 
-- spring-web.xml：
-
-    配置 SpringMVC
+- `spring-web.xml`：用于配置 SpringMVC
 
     - 首先开启 SpringMVC 注解模式
-    - 其次静态资源默认使用 servlet 配置，这里静态资源包括 js/gif/png/等，同时允许使用 `/` 做整体映射。
+- 其次静态资源默认使用 servlet 配置，这里静态资源包括 js/gif/png/等，同时允许使用 `/` 做整体映射。
     - 自定义视图解析器，默认前缀加上路径 `/WEB-INF/html/`，后缀加上 `.html`。
     - 因为可以上传图片，所以需要配置文件上传解析器，设置默认编码以及最大上传文件大小。
-    - 配置 Bean 扫描，可以扫描 @Controller 注解；
+    - 配置 Bean 扫描，可以扫描 `@Controller` 注解；
     - **权限拦截器**：
         - 首先是检验是否已经登录店家管理系统的拦截器
         - 其次是检验是否对店铺有操作权限的拦截器
-
-- spring-redis.xml：
-
-    用于配置 Redis
+    
+- `spring-redis.xml`：用于配置 Redis
 
     - 首先配置加载 Redis 配置文件位置
-    - 然后创建 Redis 连接池，并且做相关的配置
+- 然后创建 Redis 连接池，并且做相关的配置
     - 创建 Redis 工具类，封装好的 Redis 的连接以进行相关操作。
+    
+- `db.properties`
 
-- db.properties
-
-    因为使用了**主从数据库**，所有在数据库配置中分别配置了 Master 和 Slave 的访问 URL，用户名以及密码，对于数据库驱动，因为均采用 MySQL，所以采用相同的配置即可。
+    因为使用了**主从数据库**，所有在数据库配置中分别配置了 `Master` 和 `Slave` 的访问 URL，用户名以及密码，对于数据库驱动，因为均采用 MySQL，所以采用相同的配置即可。
 
     ```properties
     jdbc.Driver=com.mysql.cj.jdbc.Driver
-    jdbc.Master.url=jdbc:mysql://192.168.238.145:3306/o2o?useUnicode=true&characterEncoding=utf8
-    jdbc.Slave.url=jdbc:mysql://192.168.238.145:3306/o2o?useUnicode=true&characterEncoding=utf8
+    jdbc.Master.url=jdbc:mysql://localhost:3306/o2o?useUnicode=true&characterEncoding=utf8
+    jdbc.Slave.url=jdbc:mysql://localhost:3306/o2o?useUnicode=true&characterEncoding=utf8
     jdbc.Master.username=wRLCLxYhVKc=
     jdbc.Master.password=4iDT4Gbc8WALnx+m0/bAVw==
     jdbc.Slave.username=wRLCLxYhVKc=
     jdbc.Slave.password=4iDT4Gbc8WALnx+m0/bAVw==
     ```
 
-- mybatis-config.xml
+- `mybatis-config.xml`
 
     因为使用了 `db.properties` 来配置数据库的相关属性，所以仅仅需要配置全局属性即可，包括使用 JDBC 的 `useGeneratedKeys` 来获取数据库自增主键值，使用列标签来替换列名，**使用驼峰命名转换**，即自动将数据库中字段为 `demo_name` 转换为程序中的属性 `demoName`。同时为了验证语句的正确性，对于每一个查询语句进行打印输出。最后，因为涉及到多个数据源，所以自定义了一个数据源动态切换插件 `DynamicDataSourceInterceptor`。
 
@@ -199,7 +192,7 @@
     </configuration>
     ```
 
-- redis.properties
+- `redis.properties`
 
     Redis 的配置同样需要主机名，端口号，最大激活线程数量，最大等待线程数量等待配置。
 
@@ -213,18 +206,14 @@
     redis.pool.testOnBorrow=true
     ```
 
-
-
 ### （二）MyBatis 中的 SQL 语句的 mapper 文件
 
-> 位置：src/main/resources/mapper/
+> 包位置：src/main/resources/mapper/
 
-- AreaDao.xml
-
-    提供了区域查询语句，按照区域优先级的方式排列
+- `AreaDao.xml`：提供了区域查询语句，按照区域优先级的方式排列
 
     ```xml
-    <?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
     <!DOCTYPE mapper
             PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
@@ -237,8 +226,8 @@
         </select>
     </mapper>
     ```
-
-- HeadLineDao.xml
+    
+- `HeadLineDao.xml`
 
     提供头条方面的查询，包括根据传入的头条名称查询，根据头条 ID 查询，插入头条数据，更新头条数据，单个以及批量删除头条数据
 
@@ -251,10 +240,8 @@
     <mapper namespace="com.gjxaiou.dao.HeadLineDao">
     <!-- 根据传入的头条名字查询：queryHandLine-->
         <select id="queryHeadLine" resultType="com.gjxaiou.entity.HeadLine">
-            SELECT
-            line_id,line_name,line_link,line_img, priority,enable_status,create_time,last_edit_time
-            FROM
-            tb_head_line
+            SELECT  line_id,line_name,line_link,line_img, priority, enable_status, 							create_time, last_edit_time
+            FROM    tb_head_line
             <where>
                 <if test="headLineCondition.enableStatus!=null">
                     and enable_status = #{headLineCondition.enableStatus}
@@ -266,18 +253,10 @@
         </select>
     
         <select id="selectHeadLineByIds" resultType="com.gjxaiou.entity.HeadLine" parameterType="long">
-            SELECT
-            line_id,
-            line_name,
-            line_link,
-            line_img,
-            priority,
-            enable_status,
-            create_time,
-            last_edit_time
-            FROM
-            tb_head_line
-            WHERE line_id IN
+            SELECT  line_id, line_name, line_link, line_img, priority, enable_status,
+            		create_time, last_edit_time
+            FROM    tb_head_line
+            WHERE   line_id IN
             <foreach collection="list" item="lineId" open="(" separator="," close=")">
                 #{lineId}
             </foreach>
@@ -285,8 +264,7 @@
     
         <insert id="insertHeadLine" parameterType="com.gjxaiou.entity.HeadLine" useGeneratedKeys="true"
                 keyProperty="lineId" keyColumn="line_id">
-    		INSERT INTO
-    		tb_head_line
+    		INSERT INTO  tb_head_line
     		(line_name, line_link, line_img, priority, enable_status, create_time,
     		last_edit_time)
     		VALUES(#{lineName}, #{lineLink}, #{lineImg},
@@ -308,33 +286,21 @@
         </update>
     
         <select id="selectHeadLineById" resultType="com.gjxaiou.entity.HeadLine">
-            SELECT
-            line_id,
-            line_name,
-            line_link,
-            line_img,
-            priority,
-            enable_status,
-            create_time,
-            last_edit_time
-            FROM
-            tb_head_line
+            SELECT  line_id, line_name, line_link, line_img, priority, enable_status,
+            		create_time, last_edit_time
+            FROM    tb_head_line
             <where>
                 line_id = #{lineId}
             </where>
         </select>
     
         <delete id="deleteHeadLine">
-    		DELETE FROM
-    		tb_head_line
-    		WHERE
-    		line_id =
-    		#{lineId}
+    		DELETE FROM tb_head_line
+    		WHERE  line_id = #{lineId}
     	</delete>
     
         <delete id="batchDeleteHeadLine" parameterType="long">
-            DELETE FROM
-            tb_head_line
+            DELETE FROM  tb_head_line
             WHERE line_id IN
             <foreach collection="list" item="lineId" open="(" separator="," close=")">
                 #{lineId}
@@ -342,10 +308,8 @@
         </delete>
     </mapper>
     ```
-
     
-
-- LocalAuthDao.xml
+- `LocalAuthDao.xml`
 
     因为返回结果是一个复合对象（**即返回值对应的 Java 类中包含其他类型的对象，所有需要将结果进行封装**），所以首先需要构建 `resultMap`
 
@@ -377,7 +341,7 @@
 
     接下来同样需要提供插入方法、更新方法，根据用户 ID 查询方法、根据用户用户名和密码查询方式。
 
-- PersonInfoDao.xml
+- `PersonInfoDao.xml`
 
     该部分与上面类似，同样因为查询结果的信息是复合信息，所以返回值封装为一个 resultMap。
 
@@ -400,25 +364,23 @@
 
     这里同样提供了用户信息的查找、插入以及更新操作。
 
-- ProductCategoryDao.xml
+- `ProductCategoryDao.xml`
 
     该部分为商品类别的操作，包括根据 shopId 来查询该商铺下面的所有商品类别信息，批量新增商品列表，以及删除指定店铺下面的某个商品类别。
 
-- ProductImgDao.xml
-
-    商品详情页的图片操作相关，主要包括
+- `ProductImgDao.xml`：商品详情页的图片操作相关，主要包括
 
      * 根据店铺 Id 获取该店铺下的所有详情图片列表
 
        `List<ProductImg> queryProductImgList(long productId);`
 
      * 批量添加商品详情页图片
-    `int batchInsertProductImg(List<ProductImg> productImgList);`
-
+`int batchInsertProductImg(List<ProductImg> productImgList);`
+    
      * 根据店铺 Id 删除该店铺下所有详情图片
-    `int deleteProductImgByProductId(long productId);`
-
-- ProductDao.xml
+`int deleteProductImgByProductId(long productId);`
+    
+- `ProductDao.xml`
 
     同上，因为商品的对象中包括和店铺属性、商品种类属性等信息，所以同样将返回值封装在一个 `resultMap` 中。
 
@@ -519,7 +481,7 @@
 
 工具类封装了一系列项目中一系列的常用方法，主要包括以下部分：
 
-- CodeUtil
+- `CodeUtil`
 
     实现验证码的验证功能，因为这里通过 Google 的 kaptcha 来实现验证码的功能。主要逻辑为：将 key 为 `KAPTCHA_SESSION_KEY` 的验证码字符串放入 Session 中，然后使用 `request.getSession().getAttribute()`来获取返回值，该值与 request 请求中 key `verifyCodeActual` 中保存的真实值进行对比来判断输入的验证码是否正确。
 
@@ -548,19 +510,19 @@
     
     ```
 
-- DESUtil
+- `DESUtil`
 
-    这里使用堆成加密算法 DES 来对数据库配置信息进行加密处理，流程为：首先设置秘钥 key 以及字符编码和指定采用的加密算法名称。在初始化阶段生成 DES 算法对象，运行 SHA1 安全策略，同时设置上密钥种子并生成秘钥对象。
+    这里使用对称加密算法 DES 来对数据库配置信息进行加密处理，流程为：首先设置秘钥 key 以及字符编码和指定采用的加密算法名称。在初始化阶段生成 DES 算法对象，运行 SHA1 安全策略，同时设置上密钥种子并生成秘钥对象。
 
     加密过程：将未加密的字符串传入 `getEncryptString()` 方法，首先将字符串转换为字符数组，然后获取加密对象和初始化密码信息，然后调用 `doFinal()` 方法来进行加密，最后将加密之后的字符数组转换为字符数组返回。
 
     解密过程：解密过程与上面一样，只不过输入的字符串为加密之后的信息，因为对称加密的加密和解密秘钥是一样的，所以步骤和上面类似。 
 
-- ImageUtil
+- `ImageUtil`
 
     因为项目中涉及到大量的图片处理，所以封装了一个工具类来集中处理。首先处理之前要获得图片的绝对路径，这里为了防止用户上传重复名称的文件，使用系统生成的随机数（由当前时间和五位随机数共同组成）。同时使用了 `Thumbnails` 中的 `watermark`方法为图片增加了水印。以及删除图片等等操作。
 
-- PageCalculator
+- `PageCalculator`
 
     该部分是用于在数据查询过程中需要分页的情况，通过传入第几页以及每页显示多条数据来计算应该查询到多少行。
 
@@ -577,8 +539,6 @@
         }
     }
     ```
-
-
 
 ## 六、具体模块分析
 
@@ -601,9 +561,7 @@
 
 #### 1.针对商品信息以及类别的维护
 
-主要实现目标：
-
-- 商品的增删改查功能。
+主要实现目标：商品的增删改查功能。
 
 **具体分析**
 
@@ -746,28 +704,27 @@
     - 更新店铺：`int updateShop(Shop shop);`
 
     - 带分页功能的查询商铺列表：
-
-
-    ```java
-     /**
-         * 带有分页功能的查询商铺列表 。 可输入的查询条件：商铺名（要求模糊查询） 区域Id 商铺状态 商铺类别 owner
-         * (注意在sqlmapper中按照前端入参拼装不同的查询语句)
-         * @param shopCondition
-         * @param rowIndex：从第几行开始取
-         * @param pageSize：返回多少行数据（页面上的数据量）
-         *                    比如 rowIndex为1,pageSize为5 即为 从第一行开始取，取5行数据
-         */
-        List<Shop> queryShopList(@Param("shopCondition") Shop shopCondition,
-                                 @Param("rowIndex") int rowIndex,
-                                 @Param("pageSize") int pageSize);
-    ```
-
-    这里的 SQL 语句中，需要对输入的条件（shopCondition 中 shop 的各种属性）进行判断，因此使用 `<where></where>` 标签配合 `<if></if>`使用，进行动态 SQL 拼接，同时最后使用 ：`LIMIT #{rowIndex},#{pageSize}`进行分页。同时因为返回值为 shop对象（里面包含了其他的对象），因此采用 resultMap，里面通过组合 `<association> </association>`来实现 实体类和 数据表之间的映射；
-
-    对应到 Service 层中，因为用户传入的参数肯定是查看第几页和每页显示几条（pageIndex 和 pageSize），一次这里通过一个工具类：PageCalculator，通过：`rowIndex = (pageIndex - 1) * pageSize;`来计算从第几条开始显示；
-
+    
+        ```java
+         /**
+             * 带有分页功能的查询商铺列表 。 可输入的查询条件：商铺名（要求模糊查询） 区域Id 商铺状态 商铺类别 owner
+             * (注意在sqlmapper中按照前端入参拼装不同的查询语句)
+             * @param shopCondition
+             * @param rowIndex：从第几行开始取
+             * @param pageSize：返回多少行数据（页面上的数据量）
+             *                    比如 rowIndex为1,pageSize为5 即为 从第一行开始取，取5行数据
+             */
+            List<Shop> queryShopList(@Param("shopCondition") Shop shopCondition,
+                                     @Param("rowIndex") int rowIndex,
+                                     @Param("pageSize") int pageSize);
+        ```
+    
+        这里的 SQL 语句中，需要对输入的条件（shopCondition 中 shop 的各种属性）进行判断，因此使用 `<where></where>` 标签配合 `<if></if>`使用，进行动态 SQL 拼接，同时最后使用 ：`LIMIT #{rowIndex},#{pageSize}`进行分页。同时因为返回值为 shop对象（里面包含了其他的对象），因此采用 resultMap，里面通过组合 `<association> </association>`来实现 实体类和 数据表之间的映射；
+    
+        对应到 Service 层中，因为用户传入的参数肯定是查看第几页和每页显示几条（pageIndex 和 pageSize），一次这里通过一个工具类：PageCalculator，通过：`rowIndex = (pageIndex - 1) * pageSize;`来计算从第几条开始显示；
+    
     对于 `com.gjxaiou.dao.ShopCategoryDao.java`  来说，提供了对店铺种类的操作，包括
-
+    
     - `queryShopCategory` 方法是根据店铺类别 Id 来获取店铺类型列表，因为店铺类别是有等级的，如果参数为空的话则表示一级店铺类型，反之则是二级等子集店铺类型。
         - 首页展示一级目录（即 parent_id 为 null 的店铺类别）
         - 点进去某个一级目录加载对应目录下的子目录；
@@ -778,7 +735,7 @@
     - `insertShopCategory` 方法作用是新增商品分类；
     - `updateShopCategory`方法作用是修改商品分类；
     - `selectShopCategoryById` 方法作用是根据 Id 来查询商品分类信息；
-
+    
 - Mapper：对应的 Mapper 为 `ShopMapper.xml`；
 
 - Service 层
@@ -813,13 +770,12 @@
 
         - 然后将图片插入店铺中，然后更新店铺信息，同样这里和上面一样加上事务处理。
 
-        - ===**使用注解实现控制事务的优点**==：
+        - ==**使用注解实现控制事务的优点**==：
 
             - 开发团队达成一致性约定，明确标注事务方法的编程风格；
-        - 保证事务方法的执行时间尽可能短，不要穿插其他网络操作，RPC/HTTP 请求或者剥离到事务方法外部；
-          
+            - 保证事务方法的执行时间尽可能短，不要穿插其他网络操作，RPC/HTTP 请求或者剥离到事务方法外部；
             - 不是所有的方法都需要事务，如只有一条修改操作、只读操作时不需要事务控制；
-
+        
     - `modifyShop()`，修改店铺信息
       
         *      首先更新店铺图片：根据参数 shop 中的 shopId 获取原来店铺对应的图片，删除，再添加新的图片信息，最后更新店铺
@@ -829,20 +785,20 @@
 
     - `getShopCategoryList` 方法获得店铺的分类，==这里使用了 Redis==。
 
-        - 这里统一定义了 Redis 的 key 前缀为：`shopCategoryList`，==这里使用了 jackson 的 ObjectMapper 类来讲数据转换为操作类==。
+        - 这里统一定义了 Redis 的 key 前缀为：`shopCategoryList`，==这里使用了 JackSON 的 ObjectMapper 类来讲数据转换为操作类==。
 
         - 步骤一：首先判断传入的查询条件是否为空，如果为空则将 Redis 的 key 拼接为 `shopCategoryList_allFirstLevel`，相当于列出 parentId 为空的店铺类型，即列出所有首页大类。则将 Redis 的 key 拼接为：`shopCategoryList_parent+父类别Id`。
 
         - 步骤二：使用 `jedisKeys.exist(key)` 来判断该 key 是否存在，如果不存在则从数据库中取出数据，即调用 Dao 层的 ` shopCategoryDao.queryShopCategory()` 来实现。然后将返回的结果使用 ObjectMapper  类的 `writeValueAsString()` 方法来讲实体类集合转换为 String 存入 Redis。如果该 key 存在，直接使用 `get(key)` 方法从 Redis 中取出数据，因为返回值是一个集合类型，而直接从 Redis 中取出的数据是 String 类型，所以使用 ObjectMapper 类的 `getTypeFactory()` 得到转换之后类型为 ArrayList 集合类型，最后使用 `readValue()` 读取出值。
 
-        ```java
-        // 若存在，则直接从redis中取出数据
-        String jsonString = jedisStrings.get(key);
-         // 将String转换为集合类型
-                    JavaType javaType = mapper.getTypeFactory().constructParametricType(ArrayList.class, ShopCategory.class);
-                    try {
-                        shopCategoryList = mapper.readValue(jsonString, javaType);
-        ```
+            ```java
+            // 若存在，则直接从redis中取出数据
+            String jsonString = jedisStrings.get(key);
+             // 将String转换为集合类型
+                        JavaType javaType = mapper.getTypeFactory().constructParametricType( ArrayList.class,  ShopCategory.class);
+                        try {
+                            shopCategoryList = mapper.readValue(jsonString, javaType);
+            ```
 
     - `addShopCategory` 增加店铺种类，直接调用 `shopCategoryDao.insertShopCategory()` 来插入，如果插入成功之后将需要将该 key 对应的 Redis 缓存清理，因为这时候的缓存已经失效了。
 
@@ -861,28 +817,28 @@
 - Controller 层
 
     这里对应的 Controller 层一共包括三个：`com.gjxaiou.web.frontEnd.ShopDetailController.java` ， `com.gjxaiou.web.frontEnd.shopListController.java` 以及 `com.gjxaiou.web.shopAdmin.shopManagerController.java` 。
-    
+
     首先是 `com.gjxaiou.web.frontEnd.shopDetailController.java`
-    
+
     - `listShopDetailPageInfo` 方法用于获取店铺信息以及店铺下的信息商品类别信息。访问路径为：`/frontEnd/listShopDetailPageInfo`。使用 GET 请求。
         - 步骤一：从 request 中根据 key 为 `shopId` 取出店铺 ID ，然后调用 `shopService.getByShopId(shopId)` 获取店铺，以及通过 `productCategoryService.getProductCategoryList` 获取商品种类类别。
         - 步骤二：将查询得到的值放入返回视图中返回。
     - `listProductsByShop` 方法用户根据 ShopId 来获取商品列表，这里使用分页查询显示，所以从 GET 请求中根据 key 得到开始页面下标和每页显示页数以及 shopId，最后调用 `productService.getProductList` 来查询结果，最后将结果放入 modelMap 中返回。
     - `compactProductCondition4Search` 方法实现组合查询条件，可以查询的条件为 `long shopId, long productCategoryId, String productName`。
         - 步骤一：首先创建一个 Shop 对象，然后使用 set 方法将参数中的值赋值给对应的属性，，同样需要创建一个 ProductCategory 对象然后赋值。
-    
+
     其次是 `com.gjxaiou.web.frontEnd.ShopListController.java`
-    
+
     - `listShopsPageInfo` 方法是返回商品列表的一级或者二级区域信息列表，访问路径为：`/frontEnd/listShopsPageInfo`，首先取出 GET 请求中 key 为 `parentId`的值，如果该值存在就取出所有的二级列表，则新建一个 ShopCategory 对象，然后赋值调用 ` shopCategoryService.getShopCategoryList()` 进行查询，然后返回即可，如果 `parentId` 不存在，则将查询条件设置为 parentId = null 即可。
     - 其他方法类似不在展开。
-    
+
     针对 `com.gjxaiou.web.shopAdmin.shopManagerController.java`
-    
+
     - `registerShop`  方法实现店铺注册功能。==可以着重理解这里==
-    
+
         - 这里的  request 这是前端传入的 HttpServletRequest 类型参数 request，表示客户端的请求。客户端通过 HTTP 协议访问服务器的时候，其请求头中的信息都封装在该对象中，可以通过该对象提供的方法获取客户端请求的所有信息。本方法中，当用户在注册店铺的页面中填写完店铺信息后，完整的店铺信息就会封装保存在 request 参数中；
         - 因为是注册店铺，所以提交的信息较多，所以使用 POST 方法。
-    
+
         ```java
         @RequestMapping(value = "/registerShop", method = RequestMethod.POST)
         @ResponseBody
@@ -890,11 +846,11 @@
                 Map<String, Object> modelMap = new HashMap<>();
             }
         ```
-    
+
         整体的流程是：
-    
+
         - 步骤一：读取请求中的信息（包括店铺信息以及图片信息）然后转换为实体类对象，即接收并且转换响应的参数，**获取信息还是使用 key - value 的格式**，示例：
-    
+
             ```java
             // 这里的 shopStr 是与前端约定好的，以此为 key，然后得到其 value 值
             String shopStr = HttpServletRequestUtil.getString(request, "shopStr");
@@ -910,9 +866,9 @@
                 modelMap.put("errMsg", e.getMessage());
                 return modelMap;
             ```
-    
+
         - 步骤二：如果转换为实体类成功之后，首先处理店铺图片，具体流程见下：
-    
+
             ```java
             // 3.处理店铺图片（使用 spring 自带的 CommonsMultipartFile）
             CommonsMultipartFile shopImg = null;
@@ -930,27 +886,24 @@
                 return modelMap;
             }
             ```
-    
+
         - 步骤三：正式开始注册店铺，注册之前首先从 Session 中取出传入的信息
-    
+
             ```java
-            
             // 通过从 session 中获取登录信息，得到店主信息，因为注册店铺之前必须先登录，登录时将登录信息以键值对的形式存储，这里 user 即为 key
             PersonInfo owner = (PersonInfo) request.getSession().getAttribute("user");
             owner.setUserId(1L);
             shop.setOwner(owner);
             ```
-    
-            然后根据这些信息调用 `shopService.addShop()` 来实现正式的插入店铺。
-    
+            
+    然后根据这些信息调用 `shopService.addShop()` 来实现正式的插入店铺。
+        
     - `modifyShop` 方法作用是修改店铺信息，当然使用的是 POST 请求。
-    
+
         - 步骤一：判断用户的验证码是否正确；
         - 步骤二：从 request 中取出 key 为 shopStr 的店铺信息字符串，然后使用 Jackson 的 ObjectMapper 类的 readValue 方法将其转换为 Shop 实体类。
         - 步骤三：同上面方法处理店铺图片；
         - 步骤四：修改店铺信息，直接调用 `shopService.modifyShop()` 方法来处理。然后将 key 为 success 的视图返回。
-
-
 
 #### 3.针对区域信息与操作
 
@@ -1046,7 +999,7 @@
 
 ### （一）使用 DTO 原因
 
-DTO(data transfer object)：数据传输对象，以前被称为值对象(VO,value object)，作用仅在于在应用程序的各个子系统间传输数据，在表现层展示。与POJO对应一个数据库实体不同，DTO并不对应一个实体，可能仅存储实体的部分属性或加入符合传输需求的其他的属性。																
+DTO(data transfer object)：数据传输对象，以前被称为值对象(VO,value object)，作用仅在于在应用程序的各个子系统间传输数据，在表现层展示。与 POJO 对应一个数据库实体不同，DTO 并不对应一个实体，可能仅存储实体的部分属性或加入符合传输需求的其他的属性。																
 
 
 ### （二）验证码功能使用说明
@@ -1065,8 +1018,6 @@ DTO(data transfer object)：数据传输对象，以前被称为值对象(VO,val
 2. util包下面添加 ImageUtil 方法
 该方法中实现了图片的一般操作方法，这里的方法可以自定义。但是如果是批量处理图片，需要平凡的获取图片文件路径，
 因此新建一个 PathUtil.java 类，里面实现获取输入文件路径和输出文件路径；
-
-
 
 ### （四）数据库实现主从读写分离
 
@@ -1212,11 +1163,9 @@ cmd 中使用：`mysqldump -u用户名 -p 数据库名 数据表名 > 导出的�
   - spring MVC 拦截的是请求，即只能拦截 controller，发送请求时候被拦截器拦截，拦截之后在控制器前后增加额外的功能；
   - AOP 拦截的是方法，AOP 拦截的是特定的方法（被 Spring 管理，一般为 serviceImpl 中方法），并在其前后进行补充；
 
-
-
 ### （六）Redis
 
-具体的内容见：Java -> JavaNotes -> Redis
+具体的内容见笔记：Java -> JavaNotes -> Redis
 
 同时可以参考博客： https://blog.csdn.net/tian330726/article/details/84332830 
 
@@ -1254,12 +1203,5 @@ cmd 中使用：`mysqldump -u用户名 -p 数据库名 数据表名 > 导出的�
   这里设置 key = AREA_LIST_KEY ，首先判断 keys类型对象 jedisKeys 中是否包括该 key，当然第一次时候是没有的，这时候调用 AreaDao 的 queryArea() 方法来查询数据并返回， 同时将返回结果转换为 JSON 字符串，最后将 key 和对应的 JSON字符串使用 set 方法保存到 value 类型为 String 的 jedisString 对象中。
 
   如果不是第一次访问，即相当于经过上一步之后 jedisKeys 中已经含有了对应的 key，这样就直接从 jedisString 对象中通过 key 就可以获取对应的 value 值，然后可以将其转换为 List 即可；
-
-
-
-
-
-
-
 
 
