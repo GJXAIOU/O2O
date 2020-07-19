@@ -18,10 +18,10 @@ public interface ShopCategoryDao {
      * 	 *    2、点进去某个一级目录加载对应目录下的子目录
      * 	 *    3、店铺只能挂在店铺二级类别下
      * 	 *    4、在首页点击某个一级店铺目录 进入店铺展示页面的时候 需要加载对应目录下的子目录
-     * @param shopCategory
+     * @param shopCategoryCondition
      * @return
      */
-    List<ShopCategory> queryShopCategory(@Param("shopCategoryCondition") ShopCategory shopCategory);
+    List<ShopCategory> queryShopCategory(@Param("shopCategoryCondition") ShopCategory shopCategoryCondition);
 
     /**
      *  批量新增商品类别

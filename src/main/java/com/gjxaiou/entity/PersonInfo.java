@@ -1,4 +1,5 @@
 package com.gjxaiou.entity;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -13,17 +14,23 @@ import java.util.Date;
 @Getter
 @ToString
 public class PersonInfo {
+    /**
+     * 用户 id
+     */
     private Long userId;
     private Long localAuthId;
     private String name;
     private String profileImg;
     private String email;
     private String gender;
+    /**
+     * 用户状态，如果被标识就不能操作的，0 表示不能使用， 1 表示可以使用
+     */
     private Integer enableStatus;
     /**
-     *  1：表示顾客；
-     *  2：表示店家;
-     *  3：表示超级管理员；
+     * 1：表示顾客；
+     * 2：表示店家;
+     * 3：表示超级管理员；
      */
     private Integer userType;
     private Date createTime;

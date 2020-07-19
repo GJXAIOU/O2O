@@ -18,20 +18,20 @@ import java.util.Random;
  */
 @Slf4j
 public class ImageUtil {
-    // 获取 classPath 绝对值路径
+    // 获取 classPath 绝对值路径。通过线程的类加载器逆推得到
     // 这里水印位置可以使用线程返回来推出，这里得到的是 classPath 的绝对路径
     public static String BASE_PATH =
             Thread.currentThread().getContextClassLoader().getResource("").getPath();
 
     // 定义生成的随机文件名格式：当前年月日时分秒 + 五位随机数
-    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyyMMddHHmmSS");
+    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyyMMddHHmmss");
     private static final Random r = new Random();
 
 
     // 店铺大图
-        // 参数一：用户上传的文件流，参数二：目标输出地址,同时使用系统生成的随机名命名文件，防止用户上传重复名称文件
+    // 参数一：用户上传的文件流，参数二：目标输出地址,同时使用系统生成的随机名命名文件，防止用户上传重复名称文件
     public static String generateThumbnail(ImageHolder thumbnail,
-                                           String targetAddress){
+                                           String targetAddress) {
         String realFileName = getRandomFileName();
         String extension = getFileExtension(thumbnail.getImageName());
         // 存储路径可能不存在，新建存储路径
@@ -42,8 +42,8 @@ public class ImageUtil {
         File dest = new File(PathUtil.getImgBasePath() + relativeAddress);
 
         // 图片修饰
-        try{
-            Thumbnails.of(thumbnail.getImageName()).size(200,200).watermark(Positions.BOTTOM_RIGHT,
+        try {
+            Thumbnails.of(thumbnail.getImageName()).size(200, 200).watermark(Positions.BOTTOM_RIGHT,
                     ImageIO.read(new File(BASE_PATH + "/watermark.jpg")), 0.5f).outputQuality(0.8f).toFile(dest);
         } catch (IOException e) {
             e.printStackTrace();
@@ -52,12 +52,12 @@ public class ImageUtil {
     }
 
     // 创建目标路径涉及到的文件目录
-        // 若路径为：/a/b/c.jpg ，则 a  b   c 三个文件夹都得自动创建
+    // 若路径为：/a/b/c.jpg ，则 a  b   c 三个文件夹都得自动创建
     private static void makeDirPath(String targetAddress) {
         // 获取文件的绝对路径
         String realFileParentPath = PathUtil.getImgBasePath() + targetAddress;
         File dirPath = new File(realFileParentPath);
-        if (!dirPath.exists()){
+        if (!dirPath.exists()) {
             dirPath.mkdirs();
         }
     }
@@ -67,6 +67,7 @@ public class ImageUtil {
         return fileName.substring(fileName.lastIndexOf("."));
     }
 
+    // 获取随机文件名
     public static String getRandomFileName() {
         // 获取随机的五位数
         int randomNum = r.nextInt(89999) + 10000;
@@ -81,30 +82,33 @@ public class ImageUtil {
         String bathPath = Thread.currentThread().getContextClassLoader().getResource("").getPath();
         // 参数传入文件或者文件流，这里以文件为例，URL为需要修改的文件目录
         // 指定文件大小，水印（水印位置，水印图片路径，透明度）,压缩图片，输出位置（可以改为新的名字）
-        Thumbnails.of(new File("E:/Program/Java/Project/o2o/xiaohuangren.jpg")).size(200,200).watermark(Positions.BOTTOM_RIGHT, ImageIO.read(new File(bathPath + "watermark.jpg")), 0.5f).outputQuality(0.8f).toFile("E:/Program/Java/Project/o2o/xiaohuangrenNew.jpg");
+        Thumbnails.of(new File("E:/Program/Java/Project/o2o/xiaohuangren.jpg")).size(200, 200).watermark(Positions.BOTTOM_RIGHT, ImageIO.read(new File(bathPath + "watermark.jpg")), 0.5f).outputQuality(0.8f).toFile("E:/Program/Java/Project/o2o/xiaohuangrenNew.jpg");
     }
 
     /**
-     *  首先判断 storePath 是文件的路径还是目录的路径
-     *  如果 storePath 是文件路径则删除该文件
-     *  如果 storePath 是目录路径则删除该目录下面所有文件
+     * 首先判断 storePath 是文件的路径还是目录的路径
+     * 如果 storePath 是文件路径则删除该文件
+     * 如果 storePath 是目录路径则删除该目录下面所有文件
+     *
      * @param storePath
      */
-    public static void deleteFileOrDirectory(String storePath){
+    public static void deleteFileOrDirectory(String storePath) {
         File fileOrPath = new File(PathUtil.getImgBasePath() + storePath);
-        if (fileOrPath.exists()){
+        if (fileOrPath.exists()) {
             // 如果是目录，遍历之后递归删除
-            File[] files = fileOrPath.listFiles();
-            for (File file : files) {
-                file.delete();
+            if (fileOrPath.isDirectory()) {
+                File[] files = fileOrPath.listFiles();
+                for (File file : files) {
+                    file.delete();
+                }
             }
+            // 如果是文件，则直接删除，如果是目录递归删除之后，使用下面这句可以将这个目录也删除
+            fileOrPath.delete();
         }
-        // 如果是文件，则直接删除，如果是目录递归删除之后，使用下面这句可以将这个目录也删除
-        fileOrPath.delete();
     }
 
     /**
-     * 处理详情图，并返回新生成图片的相对值路径
+     * 处理详情图，并返回新生成图片的相对值路径。该方法和 generateThumbnail 方法一样，只是图片的透明度和大小设置不一样而已
      *
      * @param thumbnail
      * @param targetAddr

@@ -3,6 +3,7 @@ package com.gjxaiou.dao.split;
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 
 /**
+ * AbstractRoutingDataSource 是 Spring 提供的读写分离的类，然后我们需要实现里面的抽象方法
  * @author GJXAIOU
  * @create 2019-10-29-21:54
  */

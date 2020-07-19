@@ -19,7 +19,8 @@ public class HeadLine {
     private String lineLink;
     private String lineImg;
     private Integer priority;
-    /** enableStatus 状态值：
+    /**
+     * enableStatus 状态值：
      * 0：表示不可用
      * 1：表示可用
      */

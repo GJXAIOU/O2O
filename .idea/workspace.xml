@@ -1,9 +1,118 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="o2o:war exploded" />
+    </artifacts-to-build>
+  </component>
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:o2o" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:dependabot" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:dependabot" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:maven" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:dependabot" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:maven" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:o2o" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:project" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:project" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:dependabot" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:project" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:dependabot" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:maven" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:project" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:dependabot" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:maven" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:o2o" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="61f2e862-cbe6-42dc-bd27-a87c8de272ac" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../LeetCode/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../LeetCode/src/main/java/Main.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../LeetCode/src/main/java/Main2.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../LeetCode/src/main/java/Solution.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../LeetCode/src/main/java/array/easy/OR176.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__junit_junit_4_12.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__log4j_log4j_1_2_17.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_slf4j_slf4j_log4j12_1_7_5.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/gjxaiou/BaseTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/gjxaiou/dao/AreaDaoTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/gjxaiou/dao/HeadLineDaoTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/gjxaiou/dao/ProductCategoryDaoTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/gjxaiou/dao/ProductDaoTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/gjxaiou/dao/ProductImgDaoTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/gjxaiou/dao/ShopCategoryDaoTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/gjxaiou/dao/ShopDaoTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/gjxaiou/service/AreaServiceTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/gjxaiou/service/ProductServiceTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/gjxaiou/service/ShopCategoryServiceTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/gjxaiou/service/ShopServiceTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/resources/watermark.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Algorithm/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Algorithm/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Algorithm/src/main/java/com/gjxaiou/advanced/day01/BFPRT.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Algorithm/src/main/java/com/gjxaiou/advanced/day01/BFPRT.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Algorithm/src/main/java/com/gjxaiou/advanced/day01/Manacher.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Algorithm/src/main/java/com/gjxaiou/advanced/day01/Manacher.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Algorithm/src/main/java/com/gjxaiou/easy/day01/BubbleSort.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Algorithm/src/main/java/com/gjxaiou/easy/day01/BubbleSort.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Algorithm/src/main/java/com/gjxaiou/easy/day01/HeapSort.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Algorithm/src/main/java/com/gjxaiou/easy/day01/HeapSort.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Algorithm/src/main/java/com/gjxaiou/easy/day01/InsertionSort.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Algorithm/src/main/java/com/gjxaiou/easy/day01/InsertionSort.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Algorithm/src/main/java/com/gjxaiou/easy/day01/MaxGap.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Algorithm/src/main/java/com/gjxaiou/easy/day01/MaxGap.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Algorithm/src/main/java/com/gjxaiou/easy/day01/MergeSort.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Algorithm/src/main/java/com/gjxaiou/easy/day01/MergeSort.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Algorithm/src/main/java/com/gjxaiou/easy/day01/QuickSort.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Algorithm/src/main/java/com/gjxaiou/easy/day01/QuickSort.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Interview/src/main/java/com/huaweiSoftwareCode/gjxaiou/Graph.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Interview/src/main/java/com/huaweiSoftwareCode/gjxaiou/Graph.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Interview/src/main/java/com/huaweiSoftwareCode/gjxaiou/LocalMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Interview/src/main/java/com/huaweiSoftwareCode/gjxaiou/LocalMain.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JVM/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../JVM/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../JVM/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../JVM/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../JVM/src/main/java/com/gjxaiou/gc/FinalizeEscapeGC.java" beforeDir="false" afterPath="$PROJECT_DIR$/../JVM/src/main/java/com/gjxaiou/gc/FinalizeEscapeGC.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../JVM/src/main/java/com/gjxaiou/gc/ReferenceCountingGC.java" beforeDir="false" afterPath="$PROJECT_DIR$/../JVM/src/main/java/com/gjxaiou/gc/ReferenceCountingGC.java" afterDir="false" />
@@ -21,51 +130,135 @@
       <change beforePath="$PROJECT_DIR$/../JavaConcurrency/concurrency/src/main/java/com/gjxaiou/concurrency/example/singleton/SingletonExample1.java" beforeDir="false" afterPath="$PROJECT_DIR$/../JavaConcurrency/concurrency/src/main/java/com/gjxaiou/concurrency/example/singleton/SingletonExample1.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../JavaConcurrency/concurrency/src/main/java/com/gjxaiou/concurrency/example/singleton/SingletonExample2.java" beforeDir="false" afterPath="$PROJECT_DIR$/../JavaConcurrency/concurrency/src/main/java/com/gjxaiou/concurrency/example/singleton/SingletonExample2.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../JavaConcurrency/concurrency/src/main/java/com/gjxaiou/concurrency/example/sync/SynchronizedExample1.java" beforeDir="false" afterPath="$PROJECT_DIR$/../JavaConcurrency/concurrency/src/main/java/com/gjxaiou/concurrency/example/sync/SynchronizedExample1.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../LeetCode/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../LeetCode/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../LeetCode/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../LeetCode/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../LeetCode/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../LeetCode/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../LeetCode/src/main/java/array/easy/Offer21.java" beforeDir="false" afterPath="$PROJECT_DIR$/../LeetCode/src/main/java/array/easy/Offer21.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../LeetCode/src/main/java/array/easy/Offer40.java" beforeDir="false" afterPath="$PROJECT_DIR$/../LeetCode/src/main/java/array/easy/Offer40.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../LeetCode/src/main/java/array/easy/Offer57II.java" beforeDir="false" afterPath="$PROJECT_DIR$/../LeetCode/src/main/java/array/easy/Offer57II.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../LeetCode/src/main/java/list/easy/Offer52.java" beforeDir="false" afterPath="$PROJECT_DIR$/../LeetCode/src/main/java/list/easy/Offer52.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../LeetCode/src/main/java/nowcoder/huawei/Huawei4.java" beforeDir="false" afterPath="$PROJECT_DIR$/../LeetCode/src/main/java/nowcoder/huawei/Huawei4.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LeetCode/out/production/main/META-INF/main.kotlin_module" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LeetCode/src/main/java/array/easy/LeetCode1002.java" beforeDir="false" afterPath="$PROJECT_DIR$/../LeetCode/src/main/java/array/easy/LeetCode1002.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LeetCode/src/main/java/array/easy/LeetCode1010.java" beforeDir="false" afterPath="$PROJECT_DIR$/../LeetCode/src/main/java/array/easy/LeetCode1010.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LeetCode/src/main/java/array/easy/LeetCode1018.java" beforeDir="false" afterPath="$PROJECT_DIR$/../LeetCode/src/main/java/array/easy/LeetCode1018.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LeetCode/src/main/java/array/easy/LeetCode1051.java" beforeDir="false" afterPath="$PROJECT_DIR$/../LeetCode/src/main/java/array/easy/LeetCode1051.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LeetCode/src/main/java/array/easy/LeetCode1089.java" beforeDir="false" afterPath="$PROJECT_DIR$/../LeetCode/src/main/java/array/easy/LeetCode1089.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LeetCode/src/main/java/array/easy/LeetCode1122.java" beforeDir="false" afterPath="$PROJECT_DIR$/../LeetCode/src/main/java/array/easy/LeetCode1122.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LeetCode/src/main/java/array/easy/LeetCode867.java" beforeDir="false" afterPath="$PROJECT_DIR$/../LeetCode/src/main/java/array/easy/LeetCode867.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LeetCode/src/main/java/array/easy/LeetCode888.java" beforeDir="false" afterPath="$PROJECT_DIR$/../LeetCode/src/main/java/array/easy/LeetCode888.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LeetCode/src/main/java/array/easy/LeetCode896.java" beforeDir="false" afterPath="$PROJECT_DIR$/../LeetCode/src/main/java/array/easy/LeetCode896.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LeetCode/src/main/java/array/easy/LeetCode905.java" beforeDir="false" afterPath="$PROJECT_DIR$/../LeetCode/src/main/java/array/easy/LeetCode905.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LeetCode/src/main/java/array/easy/LeetCode914.java" beforeDir="false" afterPath="$PROJECT_DIR$/../LeetCode/src/main/java/array/easy/LeetCode914.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LeetCode/src/main/java/array/easy/LeetCode941.java" beforeDir="false" afterPath="$PROJECT_DIR$/../LeetCode/src/main/java/array/easy/LeetCode941.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LeetCode/src/main/java/array/easy/LeetCode977.java" beforeDir="false" afterPath="$PROJECT_DIR$/../LeetCode/src/main/java/array/easy/LeetCode977.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LeetCode/src/main/java/array/easy/LeetCode989.java" beforeDir="false" afterPath="$PROJECT_DIR$/../LeetCode/src/main/java/array/easy/LeetCode989.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LeetCode/src/main/java/array/easy/LeetCode999.java" beforeDir="false" afterPath="$PROJECT_DIR$/../LeetCode/src/main/java/array/easy/LeetCode999.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LeetCode/src/main/java/array/easy/Offer12.java" beforeDir="false" afterPath="$PROJECT_DIR$/../LeetCode/src/main/java/array/easy/Offer12.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LeetCode/src/main/java/array/medium/Offer13.java" beforeDir="false" afterPath="$PROJECT_DIR$/../LeetCode/src/main/java/array/medium/Offer13.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LeetCode/src/main/java/list/easy/Offer18.java" beforeDir="false" afterPath="$PROJECT_DIR$/../LeetCode/src/main/java/list/easy/Offer18.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LeetCode/src/main/java/list/medium/LeetCode148.java" beforeDir="false" afterPath="$PROJECT_DIR$/../LeetCode/src/main/java/list/medium/LeetCode148.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LeetCode/src/main/java/list/medium/LeetCode19.java" beforeDir="false" afterPath="$PROJECT_DIR$/../LeetCode/src/main/java/list/medium/LeetCode19.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LeetCode/src/main/java/list/medium/LeetCode2.java" beforeDir="false" afterPath="$PROJECT_DIR$/../LeetCode/src/main/java/list/medium/LeetCode2.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LeetCode/src/main/java/string/medium/LeetCode3.java" beforeDir="false" afterPath="$PROJECT_DIR$/../LeetCode/src/main/java/string/medium/LeetCode3.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../VideoClass/ThinkingInJava4Code" beforeDir="false" afterPath="$PROJECT_DIR$/../VideoClass/ThinkingInJava4Code" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/o2o_war.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/o2o_war_exploded.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/o2o_war_exploded.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__ch_qos_logback_logback_classic_1_2_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__ch_qos_logback_logback_core_1_2_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_annotations_2_9_0.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_annotations_2_8_0.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_core_2_9_5.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_core_2_8_7.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_databind_2_9_5.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_databind_2_8_7.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_protobuf_protobuf_java_3_6_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__jstl_jstl_1_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__junit_junit_4_11.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__mysql_mysql_connector_java_8_0_17.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__mysql_mysql_connector_java_5_1_37.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_taglibs_taglibs_standard_impl_1_2_5.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_slf4j_slf4j_api_1_7_22.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_slf4j_slf4j_api_1_7_5.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/gjxaiou/dao/ProductDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gjxaiou/dao/ProductDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/o2o.iml" beforeDir="false" afterPath="$PROJECT_DIR$/o2o.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/gjxaiou/cache/JedisPoolWriper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gjxaiou/cache/JedisPoolWriper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/gjxaiou/dao/ShopCategoryDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gjxaiou/dao/ShopCategoryDao.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/gjxaiou/dao/ShopDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gjxaiou/dao/ShopDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/gjxaiou/dao/split/DynamicDataSource.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gjxaiou/dao/split/DynamicDataSource.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/gjxaiou/dao/split/DynamicDataSourceInterceptor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gjxaiou/dao/split/DynamicDataSourceInterceptor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/gjxaiou/dto/ImageHolder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gjxaiou/dto/ImageHolder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/gjxaiou/dto/ProductCategoryExecution.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gjxaiou/dto/ProductCategoryExecution.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/gjxaiou/dto/ProductExecution.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gjxaiou/dto/ProductExecution.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/gjxaiou/dto/Result.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gjxaiou/dto/Result.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/gjxaiou/dto/ShopExecution.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gjxaiou/dto/ShopExecution.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/gjxaiou/entity/Area.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gjxaiou/entity/Area.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/gjxaiou/entity/HeadLine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gjxaiou/entity/HeadLine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/gjxaiou/entity/LocalAuth.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gjxaiou/entity/LocalAuth.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/gjxaiou/entity/PersonInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gjxaiou/entity/PersonInfo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/gjxaiou/entity/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gjxaiou/entity/Product.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/gjxaiou/entity/ProductCategory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gjxaiou/entity/ProductCategory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/gjxaiou/entity/ProductImg.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gjxaiou/entity/ProductImg.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/gjxaiou/entity/Shop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gjxaiou/entity/Shop.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/gjxaiou/entity/ShopCategory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gjxaiou/entity/ShopCategory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/gjxaiou/entity/WeChatAuth.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gjxaiou/entity/WeChatAuth.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/gjxaiou/enums/ProductCategoryStateEnum.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gjxaiou/enums/ProductCategoryStateEnum.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/gjxaiou/enums/ProductStateEnum.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gjxaiou/enums/ProductStateEnum.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/gjxaiou/entity/WeChatAuth.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gjxaiou/entity/WechatAuth.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/gjxaiou/enums/ShopStateEnum.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gjxaiou/enums/ShopStateEnum.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/gjxaiou/service/AreaService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gjxaiou/service/AreaService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/gjxaiou/exception/ShopOperationException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gjxaiou/exception/ShopOperationException.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/gjxaiou/service/ProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gjxaiou/service/ProductService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/gjxaiou/service/ShopService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gjxaiou/service/ShopService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/gjxaiou/service/impl/AreaServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gjxaiou/service/impl/AreaServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/gjxaiou/service/impl/HeadLineServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gjxaiou/service/impl/HeadLineServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/gjxaiou/service/impl/ProductCategoryServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gjxaiou/service/impl/ProductCategoryServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/gjxaiou/service/impl/ProductServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gjxaiou/service/impl/ProductServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/gjxaiou/service/impl/ShopCategoryServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gjxaiou/service/impl/ShopCategoryServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/gjxaiou/service/impl/ShopServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gjxaiou/service/impl/ShopServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/gjxaiou/util/CodeUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gjxaiou/util/CodeUtil.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/gjxaiou/util/DESUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gjxaiou/util/DESUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/gjxaiou/util/EncryptPropertyPlaceholderConfigurer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gjxaiou/util/EncryptPropertyPlaceholderConfigurer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/gjxaiou/util/HttpServletRequestUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gjxaiou/util/HttpServletRequestUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/gjxaiou/util/ImageUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gjxaiou/util/ImageUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/gjxaiou/util/PageCalculator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gjxaiou/util/PageCalculator.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/gjxaiou/util/PathUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gjxaiou/util/PathUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/gjxaiou/web/shopadmin/ProductCategoryManagerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gjxaiou/web/shopadmin/ProductCategoryManagerController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/gjxaiou/web/shopadmin/ProductManagerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gjxaiou/web/shopadmin/ProductManagerController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/gjxaiou/web/shopadmin/ShopManagerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gjxaiou/web/shopadmin/ShopManagerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/gjxaiou/web/frontEnd/FrontController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gjxaiou/web/frontend/FrontController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/gjxaiou/web/frontEnd/MainPageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gjxaiou/web/frontend/MainPageController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/gjxaiou/web/frontEnd/ShopDetailController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gjxaiou/web/frontend/ShopDetailController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/gjxaiou/web/frontEnd/ShopListController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gjxaiou/web/frontend/ShopListController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/gjxaiou/web/shopAdmin/ProductCategoryManagerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gjxaiou/web/shopadmin/ProductCategoryManagerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/gjxaiou/web/shopAdmin/ProductManagerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gjxaiou/web/shopadmin/ProductManagerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/gjxaiou/web/shopAdmin/shopAdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gjxaiou/web/shopadmin/shopAdminController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/gjxaiou/web/shopAdmin/shopManagerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gjxaiou/web/shopadmin/shopManagerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/gjxaiou/web/superAdmin/AreaController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gjxaiou/web/superadmin/AreaController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/db.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/db.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/mapper/ProductCategoryDao.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/mapper/ProductCategoryDao.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/mapper/ProductDao.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/mapper/ProductDao.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/mapper/ShopCategoryDao.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/mapper/ShopCategoryDao.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/mapper/ShopDao.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/mapper/ShopDao.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/mybatis-config.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/mybatis-config.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/spring/spring-dao.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/spring/spring-dao.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/spring/spring-web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/spring/spring-web.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/html/frontEnd/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/html/frontend/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/html/frontEnd/productDetail.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/html/frontend/productdetail.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/html/frontEnd/shopDetail.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/html/frontend/shopdetail.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/html/frontEnd/shopList.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/html/frontend/shoplist.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/html/shop/productCategoryManagement.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/html/shop/productcategorymanagement.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/html/shop/productManagement.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/html/shop/productmanagement.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/html/shop/productOperation.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/html/shop/productoperation.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/html/shop/shopList.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/html/shop/shoplist.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/html/shop/shopManagement.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/html/shop/shopmanagement.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/html/shop/shopOperation.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/html/shop/shopoperation.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/resources/css/frontEnd/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/resources/css/frontend/index.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/resources/css/frontEnd/productDetail.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/resources/css/frontend/productdetail.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/resources/css/frontEnd/shopDetail.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/resources/css/frontend/shopdetail.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/resources/css/frontEnd/shopList.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/resources/css/frontend/shoplist.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/resources/css/shop/productCategoryManagement.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/resources/css/shop/productcategorymanagement.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/resources/css/shop/productManagement.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/resources/css/shop/productmanagement.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/resources/css/shop/shopList.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/resources/css/shop/shoplist.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/resources/css/shop/shopManagement.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/resources/css/shop/shopmanagement.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/resources/js/common/common.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/resources/js/common/common.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/resources/js/frontEnd/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/resources/js/frontend/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/resources/js/frontEnd/shopDetail.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/resources/js/frontend/shopdetail.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/resources/js/frontEnd/shopList.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/resources/js/frontend/shoplist.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/resources/js/shop/productCategoryManagement.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/resources/js/shop/productcategorymanagement.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/resources/js/shop/productManagement.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/resources/js/shop/productmanagement.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/resources/js/shop/productOperation.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/resources/js/shop/productoperation.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/resources/js/shop/shopList.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/resources/js/shop/shoplist.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/resources/js/shop/shopOperation.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/resources/js/shop/shopoperation.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/db.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/db.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/mapper/ProductCategoryDao.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/mapper/ProductCategoryDao.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/mapper/ProductDao.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/mapper/ProductDao.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/mapper/ShopCategoryDao.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/mapper/ShopCategoryDao.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/mapper/ShopDao.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/mapper/ShopDao.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/mybatis-config.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/mybatis-config.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/spring/spring-dao.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/spring/spring-dao.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/spring/spring-redis.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/spring/spring-redis.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/spring/spring-web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/spring/spring-web.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,6 +268,13 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="LogFilters">
+    <option name="FILTER_ERRORS" value="false" />
+    <option name="FILTER_WARNINGS" value="false" />
+    <option name="FILTER_INFO" value="true" />
+    <option name="FILTER_DEBUG" value="true" />
+    <option name="CUSTOM_FILTER" />
+  </component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
@@ -83,32 +283,68 @@
         <option name="userSettingsFile" value="E:\Program\Java\maven\apache-maven-3.6.1\conf\settings.xml" />
       </MavenGeneralSettings>
     </option>
-    <option name="importingSettings">
-      <MavenImportingSettings>
-        <option name="importAutomatically" value="true" />
-      </MavenImportingSettings>
-    </option>
   </component>
   <component name="ProjectId" id="1TpCn2Bhe31P51WckGCNencnBgf" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="DatabaseDriversLRU" value="mysql" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="go.import.settings.migrated" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="project.structure.last.edited" value="Problems" />
-    <property name="project.structure.proportion" value="0.0" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/webapp/resources/js/shop" />
+    <property name="project.structure.last.edited" value="Artifacts" />
+    <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="MavenSettings" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Language Defaults" />
   </component>
-  <component name="RunManager">
-    <configuration default="true" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" ALTERNATIVE_JRE_ENABLED="false">
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\Program\Java\Project\o2o\src\main\webapp\resources\js\shop" />
+      <recent name="E:\Program\Java\Project\o2o\src\test\resources" />
+      <recent name="E:\Program\Java\Project\o2o\src\main\resources" />
+      <recent name="E:\Program\Java\Project\o2o\src\test\java" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Tomcat Server.localhost">
+    <configuration name="DESUtil" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.gjxaiou.util.DESUtil" />
+      <module name="o2o" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.gjxaiou.util.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ShopDaoTest.testQueryByShopId" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="o2o" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.gjxaiou.dao.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.gjxaiou.dao" />
+      <option name="MAIN_CLASS_NAME" value="com.gjxaiou.dao.ShopDaoTest" />
+      <option name="METHOD_NAME" value="testQueryByShopId" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 8.5.43" ALTERNATIVE_JRE_ENABLED="false">
+      <option name="BROWSER_ID" value="98ca6316-2f89-46d9-a9e5-fa9e2b0625b3" />
+      <option name="UPDATING_POLICY" value="restart-server" />
       <deployment />
       <server-settings>
         <option name="BASE_DIRECTORY_NAME" value="_o2o" />
@@ -204,6 +440,90 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="localhost" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 8.5.43" ALTERNATIVE_JRE_ENABLED="false">
+      <option name="OPEN_IN_BROWSER_URL" value="http://localhost:8080/o2o_war_exploded/" />
+      <option name="UPDATING_POLICY" value="restart-server" />
+      <deployment>
+        <artifact name="o2o:war exploded">
+          <settings>
+            <option name="CONTEXT_PATH" value="/o2o_war_exploded" />
+          </settings>
+        </artifact>
+      </deployment>
+      <server-settings>
+        <option name="BASE_DIRECTORY_NAME" value="Unnamed_o2o" />
+      </server-settings>
+      <predefined_log_file enabled="true" id="Tomcat" />
+      <predefined_log_file enabled="true" id="Tomcat Catalina" />
+      <predefined_log_file id="Tomcat Manager" />
+      <predefined_log_file id="Tomcat Host Manager" />
+      <predefined_log_file id="Tomcat Localhost Access" />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="7109" />
+      </RunnerSettings>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Cover">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Debug">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Run">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <method v="2">
+        <option name="Make" enabled="true" />
+        <option name="BuildArtifacts" enabled="true">
+          <artifact name="o2o:war exploded" />
+        </option>
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="JUnit.ShopDaoTest.testQueryByShopId" />
+      <item itemvalue="Tomcat Server.localhost" />
+      <item itemvalue="Application.DESUtil" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.DESUtil" />
+        <item itemvalue="JUnit.ShopDaoTest.testQueryByShopId" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SshConsoleOptionsProvider">
     <option name="myEncoding" value="UTF-8" />
@@ -226,50 +546,114 @@
       <workItem from="1585212722029" duration="12273000" />
       <workItem from="1585316285602" duration="2179000" />
       <workItem from="1585382902410" duration="3520000" />
-      <workItem from="1585547784006" duration="7966000" />
+      <workItem from="1585547784006" duration="8648000" />
+      <workItem from="1586519904451" duration="18000" />
+      <workItem from="1587650399656" duration="1940000" />
+      <workItem from="1595038761461" duration="43295000" />
+      <workItem from="1595137527573" duration="15755000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="1" />
+    <option name="version" value="2" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>
         <entry key="MAIN">
           <value>
-            <State>
-              <option name="COLUMN_ORDER" />
-            </State>
+            <State />
           </value>
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="487" y="144" key="#Tomcat_Server" timestamp="1584613958652">
+    <state x="312" y="11" key="#Project_Structure" timestamp="1595159098176">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="487" y="144" key="#Tomcat_Server/0.0.1920.1080@0.0.1920.1080" timestamp="1584613958652" />
-    <state x="414" y="192" width="1163" height="743" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1584613961926">
+    <state x="312" y="11" key="#Project_Structure/-1920.0.1920.1080/0.0.1920.1080@0.0.1920.1080" timestamp="1595159098176" />
+    <state x="687" y="318" key="#Tomcat_Server" timestamp="1595060736421">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="414" y="192" width="1163" height="743" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1080@0.0.1920.1080" timestamp="1584613961926" />
-    <state x="721" y="161" key="#com.intellij.ide.util.MemberChooser" timestamp="1584870898026">
+    <state x="687" y="318" key="#Tomcat_Server/-1920.0.1920.1080/0.0.1920.1080@0.0.1920.1080" timestamp="1595060736421" />
+    <state x="733" y="279" key="#Web_Browsers" timestamp="1595054379673">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="721" y="161" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1080@0.0.1920.1080" timestamp="1584870898026" />
-    <state x="716" y="250" key="FileChooserDialogImpl" timestamp="1585459979834">
+    <state x="733" y="279" key="#Web_Browsers/-1920.0.1920.1080/0.0.1920.1080@0.0.1920.1080" timestamp="1595054379673" />
+    <state x="410" y="186" width="1198" height="707" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1595159102241">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="716" y="250" key="FileChooserDialogImpl/0.0.1920.1080@0.0.1920.1080" timestamp="1585459979834" />
-    <state x="6" y="180" key="new project wizard" timestamp="1585459988804">
+    <state x="410" y="186" width="1198" height="707" key="#com.intellij.execution.impl.EditConfigurationsDialog/-1920.0.1920.1080/0.0.1920.1080@0.0.1920.1080" timestamp="1595159102241" />
+    <state x="716" y="250" key="FileChooserDialogImpl" timestamp="1595060733618">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="6" y="180" key="new project wizard/0.0.1920.1080@0.0.1920.1080" timestamp="1585459988804" />
-    <state x="539" y="45" width="840" height="1034" key="search.everywhere.popup" timestamp="1585215334936">
+    <state x="716" y="250" key="FileChooserDialogImpl/-1920.0.1920.1080/0.0.1920.1080@0.0.1920.1080" timestamp="1595060733618" />
+    <state x="716" y="250" key="FileChooserDialogImpl/0.0.1920.1080@0.0.1920.1080" timestamp="1586519916742" />
+    <state width="1867" height="223" key="GridCell.Tab.0.bottom" timestamp="1595164076934">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="539" y="45" width="840" height="1034" key="search.everywhere.popup/0.0.1920.1080@0.0.1920.1080" timestamp="1585215334936" />
+    <state width="1867" height="223" key="GridCell.Tab.0.bottom/-1920.0.1920.1080/0.0.1920.1080@0.0.1920.1080" timestamp="1595164076934" />
+    <state width="1867" height="223" key="GridCell.Tab.0.center" timestamp="1595164076934">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1867" height="223" key="GridCell.Tab.0.center/-1920.0.1920.1080/0.0.1920.1080@0.0.1920.1080" timestamp="1595164076934" />
+    <state width="1867" height="223" key="GridCell.Tab.0.left" timestamp="1595164076934">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1867" height="223" key="GridCell.Tab.0.left/-1920.0.1920.1080/0.0.1920.1080@0.0.1920.1080" timestamp="1595164076934" />
+    <state width="1867" height="223" key="GridCell.Tab.0.right" timestamp="1595164076934">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1867" height="223" key="GridCell.Tab.0.right/-1920.0.1920.1080/0.0.1920.1080@0.0.1920.1080" timestamp="1595164076934" />
+    <state width="1587" height="194" key="GridCell.Tab.1.bottom" timestamp="1595164076931">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1587" height="194" key="GridCell.Tab.1.bottom/-1920.0.1920.1080/0.0.1920.1080@0.0.1920.1080" timestamp="1595164076931" />
+    <state width="1587" height="194" key="GridCell.Tab.1.center" timestamp="1595164076931">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1587" height="194" key="GridCell.Tab.1.center/-1920.0.1920.1080/0.0.1920.1080@0.0.1920.1080" timestamp="1595164076931" />
+    <state width="1587" height="194" key="GridCell.Tab.1.left" timestamp="1595164076931">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1587" height="194" key="GridCell.Tab.1.left/-1920.0.1920.1080/0.0.1920.1080@0.0.1920.1080" timestamp="1595164076931" />
+    <state width="1587" height="194" key="GridCell.Tab.1.right" timestamp="1595164076931">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1587" height="194" key="GridCell.Tab.1.right/-1920.0.1920.1080/0.0.1920.1080@0.0.1920.1080" timestamp="1595164076931" />
+    <state width="1587" height="194" key="GridCell.Tab.2.bottom" timestamp="1595164076932">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1587" height="194" key="GridCell.Tab.2.bottom/-1920.0.1920.1080/0.0.1920.1080@0.0.1920.1080" timestamp="1595164076932" />
+    <state width="1587" height="194" key="GridCell.Tab.2.center" timestamp="1595164076932">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1587" height="194" key="GridCell.Tab.2.center/-1920.0.1920.1080/0.0.1920.1080@0.0.1920.1080" timestamp="1595164076932" />
+    <state width="1587" height="194" key="GridCell.Tab.2.left" timestamp="1595164076932">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1587" height="194" key="GridCell.Tab.2.left/-1920.0.1920.1080/0.0.1920.1080@0.0.1920.1080" timestamp="1595164076932" />
+    <state width="1587" height="194" key="GridCell.Tab.2.right" timestamp="1595164076932">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1587" height="194" key="GridCell.Tab.2.right/-1920.0.1920.1080/0.0.1920.1080@0.0.1920.1080" timestamp="1595164076932" />
+    <state width="334" height="549" key="HiddenNamespacesPopup" timestamp="1595053100247">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="334" height="549" key="HiddenNamespacesPopup/-1920.0.1920.1080/0.0.1920.1080@0.0.1920.1080" timestamp="1595053100247" />
+    <state x="374" y="111" key="Maven.ArtifactSearchDialog" timestamp="1595053673187">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="374" y="111" key="Maven.ArtifactSearchDialog/-1920.0.1920.1080/0.0.1920.1080@0.0.1920.1080" timestamp="1595053673187" />
+    <state x="381" y="22" key="SettingsEditor" timestamp="1595068223984">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="381" y="22" key="SettingsEditor/-1920.0.1920.1080/0.0.1920.1080@0.0.1920.1080" timestamp="1595068223984" />
+    <state x="549" y="45" width="840" height="1034" key="search.everywhere.popup" timestamp="1595162363141">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="549" y="45" width="840" height="1034" key="search.everywhere.popup/-1920.0.1920.1080/0.0.1920.1080@0.0.1920.1080" timestamp="1595162363141" />
   </component>
 </project>

@@ -44,7 +44,10 @@ public class AreaServiceImpl implements AreaService {
     public List<Area> getAreaList() {
         // key
         String key = AREA_LIST_KEY;
+        // 用于接收区域信息
         List<Area> areaList = null;
+        // 因为后面需要调用 areaDao.queryArea() 来获取区域列表，并且转化为 String对象，然后以键值对的形式存放在 redis 中，因此要实现
+        // areaList 对象和 String 对象的互转，因此使用到 Jackson 解析
         ObjectMapper mapper = new ObjectMapper();
         // 如果Redis中未存在key
         if (!jedisKeys.exists(key)) {
@@ -53,6 +56,7 @@ public class AreaServiceImpl implements AreaService {
             String jsonString = null;
             // 将list转换为String
             try {
+                // 将返回的 areaList 转化为 String
                 jsonString = mapper.writeValueAsString(areaList);
             } catch (JsonProcessingException e) {
                 e.printStackTrace();

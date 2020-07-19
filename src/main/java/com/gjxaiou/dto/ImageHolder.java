@@ -10,10 +10,16 @@ import java.io.InputStream;
  */
 @Data
 public class ImageHolder {
+    /**
+     * 图片流
+     */
     private InputStream image;
+    /**
+     * 图片名称
+     */
     private String imageName;
 
-    public ImageHolder(InputStream image, String imageName){
+    public ImageHolder(InputStream image, String imageName) {
         this.image = image;
         this.imageName = imageName;
     }

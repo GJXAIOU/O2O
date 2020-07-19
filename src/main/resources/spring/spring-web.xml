@@ -12,7 +12,9 @@
     <mvc:annotation-driven />
 
     <!-- 2.静态资源默认servlet配置 (1)加入对静态资源的处理：js,gif,png (2)允许使用"/"做整体映射 -->
+    <!--该 mapping 告知 DispatchServlet 不要拦截以 /resources/ 开头的请求路径，即将他们都交由 Servlet 处理-->
     <mvc:resources mapping="/resources/**" location="/resources/" />
+    <!--静态资源交由默认的 Servlet 处理-->
     <mvc:default-servlet-handler />
 
     <!-- 3.定义视图解析器 -->
@@ -21,12 +23,12 @@
         <property name="prefix" value="/WEB-INF/html/"></property>
         <property name="suffix" value=".html"></property>
     </bean>
-    <!-- 文件上传解析器 -->
+    <!-- 文件上传解析器，针对前端 Form 中的文件处理 -->
     <bean id="multipartResolver"
           class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
         <property name="defaultEncoding" value="utf-8"></property>
-        <property name="maxUploadSize" value="10485760000"></property><!-- 最大上传文件大小 -->
-        <property name="maxInMemorySize" value="10960"></property>
+        <property name="maxUploadSize" value="10485760000"></property><!-- 最大上传文件大小，单位是字节 -->
+        <property name="maxInMemorySize" value="10960000"></property>
     </bean>
 
 

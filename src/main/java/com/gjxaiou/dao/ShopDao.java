@@ -26,10 +26,10 @@ public interface ShopDao {
 
     /**
      * 新增店铺
-     * @param shopDao
+     * @param shop
      * @return 影响的行数
      */
-    int insertShop(Shop shopDao);
+    int insertShop(Shop shop);
 
     /**
      *  更新店铺

@@ -10,6 +10,12 @@ public class JedisPoolWriper {
 	// Redis 连接池对象
 	private JedisPool jedisPool;
 
+	/**
+	 * 初始化连接池对象
+	 * @param poolConfig ：配置好的连接池配置信息
+	 * @param host：服务器 IP
+	 * @param port：Redis 端口：6379
+	 */
 	public JedisPoolWriper(final JedisPoolConfig poolConfig, final String host, final int port) {
 		try {
 			jedisPool = new JedisPool(poolConfig, host, port);

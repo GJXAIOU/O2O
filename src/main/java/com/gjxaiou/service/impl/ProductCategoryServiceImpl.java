@@ -67,6 +67,7 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
      */
     @Override
     public ProductCategoryExecution deleteProductCategory(long productCategoryId, long shopId) throws ProductCategoryOperationException {
+       // 先将该商品类别下面的商品的类别 ID 置为空，然后删除
         try{
             int effectedNum = productDao.updateProductCategoryToNull(productCategoryId);
             if (effectedNum <= 0){

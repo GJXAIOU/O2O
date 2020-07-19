@@ -26,8 +26,8 @@
             <result column="owner_id" property="ownerId" />
             <result column="shop_name" property="shopName" />
         </association>
-        <!--TODO：为什么这里的 column 是 product_id-->
-        <collection property="productCategoryList" column="product_id"
+
+        <collection property="productImgList" column="product_id"
                     javaType="com.gjxaiou.entity.ProductImg">
             <id column="product_img_id" property="productImgId" />
             <result column="img_addr" property="imgAddr" />
@@ -52,7 +52,7 @@
         on
         p.product_id=pi.product_id
         where
-        p.product_id=#{shopId}
+        p.product_id=#{productId}
         order by
         pi.priority
         desc
@@ -135,7 +135,8 @@
 
 
 <!-- 更新商品信息：updateProduct-->
-    <update id="updateProduct" parameterType="com.gjxaiou.entity.Product">
+    <update id="updateProduct" parameterType="com.gjxaiou.entity.Product"
+            keyProperty="product_id" useGeneratedKeys="true">
         update
         tb_product
         <set>
@@ -160,7 +161,7 @@
 
 
 <!--删除商品之前，将商品类别 Id 置空：updateProductCategoryToNull-->
-    <update id="updateProductCategoryToNull" parameterType="Long">
+    <update id="updateProductCategoryToNull" parameterType="Long" keyProperty="product_id" useGeneratedKeys="true">
         update
         tb_product
         set

@@ -16,6 +16,7 @@
         FROM
         tb_shop_category
         <where>
+        <!--没有 parentID 则说明是首页的一级列表，但是店铺应该都是放在二级列表下面，所以不显示一级列表-->
             <if test="shopCategoryCondition == null">
                 and parent_id is null
             </if>

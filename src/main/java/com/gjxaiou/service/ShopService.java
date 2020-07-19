@@ -21,7 +21,7 @@ public interface ShopService {
     ShopExecution addShop(Shop shop, ImageHolder thumbnail) throws RuntimeException;
 
     /**
-     * 修改店铺
+     * 修改店铺,更新店铺信息
      * @param shop
      * @param thumbnail
      * @return

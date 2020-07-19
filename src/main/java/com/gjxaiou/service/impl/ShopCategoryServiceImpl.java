@@ -49,7 +49,7 @@ public class ShopCategoryServiceImpl implements ShopCategoryService {
         List<ShopCategory> shopCategoryList = null;
         // 定义jackson数据转换操作类
         ObjectMapper mapper = new ObjectMapper();
-        // 拼接出redis的key
+        // 拼接出redis的key，不同的查询条件对应不同的 key
         if (shopCategoryCondition == null) {
             // 若查询条件为空，则列出所有首页大类，即parentId为空的店铺类型
             key = key + "_allFirstLevel";

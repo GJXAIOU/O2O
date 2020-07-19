@@ -79,8 +79,10 @@ public class ProductServiceImpl implements ProductService {
      * @throws ProductOperationException
      */
     @Override
+    @Transactional
     public ProductExecution addProduct(Product product, ImageHolder thumbnail,
                                        List<ImageHolder> productImageHolderList) throws ProductOperationException {
+        // 首先商品不能为空，同时必须标明商品是属于哪一个店铺的
         if (product != null && product.getShop() != null && product.getShop().getShopId() != null) {
             // 给商品赋值默认的系统属性
             product.setCreateTime(new Date());
@@ -95,30 +97,31 @@ public class ProductServiceImpl implements ProductService {
             // 插入商品
             try {
                 int effectedNum = productDao.insertProduct(product);
-                if (effectedNum <= 0){
+                if (effectedNum <= 0) {
                     throw new ProductOperationException("创建商品失败");
                 }
-            }catch (Exception e){
+            } catch (Exception e) {
                 throw new ProductOperationException("创建商品失败" + e.toString());
             }
 
             // 若商品详情图不为空，则添加
-            if (productImageHolderList != null && productImageHolderList.size() > 0){
-                addProductImgList(product,productImageHolderList);
+            if (productImageHolderList != null && productImageHolderList.size() > 0) {
+                addProductImgList(product, productImageHolderList);
             }
-            return new ProductExecution(ProductStateEnum.SUCCESS,product);
-        }else {
+            return new ProductExecution(ProductStateEnum.SUCCESS, product);
+        } else {
             return new ProductExecution(ProductStateEnum.EMPTY);
         }
     }
 
     /**
-     *  修改商品
-     *     步骤一：如果缩略图参数有值，则处理缩略图
-     *     步骤二：若原来存在缩略图则先删除再添加新的缩略图，之后获取缩略图相对路径并赋值给 product
-     *     步骤三：若商品详情图列表参数有值，对商品详情图片列表进行同样的操作
-     *     步骤四：将 tb_product_img下面的该商品原来的商品详情图记录全部清除
-     *     步骤五：更新 tb_product_img 以及 tb_product 的信息
+     * 修改商品
+     * 步骤一：如果缩略图参数有值，则处理缩略图
+     * 步骤二：若原来存在缩略图则先删除再添加新的缩略图，之后获取缩略图相对路径并赋值给 product
+     * 步骤三：若商品详情图列表参数有值，对商品详情图片列表进行同样的操作
+     * 步骤四：将 tb_product_img下面的该商品原来的商品详情图记录全部清除
+     * 步骤五：更新 tb_product_img 以及 tb_product 的信息
+     *
      * @param product
      * @param thumbnail
      * @param productImgHolderList
@@ -139,6 +142,7 @@ public class ProductServiceImpl implements ProductService {
                 if (tempProduct.getImgAddr() != null) {
                     ImageUtil.deleteFileOrDirectory(tempProduct.getImgAddr());
                 }
+                // 添加图片
                 addThumbnail(product, thumbnail);
             }
             // 如果有新存入的商品详情图，则先删除原来的，再添加新的
@@ -164,23 +168,28 @@ public class ProductServiceImpl implements ProductService {
 
     /**
      * 给店铺增加详情图片
+     *
      * @param product
      * @param thumbnail
      */
     private void addThumbnail(Product product, ImageHolder thumbnail) {
+        // 先根据不同操作系统获取不动的基准路径
         String dest = PathUtil.getShopImagePath(product.getShop().getShopId());
+        // 将基准路径和文件流传入后台，通过 generateThumbnail 生成相应的缩略图并返回相对路径
         String thumbnailAddr = ImageUtil.generateThumbnail(thumbnail, dest);
+        // 返回之后设置到 ImgAddr 属性中
         product.setImgAddr(thumbnailAddr);
     }
 
 
     /**
      * 批量增加详情图
+     *
      * @param product
      * @param productImgHolderList
      * @throws ProductOperationException
      */
-    public void addProductImgList(Product product, List<ImageHolder> productImgHolderList) throws ProductOperationException{
+    public void addProductImgList(Product product, List<ImageHolder> productImgHolderList) throws ProductOperationException {
         // 获取图片存储路径，这里直接存放到相应店铺的文件夹底下
         String dest = PathUtil.getShopImagePath(product.getShop().getShopId());
         List<ProductImg> productImgList = new ArrayList<>();
@@ -206,7 +215,7 @@ public class ProductServiceImpl implements ProductService {
         }
     }
 
-    public void deleteProductImgList(long productId){
+    public void deleteProductImgList(long productId) {
         // 根据productId获取原来的图片
         List<ProductImg> productImgList = productImgDao.queryProductImgList(productId);
         // 删除原来的图片

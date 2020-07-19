@@ -12,8 +12,6 @@ import java.util.Date;
 @Getter
 @Setter
 @ToString
-@NoArgsConstructor
-@AllArgsConstructor
 public class ProductCategory {
     private Long productCategoryId;
     private Long shopId;

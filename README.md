@@ -15,14 +15,12 @@ v1.1 共计 13262 词，读完预计需要 35 分钟，因为纯手码可能存�
 ## 一、项目说明
 
 - 项目描述：该项目主要实现商城后台管理，包括通用模块、数据备份模块、前端展示模块、商家模块和超级管理员模块。实现的功能有店铺、商品管理，账号管理，头条、店铺、商品等详情展示等。
-
-- 技术架构： Spring  + SpringMVC  + MyBatis + MySQL + Redis + SUI Mobile + jQuery
-
-- 搭建工具：Intellij IDEA + Maven + Tomcat + Kaptcha + Linux + Lombok + Logback
-
+- 技术架构： Spring  + SpringMVC  + MyBatis + MySQL5.5 + Redis + SUI Mobile + jQuery
+- 搭建工具：Intellij IDEA2019.1.3 + Maven3.39 + Tomcat8 + Kaptcha + Linux + Lombok + Logback + Chrome
 - 项目优化：通过 MySQL 主从同步实现读写分离，使用 Redis 缓存提高数据访问速度，通过 SpringMVC 拦截器实现权限认证，考虑到后期项目部署的安全问题，使用 DES 对关键配置信息进行加密和使用验证码组件 Kaptcha 实现验证码功能，并且使用脚本定时备份数据库文件和系统信息。
+- 项目部署：阿里云
 
-## 二、项目模块分解
+## 二、项目整体场景模块功能分解
 
 - 通用模块
     - 通用 DAO 开发
@@ -36,10 +34,18 @@ v1.1 共计 13262 词，读完预计需要 35 分钟，因为纯手码可能存�
   - 店铺类别展示
   - 区域详情展示
   - 店铺详情页开发
+      - 店铺列表展示
+      - 店铺名称查询
+      - 店铺详情
+  - 商品详情页开发
+      - 商品列表展示
+      - 商品名称查询
+      - 商品详情
   - 搜索功能开发
   
-- 商家模块
-  - 账号维护
+- 商家系统模块
+  - Local账号维护
+  - 微信账号维护（未完成）
   - 店铺信息维护
   - 权限验证
   - 商品类别维护
@@ -51,20 +57,139 @@ v1.1 共计 13262 词，读完预计需要 35 分钟，因为纯手码可能存�
   - 店铺管理
   - 用户管理
 
+### 实体类解析
+
+![image-20200718103837447](README.resource/image-20200718103837447.png)
+
+### 各个实体类对应的属性详解
+
+- 区域（com.gjxaiou.entity.Area.java）=》对应的表为：`tb_area`
+
+    > 注意：各个属性的类型为包装类，因为基本数据类型会对空值进行默认赋值，会造成错误。因为默认空值就是空值。
+
+    - ID：唯一性保证
+    - 权重：权重越大，展示越靠前
+    - 创建时间
+    - 修改时间
+    - 名称
+
+- 用户信息（com.gjxaiou.entity.PersonInfo.java）=》
+
+    - ID
+    - 姓名
+    - 头像地址
+    - 邮箱
+    - 性别
+    - 状态：判断该用户时候有权限登录该商铺进行操作
+    - 身份标识：表示用户是顾客、店家或者超级管理员
+
+- 微信账号（com.gjxaiou.entity.WechatAuth.java）=》`tb_wechat_auth`
+
+    - ID
+    - 用户Local ID：两者进行相关联==这里直接引入 personInfo 实体类==
+    - OpenID：是微信账号和公众号绑定的唯一标识
+    - 创建时间
+
+- 本地账号（com.gjxaiou.entity.LocalAuth.java）=》
+
+    - ID
+    - 用户 Local ID：==同样直接引入 PersonInfo 实体类==
+    - 用户名
+    - 密码
+    - 创建时间
+
+- 头条（com.gjxaiou.entity.HeadLine.java）
+
+    - ID
+    - 权重：用于展示的优先级
+    - 状态：该头条是否可用， 0 表示不可用， 1 表示可用
+    - 名称
+    - 链接：该头条点击之后跳转的链接地址
+    - 图片
+    - 创建时间
+    - 修改时间
+
+- 店铺类别(com.gjxaiou.entiry.ProductCategory.java)
+
+    - ID
+    - 上级 ID：如主页面上有“美食饮品”分类，然后点击之后里面还有“奶茶”和“大排档”等等二级分类
+    - 名称
+    - 描述
+    - 图片
+    - 创建时间
+    - 修改时间
+
+- 商品详情图片（com.gjxaiou.entity.ProductImg.java）
+
+    - ID
+    - 图片地址
+    - 图片显示说明
+    - 图片权重
+    - 创建时间
+    - 商品 ID
+
+- 商品(com.gjxaiou.entity.Product.java)
+
+    - ID
+    - 类别 ID
+    - 商品名称
+    - 商品描述
+    - 缩略图地址
+    - 商品原价
+    - 商品折扣价
+    - 商品对应店铺 ID
+    - 商品状态：0 表示商品下架了， 1 表示在前端系统展示
+    - 商品修改时间
+    - 商品创建时间
+    - 商品权重
+
 ## 三、数据库建表
 
 数据库名称：`o2o`
 
-- `tb_area`：区域信息；包括：区域 ID、区域名称、区域权重、区域创建时间、区域修改时间；
-- `tb_head_line`：头条，即首页轮播图；包括：ID 号、名称、图片、权重、状态、链接、创建时间、修改时间；
-- `tb_shop_category`：店铺类别；包括：店铺类别 ID 号、名称、权重、描述、图片、上级ID、创建时间、修改时间；
-- `tb_shop`：商铺信息；包括：店铺 ID、店铺名称、店铺状态、店铺描述、店铺照片、店铺联系方式、店铺地址、店铺建议、店铺权重、店铺创建时间、店铺修改时间、店铺对应的区域ID、店铺对应的类别ID、店铺对应用户ID；
-- `tb_product_category`：商品类别；商品类别 ID、店铺 ID、商品类别名、商品类别描述、商品类别优先级、创建时间、修改时间；
-- `tb_product`：商品信息；包括：商品 ID、商品名称、商品状态、商品描述、商品缩略图、商品原价、商品折扣价、商品权重、商品创建时间、商品修改时间、商品对应类别 ID、商品对应店铺 ID；
-- `tb_product_img`：商品图片；包括：商品图片 ID、商品 ID、图片地址、图片描述、图片优先级、创建时间、修改时间；
+- `tb_area`：区域信息；包括：区域 ID、区域名称、区域权重、区域创建时间、区域修改时间；==表中有唯一 key 是索引的一种的==。
+
+    ![image-20200718112234166](README.resource/image-20200718112234166.png)
+
 - `tb_person_info`：用户信息；包括：用户 ID、姓名、性别、头像、邮箱、状态、身份标识、创建时间、修改时间；
-- `tb_local_auth`：本地用户信息，包括：本地用户 id，用户 id，用户名，密码，创建时间；
+
+    ![image-20200718112207158](README.resource/image-20200718112207158.png)
+
 - `tb_wechat_auth`：微信用户信息；包括：微信open id、用户id、创建时间；
+
+- ![image-20200718113138769](README.resource/image-20200718113138769.png)
+
+    ![image-20200718113019926](README.resource/image-20200718113019926.png)
+
+    **注意：**这里创建了主键和外键，同时对 open_id 增加了唯一索引（业务上改 key 必须唯一，性能上会通过该 key 来检索表中 WeChat 的信息，用于提高查询效能）。
+
+    `alter table tb_wechat_auth add unique index(open_id);`
+
+- `tb_local_auth`：本地用户信息，包括：本地用户 id，用户 id，用户名，密码，创建时间；
+
+    **用户名必须唯一**，所以添加了唯一键。
+
+    ![image-20200718113332737](README.resource/image-20200718113332737.png)
+
+- `tb_head_line`：头条，即首页轮播图；包括：ID 号、名称、图片、权重、状态、链接、创建时间、修改时间；
+
+    ![image-20200718114304515](README.resource/image-20200718114304515.png)
+
+- `tb_shop_category`：店铺类别；包括：店铺类别 ID 号、名称、权重、描述、图片、上级ID、创建时间、修改时间；**通过 shopid 外键和 shop 进行关联**。
+
+    ![image-20200718115640051](README.resource/image-20200718115640051.png)
+
+- `tb_product_img`：商品图片；包括：商品图片 ID、商品 ID、图片地址、图片描述、图片优先级、创建时间、修改时间；**包括主键和外键，外键使用 product_id 和 表 tb_product 进行关联。**
+
+    ![image-20200718115932471](README.resource/image-20200718115932471.png)
+
+- `tb_product`：商品信息；包括：商品 ID、商品名称、商品状态、商品描述、商品缩略图、商品原价、商品折扣价、商品权重、商品创建时间、商品修改时间、商品对应类别 ID、商品对应店铺 ID；**分别和 商品类别表和店铺表是主外键的关系**。
+
+    ![image-20200718120618036](README.resource/image-20200718120618036.png)
+
+- `tb_shop`：商铺信息；包括：店铺 ID、店铺名称、店铺状态、店铺描述、店铺照片、店铺联系方式、店铺地址、店铺建议、店铺权重、店铺创建时间、店铺修改时间、店铺对应的区域ID、店铺对应的类别ID、店铺对应用户ID；
+
+- `tb_product_category`：商品类别；商品类别 ID、店铺 ID、商品类别名、商品类别描述、商品类别优先级、创建时间、修改时间；
 
 ## 四、系统环境设计
 
@@ -100,17 +225,24 @@ v1.1 共计 13262 词，读完预计需要 35 分钟，因为纯手码可能存�
 
 - 首先是 SSM 基本配置：
     - `db.properties`  配置数据库连接信息；
+    
     - `mybatis-config` 配置 MyBatis 的全局属性，包括使用 JDBC 的 getGeneratedKeys 获取数据库的自增主键值；
+    
     - `spring-dao.xml` 配置整合 MyBatis  的过程，包括数据库相关参数配置文件（`db.properties`）位置，数据库连接池（数据库连接池属性， 关闭自动提交等等），配置 `SqlSessionFactory` 对象，配置扫描 Dao 接口包，实现交由 Spring 容器管理；
+    
     - `spring-service.xml` 首先配置扫描 service 包下面所有使用注解的类型，然后配置事务管理器，同时配置基于注解的声明式事务；
+    
     - `spring-web.xml` 配置 SpringMVC，开启 SpringMVC 的注解模式，配置静态资源位置，自定义视图解析器，文件上传解析器；
+    
+        上述配置完成之后，需要在 web.xml 中整合 Spring 配置。
+    
     - `web.xml` 配置 DispatcherServlet，即 SpringMVC 需要加载的配置文件
 - 日志配置：
   
     - 配置日志的记录级别，保存时间，输出位置，输出格式等；
     
 
-## 五、具体实践
+## 五、具体模块实践
 
 ### （一）Spring 相关配置文件解析
 
@@ -144,6 +276,7 @@ v1.1 共计 13262 词，读完预计需要 35 分钟，因为纯手码可能存�
 
     - 首先配置加载 Redis 配置文件位置
 - 然后创建 Redis 连接池，并且做相关的配置
+  
     - 创建 Redis 工具类，封装好的 Redis 的连接以进行相关操作。
     
 - `db.properties`
@@ -376,7 +509,7 @@ v1.1 共计 13262 词，读完预计需要 35 分钟，因为纯手码可能存�
 
      * 批量添加商品详情页图片
 `int batchInsertProductImg(List<ProductImg> productImgList);`
-    
+     
      * 根据店铺 Id 删除该店铺下所有详情图片
 `int deleteProductImgByProductId(long productId);`
     
@@ -540,6 +673,22 @@ v1.1 共计 13262 词，读完预计需要 35 分钟，因为纯手码可能存�
     }
     ```
 
+
+
+==实现模块步骤==
+
+- 步骤一：商家模块
+
+    - 先实现店铺的增删改查
+
+        - 店铺注册
+
+            主要学习目标包括：连接数据库， MyBatis 数据库表映射关系的配置， dao ->service ->controller 层代码编写以及 Junit 的使用。Session以及图片处理工具 Thumbnailator 使用， suiMobile 前端设计与开发。
+
+    - 然后实现商品的增删改查
+
+
+
 ## 六、具体模块分析
 
 ### （一）前端展示模块
@@ -625,7 +774,7 @@ v1.1 共计 13262 词，读完预计需要 35 分钟，因为纯手码可能存�
     
 - Controller 层
 
-    主要包括 `com.gjxaiou.web.shopAdmin.ProductManagerController.java` 和 `com.gjxaiou.web.shopAdmin.ProductCategoryManagerController.java`
+    主要包括 `com.gjxaiou.web.shopadmin.ProductManagerController.java` 和 `com.gjxaiou.web.shopadmin.ProductCategoryManagerController.java`
 
     - `addProduct()` 对应的请求路径就是 `/shopAdmin/addProduct`，当然因为是添加商品，所有需要有上传的数据，因此使用 POST 请求。
 
@@ -680,7 +829,7 @@ v1.1 共计 13262 词，读完预计需要 35 分钟，因为纯手码可能存�
         - 步骤三：判断上面条件符合之后调用 Service 来处理并返回结果。
         - 步骤四：将返回结果作为 value（每个 value 添加对应的 key），放入视图中返回。
 
-    `com.gjxaiou.web.shopAdmin.ProductCategoryManagerController.java` 里面的方法类似，省略。
+    `com.gjxaiou.web.shopadmin.ProductCategoryManagerController.java` 里面的方法类似，省略。
 
 #### 2.针对店铺信息与类别维护
 
@@ -739,6 +888,8 @@ v1.1 共计 13262 词，读完预计需要 35 分钟，因为纯手码可能存�
 - Mapper：对应的 Mapper 为 `ShopMapper.xml`；
 
 - Service 层
+
+    ==在 写Service 层之前，一般先定义 dto，因为操作店铺返回值不仅仅包括 shop 类，同样包括一些状态信息，然后返回给 controller 层处理，因此需要 dto 类，dto 中的返回状态值是使用枚举类型来保存的==
 
     提供接口：`com.gjxaiou.service.ShopService.java`：增加店铺；更新店铺信息（包括对图片的处理）； 通过店铺 Id 获取店铺信息；根据店铺的状态进行分页查询。
 
@@ -816,7 +967,7 @@ v1.1 共计 13262 词，读完预计需要 35 分钟，因为纯手码可能存�
 
 - Controller 层
 
-    这里对应的 Controller 层一共包括三个：`com.gjxaiou.web.frontEnd.ShopDetailController.java` ， `com.gjxaiou.web.frontEnd.shopListController.java` 以及 `com.gjxaiou.web.shopAdmin.shopManagerController.java` 。
+    这里对应的 Controller 层一共包括三个：`com.gjxaiou.web.frontEnd.ShopDetailController.java` ， `com.gjxaiou.web.frontEnd.shopListController.java` 以及 `com.gjxaiou.web.shopadmin.shopManagerController.java` 。
 
     首先是 `com.gjxaiou.web.frontEnd.shopDetailController.java`
 
@@ -832,7 +983,7 @@ v1.1 共计 13262 词，读完预计需要 35 分钟，因为纯手码可能存�
     - `listShopsPageInfo` 方法是返回商品列表的一级或者二级区域信息列表，访问路径为：`/frontEnd/listShopsPageInfo`，首先取出 GET 请求中 key 为 `parentId`的值，如果该值存在就取出所有的二级列表，则新建一个 ShopCategory 对象，然后赋值调用 ` shopCategoryService.getShopCategoryList()` 进行查询，然后返回即可，如果 `parentId` 不存在，则将查询条件设置为 parentId = null 即可。
     - 其他方法类似不在展开。
 
-    针对 `com.gjxaiou.web.shopAdmin.shopManagerController.java`
+    针对 `com.gjxaiou.web.shopadmin.shopManagerController.java`
 
     - `registerShop`  方法实现店铺注册功能。==可以着重理解这里==
 
@@ -896,10 +1047,11 @@ v1.1 共计 13262 词，读完预计需要 35 分钟，因为纯手码可能存�
             shop.setOwner(owner);
             ```
             
+    
     然后根据这些信息调用 `shopService.addShop()` 来实现正式的插入店铺。
-        
-    - `modifyShop` 方法作用是修改店铺信息，当然使用的是 POST 请求。
-
+    
+- `modifyShop` 方法作用是修改店铺信息，当然使用的是 POST 请求。
+  
         - 步骤一：判断用户的验证码是否正确；
         - 步骤二：从 request 中取出 key 为 shopStr 的店铺信息字符串，然后使用 Jackson 的 ObjectMapper 类的 readValue 方法将其转换为 Shop 实体类。
         - 步骤三：同上面方法处理店铺图片；
@@ -1006,7 +1158,7 @@ DTO(data transfer object)：数据传输对象，以前被称为值对象(VO,val
  - 导包 Kaptcha
  - web.xml 中使用servlet 生成验证码的相关设置
  - shopOperation.html 中引入验证码控件
- 其中控件中有点击方法，点击就换一张验证码图片，因此使用 js/common/common.js 实现，然后在 shopOperation.js
+ 其中控件中有点击方法，点击就换一张验证码图片，因此使用 js/common/common.js 实现，然后在 shopoperation.js
     中将生成的验证码传入，最后在 shopOperation.HTML 中引入上面的 js
   
 - 同样后端实现方法 CodeUtil.java 实现判断验证码是否正确  ;
@@ -1048,7 +1200,7 @@ MySQL 的主从复制功能不仅可以实现数据的多处自动备份，从�
 
 
 - 虚拟机一：Master 主机
-  - 修改 `/etc/my.cnf` 中配置 
+  - 修改 `/etc/my.cnf` 中配置 ，然后重启数据库：`service mysqld restart`
 
 ```linux
 server-id=1 # 设置 server-id
@@ -1087,7 +1239,7 @@ relay-log=slave-relay-bin
 ```
 - 从库重启 mysql 之后，打开 mysql 回话，执行下面语句；
 ```mysql
-CHANGE MASTER TO  MASTER_HOST='192.168.238.136',master_user='repl',master_password='GJXAIOU_o2o',master_log_file='master-bin.000002',master_log_pos=1265;
+CHANGE MASTER TO  MASTER_HOST='192.168.238.136',master_post=3306,master_user='repl',master_password='GJXAIOU_o2o',master_log_file='master-bin.000002',master_log_pos=1265;
 ```
 访问主库的IP地址，从 3306端口访问，使用 repl 账号，密码是 GJXAIOU_o2o，读取的文件是 `master-bin.000002`，从 1265 位置开始读取；
 
@@ -1203,5 +1355,234 @@ cmd 中使用：`mysqldump -u用户名 -p 数据库名 数据表名 > 导出的�
   这里设置 key = AREA_LIST_KEY ，首先判断 keys类型对象 jedisKeys 中是否包括该 key，当然第一次时候是没有的，这时候调用 AreaDao 的 queryArea() 方法来查询数据并返回， 同时将返回结果转换为 JSON 字符串，最后将 key 和对应的 JSON字符串使用 set 方法保存到 value 类型为 String 的 jedisString 对象中。
 
   如果不是第一次访问，即相当于经过上一步之后 jedisKeys 中已经含有了对应的 key，这样就直接从 jedisString 对象中通过 key 就可以获取对应的 value 值，然后可以将其转换为 List 即可；
+
+
+
+### 验证码：
+
+- 步骤一：在 pom.xml 中导包
+
+    ```xml
+     <!-- 验证码 -->
+            <dependency>
+                <groupId>com.github.penggle</groupId>
+                <artifactId>kaptcha</artifactId>
+                <version>2.3.2</version>
+            </dependency>
+    ```
+
+- 步骤二：在 web.xml 中编写对应的 Servlet，该 Servlet 负责生产验证码。并且进行一些基本配置
+
+    ```xml
+       <servlet>
+            <!-- 生成图片的Servlet -->
+            <servlet-name>Kaptcha</servlet-name>
+            <!--该 Servlet class 负责处理该 Servlet 请求-->
+            <servlet-class>com.google.code.kaptcha.servlet.KaptchaServlet</servlet-class>
+            <!--下面定义各种样式-->
+            <!-- 是否有边框 -->
+            <init-param>
+                <param-name>kaptcha.border</param-name>
+                <param-value>no</param-value>
+            </init-param>
+            <!-- 字体颜色 -->
+            <init-param>
+                <param-name>kaptcha.textproducer.font.color</param-name>
+                <param-value>red</param-value>
+            </init-param>
+            <!-- 图片宽度【验证码都是图片的】 -->
+            <init-param>
+                <param-name>kaptcha.image.width</param-name>
+                <param-value>135</param-value>
+            </init-param>
+            <!-- 使用哪些字符生成验证码 -->
+            <init-param>
+                <param-name>kaptcha.textproducer.char.string</param-name>
+                <param-value>ACDEFHKPRSTRWX345679</param-value>
+            </init-param>
+            <!-- 图片高度 -->
+            <init-param>
+                <param-name>kaptcha.image.height</param-name>
+                <param-value>50</param-value>
+            </init-param>
+            <!-- 字体大小 -->
+            <init-param>
+                <param-name>kaptcha.textproducer.font.size</param-name>
+                <param-value>43</param-value>
+            </init-param>
+            <!-- 干扰线的颜色 -->
+            <init-param>
+                <param-name>kaptcha.noise.color</param-name>
+                <param-value>black</param-value>
+            </init-param>
+            <!-- 字符个数 -->
+            <init-param>
+                <param-name>kaptcha.textproducer.char.length</param-name>
+                <param-value>4</param-value>
+            </init-param>
+            <!-- 使用哪些字体 -->
+            <init-param>
+                <param-name>kaptcha.textproducer.font.names</param-name>
+                <param-value>Arial</param-value>
+            </init-param>
+        </servlet>
+     <!-- 映射的url -->
+        <servlet-mapping>
+            <servlet-name>Kaptcha</servlet-name>
+            <url-pattern>/Kaptcha</url-pattern>
+        </servlet-mapping>
+    ```
+
+- 步骤三，在 shopoperation.html 中进行引入
+
+    ```html
+    <!-- 验证码: kaptcha -->
+    <li>
+        <div class="item-content">
+            <div class="item-inner">
+                <div class="item-title label">验证码</div>
+                <input type="text" id="v_kaptcha" placeholder="验证码">
+                <div class="item-input">
+                    <img id="kaptcha_img" alt="点击更换" title="点击更换"
+                         onclick="changeValidateCode(this)" src="../Kaptcha" />
+                </div>
+            </div>
+        </div>
+    </li>
+    ```
+
+    其中针对验证码图片增加一个 Onclick 事件，需要一个对应的响应，该响应在 resource/js/common/common.js 中实现 changeValidateCode 方法点击事件。
+    
+    ```js
+    function changeVerifyCode(img) {
+        img.src = "../Kaptcha?" + Math.floor(Math.random() * 100);
+    }
+    ```
+    
+    然后在 resources/js/shop/shopoperation.js 中进行点击事件配置即可，即生成新的验证码然后传入后台。
+
+- 步骤四：接收验证码，然后验证 util/CodeUtil.java
+
+    ```java
+    package com.gjxaiou.util;
+    
+    import javax.servlet.http.HttpServletRequest;
+    
+    /**
+     * @author GJXAIOU
+     * @create 2019-10-19-14:30
+     */
+    public class CodeUtil {
+        public static boolean checkVerifyCode(HttpServletRequest request) {
+            // 从 session 中得到实际的验证码
+            String verifyCodeExpected = (String) request.getSession().getAttribute(
+                    com.google.code.kaptcha.Constants.KAPTCHA_SESSION_KEY);
+            // 输入的验证码
+            String verifyCodeActual = HttpServletRequestUtil.getString(request,
+                    "verifyCodeActual");
+            if (verifyCodeActual == null
+                    || !verifyCodeActual.equalsIgnoreCase(verifyCodeExpected)) {
+                return false;
+            }
+            return true;
+        }
+    }
+    
+    ```
+
+    然后在店铺注册 ShopManagermentController.java 中进行逻辑引入。
+
+    ```java
+     private Map<String, Object> registerShop(HttpServletRequest request) {
+            Map<String, Object> modelMap = new HashMap<>();
+    
+            // 1.首先判断用户的验证码是否正确
+            if (!CodeUtil.checkVerifyCode(request)) {
+                modelMap.put("success", false);
+                modelMap.put("errMsg", "输入的验证码错误");
+                return modelMap;
+            }
+    
+    ```
+
+    
+
+## 加密（jdbc.properties 中的用户名和密码）
+
+利用 PropertyPlaceholderConfigurer 实现对称加密
+
+首先编写加密类，将用户名和密码进行加密之后放在 jdbc.properties 文件中，当用到该文件的时候，需要对这些信息进行解密然后读取其值赋值到 spring-dao.xml 中的属性中。
+
+原本是spring-dao.xml 通过 `<context:property-placeholder location="classpath:db.properties" ignore-unresolvable="true"/>` 将 jdbc.peoperties 文件载入进来，然后获取其键值对，并将其赋值到 spring-dao.xml 中的`${jdbc.drive}`的中。
+
+该配置 `context:property-placeholder` 就是 PropertyPlaceHolderConfig 类的化身，该类的 Bean 工厂后置处理器的实现，即 BeanFactoryProcessor 接口的一个实现。该类可以将上下文的属性值放在一个标准 Java 属性 properties 文件中，然后在 XML 中使用 `${key}` 进行取值，从而只要修改 properties 中值，不需要修改 XML  文件中值。
+
+我们需要一个类来实现上面的类，然后对其中一些方法进行改写从而实现加密
+
+因为需要加密和解密，这里使用 DES 加密，工具类为：DESUtil。加密的时候直接在该工具类中使用 Main 方法调用加密函数，传入账号和密码进行加密即可，只需要调用一次，然后将加密之后的值替换掉原来的 jdbc.properties 文件中数据库配置的用户名和密码。
+
+然后需要在程序启动的时候，即 Tomcat 启动加载到 spring-dao.xml 时候将上面的加密信息进行解密。因此需要编写一个类 EncryptPropertyPlaceholderConfigurer 继承 PropertyPlaceholderConfigurer，然后重写convertProperty
+
+最后在 spring-dao.xml 中配置这个 Bean 就行
+
+```xml
+ <!--数据库和 Redis 加密配置时候使用-->
+    <bean class="com.gjxaiou.util.EncryptPropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:db.properties</value>
+                <value>classpath:redis.properties</value>
+            </list>
+        </property>
+        <property name="fileEncoding" value="utf-8"></property>
+    </bean>
+```
+
+
+
+
+
+
+
+## Redis 
+
+![image-20200719201424762](README.resource/image-20200719201424762.png)
+
+RDB =>  使用子进程进行持久化，不耽误主进程。但是会造成数据丢失，是数据要求不严格的时候适合使用。
+
+存储机制默认设置为：如果修改了一个 key 则间隔 900 秒之后进行一次持久化存储。如果修改了十个 key 则间隔 300 秒之后进行一次持久化存储。如果修改了一万个 key 则在修改之后一分钟之后进行一次持久化存储。恢复RDB 数据简单，直接重启就行。
+
+
+
+**将一些不常更改的信息，如店铺类别、区域信息和头条信息 存入 REdis**。有修改就清空。
+
+![image-20200719202250134](README.resource/image-20200719202250134.png)
+
+
+
+Jedis 是一个服务于 Java 的 Redis 客户端，用来封装 Redis 操作并且和 Redis 进行通信。
+
+使用之前引入 Jar 包，然后配置 redis.properties 和 spring-redis.xml。
+
+项目中 Redis 的数据结构仅仅使用了 String 数据结构，在 JedisUtil 类中定义了。String 是二进制安全的，所有可以接受任何格式的数据，包括图像、JSON 等等。同时 Redis 中的 String 可以最长容纳 512 M，足够使用了。
+
+远程连接 Redis 时候需要先将配置文件 redis.conf 中的 protectedMode 改为 false。然后重启。
+
+重启过程为：先使用 `ps -ef|grep redis` 查看 Redis 进程编号，然后 `kill -9 进程号`。最后启动就行 `src/redis-server redis.conf` 即可。
+
+- 针对区域信息：改写 AreaServiceImpl 类。
+
+- 针对头条：改写 HeadLineServiceImpl 类。
+
+- 店铺类别也是：shopCategoryServiceImp：这里面根据不同的条件设置不同的 key
+
+    
+
+    如果信息修改就直接将该 key 移除。移除方法在 CacheService 接口中。删除范围比较大。如果有一个 key 修改了。直接将前缀相同的 key 全部删除了。
+
+    
+
+
+
 
 

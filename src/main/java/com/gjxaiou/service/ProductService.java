@@ -44,8 +44,8 @@ public interface ProductService {
     /**
      * 修改商品信息和对应的图片处理
      * @param product
-     * @param thumbnail
-     * @param productImageHolderList
+     * @param thumbnail：商品缩略图
+     * @param productImageHolderList：商品详情图列表
      * @return
      * @throws ProductOperationException
      */

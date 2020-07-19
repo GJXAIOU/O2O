@@ -52,6 +52,7 @@ public class HeadLineServiceImpl implements HeadLineService {
 		List<HeadLine> headLineList = null;
 		ObjectMapper mapper = new ObjectMapper();
 		String key = HL_LIST_KEY;
+		// 这里根据 headLineCondition 是 0 或者 1 不同来拼接不同的 key。最终包括三种 headline：全部，可用，不可用
 		if (headLineCondition.getEnableStatus() != null) {
 			key = key + "_" + headLineCondition.getEnableStatus();
 		}

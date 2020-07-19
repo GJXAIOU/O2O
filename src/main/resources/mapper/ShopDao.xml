@@ -3,42 +3,44 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<!-- 因为涉及到多表查询（因为 Shop 类中有其他类的实例），需要配置 <resultMap> -->
-    <!--<resultMap>中即配置该类所有属性值和数据库中字段的对应关系，涉及到其他类需要使用 <association> 标签-->
+<!-- 因为涉及到多表查询（因为 Shop 类中有其他类的实例【tb_shop 中只有 shop_category_id，所以需要和 tb_shop_category 表联合查询得到
+shop_category_name，和 tb_area 连接获取 area_name ），需要配置 <resultMap> -->
+<!--<resultMap>中即配置该类所有属性值和数据库中字段的对应关系，涉及到其他类需要使用 <association> 标签-->
 <mapper namespace="com.gjxaiou.dao.ShopDao">
     <resultMap id="shopMap" type="com.gjxaiou.entity.Shop">
+        <!--定义主键-->
         <id column="shop_id" property="shopId"></id>
-        <result column="owner_id" property="ownerId" />
-        <result column="shop_name" property="shopName" />
-        <result column="shop_desc" property="shopDesc" />
-        <result column="shop_addr" property="shopAddr" />
-        <result column="phone" property="phone" />
-        <result column="shop_img" property="shopImg" />
-        <result column="priority" property="priority" />
-        <result column="create_time" property="createTime" />
-        <result column="last_edit_time" property="lastEditTime" />
-        <result column="enable_status" property="enableStatus" />
-        <result column="advice" property="advice" />
+        <result column="owner_id" property="ownerId"/>
+        <result column="shop_name" property="shopName"/>
+        <result column="shop_desc" property="shopDesc"/>
+        <result column="shop_addr" property="shopAddr"/>
+        <result column="phone" property="phone"/>
+        <result column="shop_img" property="shopImg"/>
+        <result column="priority" property="priority"/>
+        <result column="create_time" property="createTime"/>
+        <result column="last_edit_time" property="lastEditTime"/>
+        <result column="enable_status" property="enableStatus"/>
+        <result column="advice" property="advice"/>
         <!-- property 对应类中属性值，column 为该属性值对应的数据库中字段，JavaType 表示该属性类型 -->
         <association property="area" column="area_id" javaType="com.gjxaiou.entity.Area">
             <id column="area_id" property="areaId"></id>
             <result column="area_name" property="areaName"></result>
         </association>
-        <association property="ower" column="user_id"
+        <association property="owner" column="user_id"
                      javaType="com.gjxaiou.entity.PersonInfo">
             <id column="user_id" property="userId"></id>
             <result column="name" property="name"></result>
         </association>
         <association property="shopCategory" column="shop_category_id"
                      javaType="com.gjxaiou.entity.ShopCategory">
-            <id column="shop_category_id" property="shopCategoryId" />
-            <result column="shop_category_name" property="shopCategoryName" />
+            <id column="shop_category_id" property="shopCategoryId"/>
+            <result column="shop_category_name" property="shopCategoryName"/>
         </association>
     </resultMap>
 
-<!--  根据店铺 ID 查询店铺：queryByShopId -->
+    <!--  根据店铺 ID 查询店铺：queryByShopId -->
     <select id="queryByShopId" resultMap="shopMap" parameterType="Long">
-    select
+    SELECT
     s.shop_id, s.shop_name, s.shop_desc, s.shop_addr, s.phone, s.shop_img, s.priority,
     s.create_time, s.last_edit_time, s.enable_status, s.advice,
     a.area_id, a.area_name,
@@ -53,7 +55,7 @@
     s.shop_id=#{shopId}
     </select>
 
-<!-- 查询返回与该店铺状态相同的店铺数：queryShopCount -->
+    <!-- 查询返回与该店铺状态相同的店铺数：queryShopCount,配合下面的查询列表使用-->
     <select id="queryShopCount" resultType="int">
         select
         count (1)
@@ -112,22 +114,26 @@
     </select>
 
 
-<!-- 新增店铺：insertShop -->
-    <!--userGeneratedKeys = "true" 表示数据一旦插入成功，就使用 JDBC 获取主键值，然后将其插入传入的实体类Shop 对象中
+    <!-- 新增店铺：insertShop -->
+    <!--userGeneratedKeys = "true" 表示数据一旦插入成功，就使用 JDBC 获取主键值，然后将其插入传入的实体类Shop 对象中。
+    因为在新增店铺的同时需要存储店铺的图片，需要将属于该店铺的图片存储在该店铺目录下，因此需要店铺主键来区分店铺，所以店铺添加完成之后立刻返回店铺 ID。
+    因为可以添加完成之后再次获取但是麻烦同时多线程时候可能出错。
          后面为数据库中主键字段，然后是其类中对应的属性名-->
     <insert id="insertShop" useGeneratedKeys="true" keyColumn="shop_id" keyProperty="shopId">
-        insert into
-         tb_shop(owner_id, area_id, shop_category_id, shop_name, shop_desc, shop_addr, phone,
+        INSERT INTO
+        tb_shop(owner_id, area_id, shop_category_id, shop_name, shop_desc, shop_addr, phone,
         shop_img, priority, create_time, last_edit_time, enable_status, advice)
-        values
+        VALUES
+        <!--因为传输的是一个对象，打开 shop 实体类中有一个 PersonInfo 类型的 owner 属性，其他类似-->
         (#{owner.userId},#{area.areaId},#{shopCategory.shopCategoryId},
-         #{shopName},#{shopDesc},#{shopAddr},#{phone},#{shopImg}, #{priority},#{createTime},#{lastEditTime},#{enableStatus},#{advice})
+        #{shopName},#{shopDesc},#{shopAddr},#{phone},#{shopImg},
+        #{priority},#{createTime},#{lastEditTime},#{enableStatus},#{advice})
 
     </insert>
 
-<!-- 更新店铺：updateShop -->
+    <!-- 更新店铺：updateShop -->
     <update id="updateShop" parameterType="com.gjxaiou.entity.Shop">
-        update tb_shop
+        UPDATE tb_shop
         <set>
             <if test="shopName != null">shop_name=#{shopName},</if>
             <if test="shopDesc != null">shop_desc=#{shopDesc},</if>
@@ -141,14 +147,15 @@
             <if test="area != null">area_id=#{area.areaId},</if>
             <if test="shopCategory != null">shop_category_id=#{shopCategory.shopCategoryId}</if>
         </set>
-        where
+        WHERE
         shop_id=#{shopId}
     </update>
 
     <!--分页查询所有店铺：queryShopList-->
     <select id="queryShopList" resultMap="shopMap">
         SELECT
-        s.shop_id, s.shop_name, s.shop_desc, s.shop_addr, s.phone, s.shop_img, s.priority, s.create_time,s.last_edit_time,s.enable_status, s.advice,
+        s.shop_id, s.shop_name, s.shop_desc, s.shop_addr, s.phone, s.shop_img, s.priority,
+        s.create_time,s.last_edit_time,s.enable_status, s.advice,
         a.area_id,a.area_name,
         sc.shop_category_id,sc.shop_category_name
         FROM

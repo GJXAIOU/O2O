@@ -3,6 +3,7 @@ package com.gjxaiou.dto;
 import lombok.Data;
 
 /**
+ * 和 modelMap 类似，都是封装数据
  * @author GJXAIOU
  * @create 2019-11-04-15:52
  */
