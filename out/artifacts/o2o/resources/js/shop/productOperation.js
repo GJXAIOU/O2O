@@ -1,12 +1,13 @@
+// 判断该页面是用于商品添加的还是商品编辑的，如果 url 后面包括 shopId 就是编辑否则就是商品新增。因为两者共用一个页面
 $(function() {
 	// 从URL里获取productId参数的值
 	var productId = getQueryString('productId')
 	// 通过productId获取商品信息的URL
-	var infoUrl = '/o2o/shopAdmin/getProductById?productId=' + productId;
+	var infoUrl = '/shopadmin/getproductbyid?productId=' + productId;
 	// 获取当前店铺设定的商品类别列表的URL
-	var categoryUrl = '/o2o/shopAdmin/getProductCategoryList';
+	var categoryUrl = '/shopadmin/getproductcategorylist';
 	// 更新商品信息的URL
-	var productPostUrl = '/o2o/shopAdmin/modifyProduct';
+	var productPostUrl = '/shopadmin/modifyproduct';
 	// 由于商品添加和编辑使用的是同一个页面，该表示符用来表明本次是添加操作还是编辑操作
 	var isEdit = false;
 	if (productId) {
@@ -15,7 +16,7 @@ $(function() {
 		isEdit = true;
 	} else {
 		getCategory();
-		productPostUrl = '/o2o/shopAdmin/addProduct';
+		productPostUrl = '/shopadmin/addproduct';
 	}
 
 	// 获取需要编辑的商品的商品信息，并赋值给表单

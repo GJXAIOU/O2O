@@ -6,7 +6,7 @@
 <mapper namespace="com.gjxaiou.dao.ProductCategoryDao">
 
 <!--通过 shopId 查询该店铺下所有商品类别信息: queryProductCategoryList-->
-    <select id="queryProductCategoryList" parameterType="Long">
+    <select id="queryProductCategoryList" resultType="com.gjxaiou.entity.ProductCategory" parameterType="Long">
         select
         product_category_id, product_category_name, priority, create_time, shop_id
         from 
@@ -15,14 +15,15 @@
         shop_id=#{shopId}
         order by 
         priority
-        desc 
+        DESC
     </select>
     
 <!-- 批量新增商品列表: batchInsertProductCategory  -->
     <insert id="batchInsertProductCategory" parameterType="java.util.List">
-        insert into 
+        INSERT INTO
         tb_product_category(product_category_name, priority, create_time, shop_id)
-        values 
+        values
+        -- 遍历输入列表中所有元素进行插入操作
         <foreach collection="list" item="productCategory" index="index"  open="(" close=")"
                  separator=",">
         #{productCategory.productCategoryName},#{productCategory.priority},#{productCategory.createTime},#{productCategory.shopId}

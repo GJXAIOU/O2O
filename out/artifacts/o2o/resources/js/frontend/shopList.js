@@ -5,9 +5,9 @@ $(function() {
 	// 一页的返回最大条数
 	var pageSize = 10;
 	// 获取店铺列表的URL
-	var listUrl = '/o2o/frontEnd/listShops';
+	var listUrl = '/frontend/listshops';
 	// 获取店铺里诶包及区域列表的URL
-	var searchDivUrl = '/o2o/frontEnd/listShopsPageInfo';
+	var searchDivUrl = '/frontend/listshopspageinfo';
 	// 页码
 	var pageNum = 1;
 	var parentId = getQueryString('parentId');
@@ -111,7 +111,7 @@ $(function() {
 	// 显示店铺详情页
 	$('.shop-list').on('click', '.card', function(e) {
 		var shopId = e.currentTarget.dataset.shopId;
-		window.location.href = '/o2o/frontEnd/shopDetail?shopId=' + shopId;
+		window.location.href = '/frontend/shopdetail?shopId=' + shopId;
 	});
 
 	// 选择新的店铺类别后，重置页码，清空原来的店铺列表重新加载新的搜索结果

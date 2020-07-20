@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
-  <artifact type="exploded-war" name="o2o:war exploded">
-    <output-path>$PROJECT_DIR$/out/artifacts/o2o_war_exploded</output-path>
+  <artifact type="exploded-war" name="o2o">
+    <output-path>$PROJECT_DIR$/out/artifacts/o2o</output-path>
     <root id="root">
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
