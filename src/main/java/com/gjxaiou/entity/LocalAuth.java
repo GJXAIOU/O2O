@@ -14,11 +14,24 @@ import java.util.Date;
 @Setter
 @ToString
 public class LocalAuth {
+    // 主键 ID
     private Long localAuthId;
+    /**
+     * 用户名
+     */
     private String username;
+    /**
+     * 密码
+     */
     private String password;
     private Date createTime;
+    /**
+     * 最后一次更新时间
+     */
     private Date lastEditTime;
+    /**
+     * 个人信息，关系为一一对应 =》一个账号对应一个用户
+     */
     private PersonInfo personInfo;
 
     public Long getLocalAuthId() {

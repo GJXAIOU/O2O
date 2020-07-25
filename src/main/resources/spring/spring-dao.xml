@@ -19,31 +19,8 @@
         <property name="fileEncoding" value="utf-8"></property>
     </bean>
 
-<!--    &lt;!&ndash;2.配置数据库连接池&ndash;&gt;-->
-<!--    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">-->
-<!--        &lt;!&ndash; c3p0连接池的私有属性 &ndash;&gt;-->
-<!--        <property name="maxPoolSize" value="30"/>-->
-<!--        <property name="minPoolSize" value="10"/>-->
-<!--        &lt;!&ndash; 关闭连接后不自动commit &ndash;&gt;-->
-<!--        <property name="autoCommitOnClose" value="false"/>-->
-<!--        &lt;!&ndash; 获取连接超时时间 &ndash;&gt;-->
-<!--        <property name="checkoutTimeout" value="10000"/>-->
-<!--        &lt;!&ndash; 当获取连接失败重试次数 &ndash;&gt;-->
-<!--        <property name="acquireRetryAttempts" value="2"/>-->
-
-<!--        &lt;!&ndash;不使用主从库的时候配置数据库连接池属性&ndash;&gt;-->
-<!--        <property name="driverClass" value="${jdbc.username}"></property>-->
-<!--        <property name="jdbcUrl"  value="${jdbc.url}"></property>-->
-<!--        <property name="user" value="${jdbc.username}"></property>-->
-<!--        <property name="password" value="${jdbc.password}"></property>-->
-
-<!--    </bean>-->
-
-
-    <!--配置主从库时候使用-->
     <!--2.配置数据库连接池-->
-    <bean id="abstractDataSource" abstract="true" destroy-method="close"
-          class="com.mchange.v2.c3p0.ComboPooledDataSource">
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
         <!-- c3p0连接池的私有属性 -->
         <property name="maxPoolSize" value="30"/>
         <property name="minPoolSize" value="10"/>
@@ -54,43 +31,65 @@
         <!-- 当获取连接失败重试次数 -->
         <property name="acquireRetryAttempts" value="2"/>
 
-    </bean>
-
-    <!--3.分别配置主从数据库属性-->
-    <bean id="master" parent="abstractDataSource">
-        <property name="driverClass" value="${jdbc.Driver}"></property>
-        <property name="jdbcUrl" value="${jdbc.Master.url}"/>
-        <property name="user" value="${jdbc.Master.username}"/>
-        <property name="password" value="${jdbc.Master.password}"/>
-    </bean>
-
-    <bean id="slave" parent="abstractDataSource">
-        <property name="driverClass" value="${jdbc.Driver}"></property>
-        <property name="jdbcUrl" value="${jdbc.Slave.url}"/>
-        <property name="user" value="${jdbc.Slave.username}"/>
-        <property name="password" value="${jdbc.Slave.password}"/>
+        <!--不使用主从库的时候配置数据库连接池属性-->
+        <property name="driverClass" value="${jdbc.username}"></property>
+        <property name="jdbcUrl"  value="${jdbc.url}"></property>
+        <property name="user" value="${jdbc.username}"></property>
+        <property name="password" value="${jdbc.password}"></property>
     </bean>
 
 
-    <!-- 配置动态数据源，这里的 targetDataSources 就是路由数据源所对应的名称-->
-    <bean id="dynamicDataSource" class="com.gjxaiou.dao.split.DynamicDataSource">
-        <property name="targetDataSources">
-            <map>
-                <entry value-ref="master" key="master"></entry>
-                <entry value-ref="slave"  key="slave"></entry>
-            </map>
-        </property>
-    </bean>
+<!--    &lt;!&ndash;配置主从库时候使用&ndash;&gt;-->
+<!--    &lt;!&ndash;2.配置数据库连接池&ndash;&gt;-->
+<!--    <bean id="abstractDataSource" abstract="true"-->
+<!--          class="com.mchange.v2.c3p0.ComboPooledDataSource">-->
+<!--        &lt;!&ndash; c3p0连接池的私有属性 &ndash;&gt;-->
+<!--        <property name="maxPoolSize" value="30"/>-->
+<!--        <property name="minPoolSize" value="10"/>-->
+<!--        &lt;!&ndash; 关闭连接后不自动commit &ndash;&gt;-->
+<!--        <property name="autoCommitOnClose" value="false"/>-->
+<!--        &lt;!&ndash; 获取连接超时时间 &ndash;&gt;-->
+<!--        <property name="checkoutTimeout" value="10000"/>-->
+<!--        &lt;!&ndash; 当获取连接失败重试次数 &ndash;&gt;-->
+<!--        <property name="acquireRetryAttempts" value="2"/>-->
+
+<!--    </bean>-->
+
+<!--    &lt;!&ndash;3.分别配置主从数据库属性&ndash;&gt;-->
+<!--    <bean id="master" parent="abstractDataSource">-->
+<!--        <property name="driverClass" value="${jdbc.Driver}"></property>-->
+<!--        <property name="jdbcUrl" value="${jdbc.Master.url}"/>-->
+<!--        <property name="user" value="${jdbc.Master.username}"/>-->
+<!--        <property name="password" value="${jdbc.Master.password}"/>-->
+<!--    </bean>-->
+
+<!--    <bean id="slave" parent="abstractDataSource">-->
+<!--        <property name="driverClass" value="${jdbc.Driver}"></property>-->
+<!--        <property name="jdbcUrl" value="${jdbc.Slave.url}"/>-->
+<!--        <property name="user" value="${jdbc.Slave.username}"/>-->
+<!--        <property name="password" value="${jdbc.Slave.password}"/>-->
+<!--    </bean>-->
+
+
+<!--    &lt;!&ndash; 配置动态数据源，这里的 targetDataSources 就是路由数据源所对应的名称&ndash;&gt;-->
+<!--    <bean id="dynamicDataSource" class="com.gjxaiou.dao.split.DynamicDataSource">-->
+<!--        <property name="targetDataSources">-->
+<!--            <map>-->
+<!--                <entry value-ref="master" key="master"></entry>-->
+<!--                <entry value-ref="slave"  key="slave"></entry>-->
+<!--            </map>-->
+<!--        </property>-->
+<!--    </bean>-->
 
 
 
-    <!--将这个 bean 放入连接池，做懒加载，因为得等 SQL 正式执行才将 DataSource指定-->
-    <bean id="dataSource"
-          class="org.springframework.jdbc.datasource.LazyConnectionDataSourceProxy">
-        <property name="targetDataSource">
-            <ref bean="dynamicDataSource"></ref>
-        </property>
-    </bean>
+<!--    &lt;!&ndash;将这个 bean 放入连接池，做懒加载，因为得等 SQL 正式执行才将 DataSource指定&ndash;&gt;-->
+<!--    <bean id="dataSource"-->
+<!--          class="org.springframework.jdbc.datasource.LazyConnectionDataSourceProxy">-->
+<!--        <property name="targetDataSource">-->
+<!--            <ref bean="dynamicDataSource"></ref>-->
+<!--        </property>-->
+<!--    </bean>-->
 
 
     <!--4.配置 SqlSessionFactory 对象-->

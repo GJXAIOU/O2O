@@ -1,38 +1,57 @@
 package com.gjxaiou.dao;
 
-
 import com.gjxaiou.entity.PersonInfo;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
- * @Description: 用户信息接口
- *
- * @author tyronchen
- * @date 2019年6月3日
+ * @Description: TODO(这里用一句话描述这个类的作用)
+ * @Author ASUS
+ * @Date 2019/12/1 19:02
  */
+@Repository
 public interface PersonInfoDao {
+    /**
+     * 根据查询条件分页返回用户信息列表
+     *
+     * @param personInfoCondition
+     * @param rowIndex
+     * @param pageSize
+     * @return
+     */
+    List<PersonInfo> queryPersonInfoList(@Param("personInfoCondition") PersonInfo personInfoCondition, @Param("rowIndex") int rowIndex, @Param("pageSize") int pageSize);
 
-	/**
-	 * 根据用户ID查询用户信息
-	 * 
-	 * @param userId 用户ID
-	 * @return 用户信息
-	 */
-	PersonInfo queryInfoByUserId(long userId);
+    /**
+     * 根据查询条件返回总数，配合queryPersonInfoList使用
+     *
+     * @param personInfoCondition
+     * @return
+     */
+    int queryPersonInfoCount(@Param("personInfoCondition") PersonInfo personInfoCondition);
 
-	/**
-	 * 添加平台账号
-	 * 
-	 * @param user 用户信息
-	 * @return 添加成功条数
-	 */
-	int insertPersonInfo(PersonInfo user);
+    /**
+     * 通过用户Id查询用户
+     *
+     * @param userId
+     * @return
+     */
+    PersonInfo queryPersonInfoById(long userId);
 
-	/**
-	 * 修改用户信息
-	 * 
-	 * @param user 用户信息
-	 * @return 修改成功数
-	 */
-	int updatePersonInfo(PersonInfo user);
+    /**
+     * 添加用户信息
+     *
+     * @param personInfo
+     * @return
+     */
+    int insertPersonInfo(PersonInfo personInfo);
 
+    /**
+     * 修改用户信息
+     *
+     * @param personInfo
+     * @return
+     */
+    int updatePersonInfo(PersonInfo personInfo);
 }

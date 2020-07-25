@@ -42,17 +42,17 @@
     <mvc:interceptors>
         <!-- 校验是否已登录了店家管理系统的拦截器 -->
         <mvc:interceptor>
-            <mvc:mapping path="/shopAdmin/**"/>
+            <mvc:mapping path="/shopadmin/**"/>
             <bean id="ShopLoginInterceptor"
-                  class="com.gjxaiou.interceptor.shopAdmin.ShopLoginInterceptor" />
+                  class="com.gjxaiou.interceptor.shopadmin.ShopLoginInterceptor" />
         </mvc:interceptor>
         <!-- 校验是否对该店铺有操作权限的拦截器-->
         <mvc:interceptor>
-            <mvc:mapping path="/shopAdmin/shopOperation"/>
-            <mvc:mapping path="/shopAdmin/productManagement"/>
-            <mvc:mapping path="/shopAdmin/productCategoryManagement"/>
+            <mvc:mapping path="/shopadmin/shopoperation"/>
+            <mvc:mapping path="/shopadmin/productmanagement"/>
+            <mvc:mapping path="/shopadmin/productcategorymanagement"/>
             <bean id="ShopPermissionInterceptor"
-                  class="com.gjxaiou.interceptor.shopAdmin.ShopPermissionInterceptor" />
+                  class="com.gjxaiou.interceptor.shopadmin.ShopPermissionInterceptor" />
         </mvc:interceptor>
     </mvc:interceptors>
 </beans>

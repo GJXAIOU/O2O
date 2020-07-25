@@ -31,9 +31,9 @@ public class ShopDaoTest extends BaseTest {
 		Area area = new Area();
 		ShopCategory shopCategory = new ShopCategory();
 
-		owner.setUserId(1L);
+		owner.setUserId(12L);
 		area.setAreaId(2);
-		shopCategory.setShopCategoryId(1L);
+		shopCategory.setShopCategoryId(13L);
 
 		shop.setOwner(owner);
 		shop.setArea(area);

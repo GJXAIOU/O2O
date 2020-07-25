@@ -5,25 +5,17 @@ import com.gjxaiou.dto.LocalAuthExecution;
 import com.gjxaiou.entity.LocalAuth;
 import com.gjxaiou.entity.PersonInfo;
 import com.gjxaiou.enums.LocalAuthStateEnum;
-import com.gjxaiou.enums.OperationStatusEnum;
-import com.gjxaiou.enums.PersonInfoStatusEnum;
-import com.gjxaiou.enums.PersonInfoTypeEnum;
 import com.gjxaiou.exception.LocalAuthOperationException;
 import com.gjxaiou.service.LocalAuthService;
-import com.gjxaiou.service.PersonInfoService;
 import com.gjxaiou.util.CodeUtil;
 import com.gjxaiou.util.HttpServletRequestUtil;
-import com.gjxaiou.util.MD5;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -37,10 +29,10 @@ public class LocalAuthController {
 	@Autowired
 	private LocalAuthService localAuthService;
 
-	@RequestMapping(value = "/bindLocalAuth", method = RequestMethod.POST)
+	@RequestMapping(value = "/bindlocalauth", method = RequestMethod.POST)
 	@ResponseBody
 	/**
-	 * 将用户信息与平台帐号绑定
+	 * 将用户信息与平台帐号绑定，即创建平台账号并和用户信息绑定
 	 *
 	 * @param request
 	 * @return
@@ -81,7 +73,7 @@ public class LocalAuthController {
 		return modelMap;
 	}
 
-	@RequestMapping(value = "/changeLocalPwd", method = RequestMethod.POST)
+	@RequestMapping(value = "/changelocalpwd", method = RequestMethod.POST)
 	@ResponseBody
 	/**
 	 * 修改密码
@@ -110,7 +102,7 @@ public class LocalAuthController {
 				&& !password.equals(newPassword)) {
 			try {
 				// 查看原先帐号，看看与输入的帐号是否一致，不一致则认为是非法操作
-				LocalAuth localAuth = localAuthService.queryLocalByLocalAuthId(user.getUserId());
+				LocalAuth localAuth = localAuthService.queryLocalByUserId(user.getUserId());
 				if (localAuth == null || !localAuth.getUsername().equals(userName)) {
 					// 不一致则直接退出
 					modelMap.put("success", false);
@@ -118,7 +110,8 @@ public class LocalAuthController {
 					return modelMap;
 				}
 				// 修改平台帐号的用户密码
-				LocalAuthExecution le = localAuthService.modifyLocalAuth( userName, password,
+				LocalAuthExecution le = localAuthService.modifyLocalAuth(user.getUserId(), userName,
+						password,
 						newPassword);
 				if (le.getState() == LocalAuthStateEnum.SUCCESS.getState()) {
 					modelMap.put("success", true);
@@ -139,11 +132,16 @@ public class LocalAuthController {
 		return modelMap;
 	}
 
-	@RequestMapping(value = "/loginCheck", method = RequestMethod.POST)
+	/**
+	 * 登录验证
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/logincheck", method = RequestMethod.POST)
 	@ResponseBody
 	private Map<String, Object> loginCheck(HttpServletRequest request) {
 		Map<String, Object> modelMap = new HashMap<String, Object>();
-		// 获取是否需要进行验证码校验的标识符
+		// 获取是否需要进行验证码校验的标识符，因为登录界面输入密码错误超过上次就会要求进行验证码验证
 		boolean needVerify = HttpServletRequestUtil.getBoolean(request, "needVerify");
 		if (needVerify && !CodeUtil.checkVerifyCode(request)) {
 			modelMap.put("success", false);

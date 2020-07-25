@@ -60,7 +60,7 @@
 
 
 <!--查询商品列表并分页，可以输入的条件为：商品名（支持模糊），商品状态，店铺 ID、商品类别： queryProductList-->
-    <select id="queryProductList" resultMap="com.gjxaiou.entity.Product">
+    <select id="queryProductList" resultType="com.gjxaiou.entity.Product">
         select
         product_id, product_name, product_desc, img_addr, normal_price,promotion_price, priority, create_time, last_edit_time, enable_status,product_category_id, shop_id
         from
@@ -86,7 +86,7 @@
 
 
 <!-- 查询商品总数：queryProductCount-->
-    <select id="queryProductCount" resultMap="int">
+    <select id="queryProductCount" resultType="int">
         select
         count(1)
         from

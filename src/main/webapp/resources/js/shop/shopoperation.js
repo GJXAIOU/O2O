@@ -1,137 +1,132 @@
-// 主要用户获取 html 中信息，主要功能如下：
-// 第一个首先从后台获取 商品分类、所属区域等列表的信息，然后填充到 HTML 的下拉控件中
-// 第二个就是提交的时候，将整个表单中的内容全部获取到，然后将它通过 Ajax 转发到后台进行注册店铺
+/*
 
-$(function () {
-
-    var shopId = getQueryString("shopId");
-    // 如果 shopId 没有值则默认是注册的，有值就是更新店铺
-    var isEdit = shopId ? true : false;
-    var initUrl = '/shopadmin/getshopinitinfo';
-    var registerShopUrl = '/shopadmin/registershop';
-    var shopInfoUrl = '/shopadmin/getshopbyid?shopId=' + shopId;
-    var editShopUrl = '/shopadmin/modifyshop';
-    //alert(initUrl);
-    getShopInitInfo();
-    // 初始化
-    if (isEdit) {
-        getShopInitInfo(shopId);
-    } else {
-        // js 文件刚刚加载的时候，调用该方法获取后台的区域信息，并将其填充到前端  -> 在 HTML 尾部引入 js 文件
-        getShopInfo();
-    }
-
-
-    /*
- * 根据店铺ID获取店铺信息：店铺分类和区域信息列表
  */
+$(function () {
+    //从URL里获取shopId参数的值
+    var shopId = getQueryString('shopId');
+    //由于店铺注册和编辑使用的是同一个页面，
+    //该标识符用来标明本次是添加还是编辑操作
+    var isEdit = shopId ? true : false;
+    // 用于店铺注册时候的店铺类别以及区域列表的初始化的URL
+    var initUrl='/o2o/shopadmin/getshopinitinfo';
+    // 注册店铺的URL
+    var registerShopUrl ='/o2o/shopadmin/registershop';
+    //编辑店铺前需要获取店铺信息，这里为获取当前店铺信息的URL
+    var shopInfoUrl = "/o2o/shopadmin/getshopbyid?shopId=" + shopId;
+    //编辑店铺信息的URL
+    var editShopUrl = '/o2o/shopadmin/modifyshop';
+    //判断是编辑操作还是注册操作
+    if (!isEdit){
+        getShopInitInfo()
+    } else {
+        getShopInfo(shopId)
+    }
+    //通过店铺Id获取店铺信息
     function getShopInfo(shopId) {
         $.getJSON(shopInfoUrl, function(data) {
-            // 数据存在
             if (data.success) {
+                // 若访问成功，则依据后台传递过来的店铺信息为表单元素赋值
                 var shop = data.shop;
-                // 赋值 要和shop实体类中的属性名保持一致
-                $('#shop-name').val(shop.shopName);
-                // 店铺名称不能修改
-//				$('#shop-name').attr('disabled', 'disabled');
-                $('#shop-addr').val(shop.shopAddr);
-                $('#shop-phone').val(shop.phone);
-                $('#shop-desc').val(shop.shopDesc);
-                // 商品目录进行赋值 商品目录仅仅加载对应的目录，且不可编辑
+                $('#shop_name').val(shop.shopName);
+                $('#shop_addr').val(shop.shopAddr);
+                $('#shop_phone').val(shop.phone);
+                $('#shop_desc').val(shop.shopDesc);
+                // 给店铺类别选定原先的店铺类别值
                 var shopCategory = '<option data-id="'
                     + shop.shopCategory.shopCategoryId + '" selected>'
                     + shop.shopCategory.shopCategoryName + '</option>';
-                var tempShopAreaHtml = '';
-                data.areaList.map(function(item, index) {
-                    tempShopAreaHtml += '<option data-id="' + item.areaId
-                        + '">' + item.areaName + '</option>';
-                });
-                $('#shop-category').html(shopCategory);
-                // 设置为不可编辑
-                $('#shop-category').attr('disabled', 'disabled');
-
-                // 区域进行赋值 区域可以进行编辑，并且初始设置为后台对应的区域
-                $('#area').html(tempShopAreaHtml);
-                // 初始设置为后台对应的区域
-                $("#area option[data-id='" + shop.area.areaId + "']")
-                    .attr("selected", "selected");
-            } else {
-                $.toast(data.errMsg);
-            }
-        })
-    }
-
-    // 实现功能一：从后台获取 商品分类、所属区域等列表的信息，然后填充到 HTML 的下拉控件中
-    function getShopInitInfo() {
-        $.getJSON(initUrl, function (data) {
-            if (data.success) {
-                var tempHtml = '';
                 var tempAreaHtml = '';
-                data.shopCategoryList.map(function (item, index) {
-                    tempHtml += '<option data-id="' + item.shopCategoryId + '">'
-                        + item.shopCategoryName + '</option>';
-                });
-                data.areaList.map(function (item, index) {
+                // 初始化区域列表
+                data.areaList.map(function(item, index) {
                     tempAreaHtml += '<option data-id="' + item.areaId + '">'
                         + item.areaName + '</option>';
                 });
-                $('#shop-category').html(tempHtml);
+                $('#shop_category').html(shopCategory);
+                // 不允许选择店铺类别
+                $('#shop_category').attr('disabled', 'disabled');
+                $('#area').html(tempAreaHtml);
+                // 给店铺选定原先的所属的区域
+                $("#area option[data-id='" + shop.area.areaId + "']").attr(
+                    "selected", "selected");
+            }
+        });
+    }
+    // 取得所有二级店铺类别以及区域信息，并分别赋值进类别列表以及区域列表
+    function getShopInitInfo() {
+        $.getJSON(initUrl, function(data) {
+            if (data.success) {
+                var tempHtml = '';
+                var tempAreaHtml = '';
+                data.shopCategoryList.map(function(item, index) {
+                    tempHtml += '<option data-id="' + item.shopCategoryId
+                        + '">' + item.shopCategoryName + '</option>';
+                });
+                data.areaList.map(function(item, index) {
+                    tempAreaHtml += '<option data-id="' + item.areaId + '">'
+                        + item.areaName + '</option>';
+                });
+                $('#shop_category').html(tempHtml);
                 $('#area').html(tempAreaHtml);
             }
         });
-
-        // 功能二：
-        $('#submit').click(function () {
-            var shop = {};
-            if (isEdit){
-                shop.shopId = shopId;
-            }
-            shop.shopName = $('#shop-name').val();
-            shop.shopAddr = $('#shop-addr').val();
-            shop.phone = $('#shop-phone').val();
-            shop.shopDesc = $('#shop-desc').val();
-
-            shop.shopCategory = {
-                shopCategoryId: $('#shop-category').find('option').not(function () {
-                    return !this.selected;
-                }).data('id')
-            };
-            shop.area = {
-                areaId: $('#area').find('option').not(function () {
-                    return !this.selected;
-                }).data('id')
-            };
-
-            var shopImg = $("#shop-img")[0].files[0];
-            var formData = new FormData();
-            formData.append('shopImg', shopImg);
-            formData.append('shopStr', JSON.stringify(shop));
-
-            var verifyCodeActual = $('#j_captcha').val();
-            if (!verifyCodeActual) {
-                $.toast("请输入验证码");
-                return;
-            }
-            formData.append("verifyCodeActual", verifyCodeActual);
-
-            $.ajax({
-                url: (isEdit ? editShopUrl : registerShopUrl),
-                type: 'POST',
-                // contentType: "application/x-www-form-urlencoded; charset=utf-8",
-                data: formData,
-                contentType: false,
-                processData: false,
-                cache: false,
-                success: function (data) {
-                    if (data.success) {
-                        $.toast('提交成功！');
-                    } else {
-                        $.toast('提交失败！' + data.errMsg);
-                    }
-                    // 无论提交成功或者失败都要换验证码
-                    $('#captcha_img').click();
-                }
-            });
-        });
     }
-});
+    // 提交按钮的事件响应，分别对店铺注册和编辑操作做不同响应
+    $('#submit').click(function () {
+        // 创建shop对象
+        var shop = {};
+        if (isEdit){
+            //若属于编辑，则给shopId赋值
+            shop.shopId =shopId;
+        }
+        // 获取表单里的数据并填充进对应的店铺属性中
+        shop.shopName = $('#shop_name').val();
+        shop.shopAddr = $('#shop_addr').val();
+        shop.phone = $('#shop_phone').val();
+        shop.shopDesc = $('#shop_desc').val();
+        // 选择选定好的店铺类别
+        shop.shopCategory ={
+            shopCategoryId:$('#shop_category').find('option').not(function () {
+                return !this.selected;
+            }).data('id')
+        };
+        // 选择选定好的区域信息
+        shop.area ={
+            areaId:$('#area').find('option').not(function () {
+                return !this.selected;
+            }).data('id')
+        };
+        // 获取上传的图片文件流
+        var shopImg =$('#shop_img')[0].files[0];
+        // 生成表单对象，用于接收参数并传递给后台
+        var formData = new FormData();
+        formData.append('shopImg',shopImg);
+        // 将shop json对象转成字符流保存至表单对象key为shopStr的的键值对里
+        formData.append('shopStr',JSON.stringify(shop));
+        // 获取表单里输入的验证码
+        var verifyCodeActual = $('#j_captcha').val();
+        if (!verifyCodeActual) {
+            $.toast('请输入验证码！');
+            return;
+        }
+        formData.append('verifyCodeActual',verifyCodeActual);
+        // 将数据提交至后台处理相关操作
+        $.ajax({
+            url: (isEdit ? editShopUrl : registerShopUrl),
+            type:'POST',
+            data: formData,
+            contentType:false,
+            processData:false,
+            cache:false,
+            success:function (data) {
+                if (data.success){
+                    $.toast('提交成功！');
+                }else {
+                    alert('提交失败！' + data.errMsg);
+                }
+                // 点击验证码图片的时候，注册码会改变
+                $('#captcha_img').click();
+            }
+        });
+    });
+
+})

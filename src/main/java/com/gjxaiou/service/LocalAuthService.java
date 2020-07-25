@@ -31,10 +31,10 @@ public interface LocalAuthService {
 	/**
 	 * 根据用户ID查询本地用户信息
 	 * 
-	 * @param localAuthId 用户ID
+	 * @param userId 用户ID
 	 * @return 用户信息
 	 */
-	LocalAuth queryLocalByLocalAuthId(long localAuthId);
+	LocalAuth queryLocalByUserId(long userId);
 
 	/**
 	 * 保存本地账号信息
@@ -64,6 +64,7 @@ public interface LocalAuthService {
 	 * @return 操作返回信息
 	 * @throws LocalAuthOperationException 继承runtimeException结合事务使用
 	 */
-	LocalAuthExecution modifyLocalAuth(String username, String password, String newPassword)
+	LocalAuthExecution modifyLocalAuth(Long userId,String username, String password,
+									   String newPassword)
 			throws LocalAuthOperationException;
 }

@@ -1,35 +1,38 @@
 package com.gjxaiou.service;
 
-
 import com.gjxaiou.dto.PersonInfoExecution;
 import com.gjxaiou.entity.PersonInfo;
 
 /**
- * @Description: 用户信息服务层接口
+ * @Description: TODO(这里用一句话描述这个类的作用)
+ * @Author ASUS
+ * @Date 2019/12/1 19:34
  */
 public interface PersonInfoService {
+    /**
+     * 根据用户Id获取personInfo信息
+     *
+     * @param userId
+     * @return
+     */
+    PersonInfo getPersonInfoById(Long userId);
 
-	/**
-	 * 根据用户ID查询用户信息
-	 * 
-	 * @param userId 用户ID
-	 * @return 用户信息
-	 */
-	PersonInfo queryInfoByUserId(long userId);
+    /**
+     * 根据查询条件分页返回用户信息列表
+     *
+     * @param personInfoCondition
+     * @param pageIndex
+     * @param pageSize
+     * @return
+     */
+    PersonInfoExecution getPersonInfoList(PersonInfo personInfoCondition, int pageIndex,
+                                          int pageSize);
 
-	/**
-	 * 添加平台账号
-	 * 
-	 * @param user 用户信息
-	 * @return 操作返回信息
-	 */
-	PersonInfoExecution insertPersonInfo(PersonInfo user);
-
-	/**
-	 * 修改用户信息
-	 * 
-	 * @param user 用户信息
-	 * @return 操作返回信息
-	 */
-	PersonInfoExecution updatePersonInfo(PersonInfo user);
+    /**
+     * 根据传入的PersonInfo修改对应的用户信息
+     *
+     * @param pi
+     * @return
+     */
+    PersonInfoExecution modifyPersonInfo(PersonInfo pi);
 }

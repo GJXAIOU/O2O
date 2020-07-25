@@ -1,35 +1,38 @@
 package com.gjxaiou.enums;
 
 /**
- * @Description: 用户信息操作枚举类
+ * @Description: TODO(使用枚举表述常量数据字典)
+ * @Author ASUS
+ * @Date 2019/12/29 18:14
  */
 public enum PersonInfoStateEnum {
-	NULL_PERSON_INFO(-1001, "注册信息为空");
 
-	private int state;
+    SUCCESS(0, "创建成功"), INNER_ERROR(-1001, "操作失败"), EMPTY(-1002, "用户信息为空");
 
-	private String stateInfo;
+    private int state;
 
-	private PersonInfoStateEnum(int state, String stateInfo) {
-		this.state = state;
-		this.stateInfo = stateInfo;
-	}
+    private String stateInfo;
 
-	public int getState() {
-		return state;
-	}
+    private PersonInfoStateEnum(int state, String stateInfo) {
+        this.state = state;
+        this.stateInfo = stateInfo;
+    }
 
-	public String getStateInfo() {
-		return stateInfo;
-	}
+    public int getState() {
+        return state;
+    }
 
-	public static PersonInfoStateEnum stateOf(int index) {
-		for (PersonInfoStateEnum state : values()) {
-			if (state.getState() == index) {
-				return state;
-			}
-		}
-		return null;
-	}
+    public String getStateInfo() {
+        return stateInfo;
+    }
+
+    public static PersonInfoStateEnum stateOf(int index) {
+        for (PersonInfoStateEnum state : values()) {
+            if (state.getState() == index) {
+                return state;
+            }
+        }
+        return null;
+    }
 
 }

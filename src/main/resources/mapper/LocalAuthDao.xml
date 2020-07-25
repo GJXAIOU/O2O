@@ -30,9 +30,9 @@
 	<insert id="insertLocalAuth" parameterType="com.gjxaiou.entity.LocalAuth"
 		useGeneratedKeys="true" keyProperty="localAuthId" keyColumn="local_auth_id">
 		INSERT INTO
-		tb_local_auth(username,password,create_time,last_edit_time)
+		tb_local_auth(username,password,user_id,create_time,last_edit_time)
 		VALUES
-		(#{username},#{password},#{createTime},#{lastEditTime})
+		(#{username},#{password},#{personInfo.userId},#{createTime},#{lastEditTime})
 	</insert>
 
 	<update id="updateLocalAuth">
@@ -41,7 +41,8 @@
 			<if test="newPassword != null">password=#{newPassword},</if>
 			<if test="lastEditTime != null">last_edit_time=#{lastEditTime}</if>
 		</set>
-		where 
+		where
+		user_id = #{userId} AND
 		username=#{username} AND password=#{password}
 	</update>
 
