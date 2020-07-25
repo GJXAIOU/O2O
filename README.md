@@ -1,5 +1,6 @@
 # README
 
+
 [![GitHub license](https://img.shields.io/github/license/GJXAIOU/O2O)](https://github.com/GJXAIOU/O2O/blob/master/LICENSE) ![](https://img.shields.io/badge/language-Java-yellow) ![](https://img.shields.io/badge/version-v1.0-yellow)
 
 **在线阅读地址**：www.gjxaiou.com/O2O         **项目源代码见**：https://github.com/GJXAIOU/O2O
